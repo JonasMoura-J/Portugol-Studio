@@ -7,7 +7,9 @@ FECHA_COLCHETES:            ']' ;
 ABRE_CHAVES:                '{' ;
 FECHA_CHAVES:               '}' ; 
 
-TIPO:           'real' | 'inteiro' | 'vazio' | 'logico' | 'cadeia' | 'caracter' ; 
+TIPO:           'real' | 'inteiro' | 'vazio' | 'logico' | 'cadeia' | 'caracter';
+
+REGISTRO : 'registro';
 
 FACA:           'faca' ;
 ENQUANTO:       'enquanto' ;
@@ -75,6 +77,8 @@ fragment DIGIT_HEX: ('0'..'9'|'a'..'f'|'A'..'F') ;
 STRING : '"' ( SEQ_ESC | . )*? '"' ;
 
 ID:             (LETRA | '_') (LETRA | [0-9] | '_')* ;
+
+ID_REGISTRO: (LETRA | '_') (LETRA | [0-9] | '_')* ;
 
 fragment LETRA: [a-zA-Z] ;
 

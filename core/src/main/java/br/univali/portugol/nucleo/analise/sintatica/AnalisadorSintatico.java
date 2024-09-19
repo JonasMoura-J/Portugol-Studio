@@ -79,7 +79,7 @@ public final class AnalisadorSintatico
 
     private static final List<String> outros =  Arrays.asList(new String[]
     {
-        "SEQ_ESC", "ESC_OCTAL", "ESC_UNICODE", "COMENTARIO", "DIGIT_HEX", "ESPACO", "GAMBIARRA"
+        "SEQ_ESC", "ESC_OCTAL", "ESC_UNICODE", "COMENTARIO", "DIGIT_HEX", "ESPACO", "GAMBIARRA", "REGISTRO"
     });
 
     public static final List<String> comandos = Arrays.asList(new String[]
@@ -114,6 +114,7 @@ public final class AnalisadorSintatico
         this.codigoFonte = codigoFonte;
 
         PortugolLexer portugolLexer = new PortugolLexer(CharStreams.fromString(codigoFonte));
+        System.out.println(outros);
         portugolLexer.removeErrorListeners();
         portugolLexer.addErrorListener(new BaseErrorListener(){
             @Override

@@ -12,9 +12,44 @@ inclusaoBiblioteca
 
 listaDeclaracoes
     :  CONSTANTE? TIPO declaracao (VIRGULA declaracao)*;
+//________________________________________________________________________
 
+listaAtributosRegistro
+    :  TIPO declaracaoAtributo (VIRGULA declaracaoAtributo)*;
+
+declaracaoAtributo
+    :   declaracaoVariavelAtributo | declaracaoArrayAtributo | declaracaoMatrizAtributo;
+
+declaracaoVariavelAtributo
+    : ID;
+
+declaracaoMatrizAtributo
+    :   ID ABRE_COLCHETES linhaMatriz? FECHA_COLCHETES ABRE_COLCHETES colunaMatriz? FECHA_COLCHETES;
+
+declaracaoArrayAtributo
+    :   ID ABRE_COLCHETES tamanhoArray? FECHA_COLCHETES;
+
+declaracaoTipoRegistro
+    :   REGISTRO ID_REGISTRO ABRE_CHAVES listaDeclaracoes FECHA_CHAVES;
+
+declaracaoVariavelRegistro
+    : ID_REGISTRO ID;
+
+atribuicaoAtributoRegistro
+    :   atribuicaoVariavelAtributo | atribuicaoArrayAtributo | atribuicaoMatrizAtributo;
+
+atribuicaoVariavelAtributo
+    : ID PONTO ID OP_ATRIBUICAO expressao ;
+
+atribuicaoMatrizAtributo
+    : ID PONTO ID OP_ATRIBUICAO inicializacaoMatriz;
+
+atribuicaoArrayAtributo
+    : ID PONTO ID OP_ATRIBUICAO inicializacaoArray;
+
+//____________________________________________________________________
 declaracao
-    :   declaracaoVariavel | declaracaoArray | declaracaoMatriz ;
+    :   declaracaoVariavel | declaracaoArray | declaracaoMatriz;
 
 declaracaoVariavel
     : ID (OP_ATRIBUICAO expressao)? ;
