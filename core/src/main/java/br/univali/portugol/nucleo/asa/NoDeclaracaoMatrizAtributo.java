@@ -1,0 +1,67 @@
+package br.univali.portugol.nucleo.asa;
+
+public final class NoDeclaracaoMatrizAtributo extends NoDeclaracaoBase {
+
+    private final NoExpressao numeroLinhas;
+    private final NoExpressao numeroColunas;
+
+    /**
+     *
+     * @param nome o nome desta matriz.
+     *
+     * @param tipoDado o tipo de dado desta matriz.
+     *
+     * @param numeroLinhas a expressão que define o número de linhas desta
+     * matriz.
+     *
+     * @param numeroColunas a expressão que define o número de colunas desta
+     * matriz.
+     *
+     * @param constante flag indicando se esta matriz terá valores constantes ou
+     * não. Se o valor for <code>true</code> os valores da matriz não poderão
+     * ser alterados após a inicialização.
+     *
+     * @since 1.0
+     */
+    public NoDeclaracaoMatrizAtributo(String nome, TipoDado tipoDado, NoExpressao numeroLinhas, NoExpressao numeroColunas, boolean constante)
+    {
+        super(nome, tipoDado, false);
+        this.numeroLinhas = numeroLinhas;
+        this.numeroColunas = numeroColunas;
+    }
+
+    /**
+     * Obtém a expressão que define o número de linhas desta matriz. Pode ser
+     * qualquer expressão do tipo {@link TipoDado#INTEIRO}.
+     *
+     * @return a expressão que define o número de linhas desta matriz.
+     *
+     * @since 1.0
+     */
+    public NoExpressao getNumeroLinhas()
+    {
+        return numeroLinhas;
+    }
+
+    /**
+     * Obtém a expressão que define o número de colunas desta matriz. Pode ser
+     * qualquer expressão do tipo {@link TipoDado#INTEIRO}.
+     *
+     * @return a expressão que define o número de colunas desta matriz.
+     *
+     * @since 1.0
+     */
+    public NoExpressao getNumeroColunas()
+    {
+        return numeroColunas;
+    }
+
+    /**
+     * {@inheritDoc }
+     */
+    @Override
+    public Object aceitar(VisitanteASA visitante) throws ExcecaoVisitaASA
+    {
+        return visitante.visitar(this);
+    }
+}

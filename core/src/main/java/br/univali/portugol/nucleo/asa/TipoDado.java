@@ -146,7 +146,10 @@ public enum TipoDado
      * das funções de bibliotecas. Este tipo de dado indica ao {@link AnalisadorSemantico}
      * que o parâmetro da função aceita qualquer tipo de dado.
      */ 
-    TODOS("todos", "todos", null, Object.class);
+    TODOS("todos", "todos", null, Object.class),
+
+
+    REGISTRO("registro", "registro", null, Object.class);
     
     private final String nome;
     private final String descricao;

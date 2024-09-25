@@ -15,7 +15,7 @@ listaDeclaracoes
 //________________________________________________________________________
 
 listaAtributosRegistro
-    :  TIPO declaracaoAtributo (VIRGULA declaracaoAtributo)*;
+    :  TIPO declaracaoAtributo;
 
 declaracaoAtributo
     :   declaracaoVariavelAtributo | declaracaoArrayAtributo | declaracaoMatrizAtributo;
@@ -30,7 +30,7 @@ declaracaoArrayAtributo
     :   ID ABRE_COLCHETES tamanhoArray? FECHA_COLCHETES;
 
 declaracaoTipoRegistro
-    :   REGISTRO ID_REGISTRO ABRE_CHAVES listaDeclaracoes FECHA_CHAVES;
+    :   REGISTRO ID_REGISTRO ABRE_CHAVES listaAtributosRegistro FECHA_CHAVES;
 
 declaracaoVariavelRegistro
     : ID_REGISTRO ID;
@@ -39,7 +39,7 @@ atribuicaoAtributoRegistro
     :   atribuicaoVariavelAtributo | atribuicaoArrayAtributo | atribuicaoMatrizAtributo;
 
 atribuicaoVariavelAtributo
-    : ID PONTO ID OP_ATRIBUICAO expressao ;
+    : ID PONTO ID OP_ATRIBUICAO expressao;
 
 atribuicaoMatrizAtributo
     : ID PONTO ID OP_ATRIBUICAO inicializacaoMatriz;

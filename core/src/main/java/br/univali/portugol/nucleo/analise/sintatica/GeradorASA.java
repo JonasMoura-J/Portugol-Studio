@@ -63,7 +63,7 @@ public class GeradorASA {
                     }
                 }
             }
-            
+
             return null;
         }
 
@@ -81,6 +81,79 @@ public class GeradorASA {
             
             return lista;
         }
+
+        @Override public T visitListaAtributosRegistro(PortugolParser.ListaAtributosRegistroContext ctx) { return visitChildren(ctx); }
+        /**
+         * {@inheritDoc}
+         *
+         * <p>The default implementation returns the result of calling
+         * {@link #visitChildren} on {@code ctx}.</p>
+         */
+        @Override public T visitDeclaracaoAtributo(PortugolParser.DeclaracaoAtributoContext ctx) { return visitChildren(ctx); }
+        /**
+         * {@inheritDoc}
+         *
+         * <p>The default implementation returns the result of calling
+         * {@link #visitChildren} on {@code ctx}.</p>
+         */
+        @Override public T visitDeclaracaoVariavelAtributo(PortugolParser.DeclaracaoVariavelAtributoContext ctx) { return visitChildren(ctx); }
+        /**
+         * {@inheritDoc}
+         *
+         * <p>The default implementation returns the result of calling
+         * {@link #visitChildren} on {@code ctx}.</p>
+         */
+        @Override public T visitDeclaracaoMatrizAtributo(PortugolParser.DeclaracaoMatrizAtributoContext ctx) { return visitChildren(ctx); }
+        /**
+         * {@inheritDoc}
+         *
+         * <p>The default implementation returns the result of calling
+         * {@link #visitChildren} on {@code ctx}.</p>
+         */
+        @Override public T visitDeclaracaoArrayAtributo(PortugolParser.DeclaracaoArrayAtributoContext ctx) { return visitChildren(ctx); }
+        /**
+         * {@inheritDoc}
+         *
+         * <p>The default implementation returns the result of calling
+         * {@link #visitChildren} on {@code ctx}.</p>
+         */
+        @Override public T visitDeclaracaoTipoRegistro(PortugolParser.DeclaracaoTipoRegistroContext ctx) { return visitChildren(ctx); }
+        /**
+         * {@inheritDoc}
+         *
+         * <p>The default implementation returns the result of calling
+         * {@link #visitChildren} on {@code ctx}.</p>
+         */
+        @Override public T visitDeclaracaoVariavelRegistro(PortugolParser.DeclaracaoVariavelRegistroContext ctx) { return visitChildren(ctx); }
+        /**
+         * {@inheritDoc}
+         *
+         * <p>The default implementation returns the result of calling
+         * {@link #visitChildren} on {@code ctx}.</p>
+         */
+        @Override public T visitAtribuicaoAtributoRegistro(PortugolParser.AtribuicaoAtributoRegistroContext ctx) { return visitChildren(ctx); }
+        /**
+         * {@inheritDoc}
+         *
+         * <p>The default implementation returns the result of calling
+         * {@link #visitChildren} on {@code ctx}.</p>
+         */
+        @Override public T visitAtribuicaoVariavelAtributo(PortugolParser.AtribuicaoVariavelAtributoContext ctx) { return visitChildren(ctx); }
+        /**
+         * {@inheritDoc}
+         *
+         * <p>The default implementation returns the result of calling
+         * {@link #visitChildren} on {@code ctx}.</p>
+         */
+        @Override public T visitAtribuicaoMatrizAtributo(PortugolParser.AtribuicaoMatrizAtributoContext ctx) { return visitChildren(ctx); }
+        /**
+         * {@inheritDoc}
+         *
+         * <p>The default implementation returns the result of calling
+         * {@link #visitChildren} on {@code ctx}.</p>
+         */
+        @Override public T visitAtribuicaoArrayAtributo(PortugolParser.AtribuicaoArrayAtributoContext ctx) { return visitChildren(ctx); }
+        /**
         
 //        @Override 
 //        public No visitDeclaracaoListaMatriz(DeclaracaoListaMatrizContext ctx) {

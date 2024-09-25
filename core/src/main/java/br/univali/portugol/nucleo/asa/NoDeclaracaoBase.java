@@ -18,6 +18,7 @@ public abstract class NoDeclaracaoBase extends NoBloco implements NoDeclaracao
     private String nome;
     private final boolean constante;
     private final TipoDado tipoDado;
+    private String tipoRegistro;
     private TrechoCodigoFonte trechoCodigoFonteNome;
     private TrechoCodigoFonte trechoCodigoFonteTipoDado;
     private final List<NoReferencia> referencias = new ArrayList<>();
@@ -40,9 +41,36 @@ public abstract class NoDeclaracaoBase extends NoBloco implements NoDeclaracao
         this.constante = constante;
     }
 
+    public NoDeclaracaoBase(String nome, String tipoRegistro)
+    {
+        this.nome = nome;
+        this.tipoRegistro = tipoRegistro;
+        this.constante = false;
+        this.tipoDado = null;
+    }
+
     public void setNome(String nome)
     {
         this.nome = nome;
+    }
+
+    /**
+     * Obtém o nome do símbolo que está sendo declarado. O nome definido na
+     * declaração do símbolo será o mesmo nome utilizado para acessá-lo em
+     * outros locais do código fonte.
+     *
+     * @return o nome do símbolo sendo declarado.
+     *
+     * @since 1.0
+     */
+    public String getTipoRegistro()
+    {
+        return tipoRegistro;
+    }
+
+    public void setTipoRegistro(String tipoRegistro)
+    {
+        this.tipoRegistro = tipoRegistro;
     }
 
     /**
