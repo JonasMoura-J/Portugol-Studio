@@ -649,6 +649,31 @@ final class BuscadorDeSimbolo implements VisitanteASA {
     }
 
     @Override
+    public Object visitar(NoDeclaracaoVariavelAtributo noDeclaracaoVariavelAtributo) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
+    public Object visitar(NoDeclaracaoArrayAtributo noDeclaracaoArrayAtributo) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
+    public Object visitar(NoDeclaracaoMatrizAtributo noDeclaracaoMatrizAtributo) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
+    public Object visitar(NoDeclaracaoTipoRegistro noDeclaracaoTipoRegistro) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
+    public Object visitar(NoDeclaracaoVariavelRegistro noDeclaracaoVariavelRegistro) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
     public Object visitar(NoInteiro noInteiro) throws ExcecaoVisitaASA {
         return null;
     }
