@@ -345,4 +345,19 @@ public abstract class VisitanteASABasico implements VisitanteASA
     public Object visitar(NoDeclaracaoVariavelRegistro noDeclaracaoVariavelRegistro) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA(new UnsupportedOperationException("Esta operação ainda não foi implementada. " + this.getClass() + ":" + Thread.currentThread().getStackTrace()[1].getMethodName()), null, null) ;
     }
+
+    @Override
+    public Object visitar(NoAtribuicaoVariavelAtributo noAtribuicaoVariavelAtributo) throws ExcecaoVisitaASA {
+        throw new ExcecaoVisitaASA(new UnsupportedOperationException("Esta operação ainda não foi implementada. " + this.getClass() + ":" + Thread.currentThread().getStackTrace()[1].getMethodName()), null, null) ;
+    }
+
+    @Override
+    public Object visitar(NoAtribuicaoArrayAtributo noAtribuicaoArrayAtributo) throws ExcecaoVisitaASA {
+        throw new ExcecaoVisitaASA(new UnsupportedOperationException("Esta operação ainda não foi implementada. " + this.getClass() + ":" + Thread.currentThread().getStackTrace()[1].getMethodName()), null, null) ;
+    }
+
+    @Override
+    public Object visitar(NoAtribuicaoMatrizAtributo noAtribuicaoArrayAtributo) throws ExcecaoVisitaASA {
+        throw new ExcecaoVisitaASA(new UnsupportedOperationException("Esta operação ainda não foi implementada. " + this.getClass() + ":" + Thread.currentThread().getStackTrace()[1].getMethodName()), null, null) ;
+    }
 }

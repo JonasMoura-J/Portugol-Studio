@@ -82,7 +82,178 @@ public class GeradorASA {
             return lista;
         }
 
-//        @Override
+        @Override
+        public No visitListaAtributosRegistro(ListaAtributosRegistroContext ctx) {
+            TipoDado tipo = TipoDado.obterTipoDadoPeloNome(ctx.TIPO().getText());
+
+            NoListaAtributosRegistro lista = new NoListaAtributosRegistro(tipo);
+
+            for (DeclaracaoAtributoContext declaracaoAtributoContext : ctx.declaracaoAtributo()) {
+                NoDeclaracaoAtributo noDeclaracaoAtributo = (NoDeclaracaoAtributo)declaracaoAtributoContext.accept(this);
+                lista.adicionaDeclaracao(noDeclaracaoAtributo);
+            }
+
+            return lista;
+        }
+
+        @Override
+        public No visitDeclaracaoVariavelAtributo(PortugolParser.DeclaracaoVariavelAtributoContext ctx) {
+            ListaAtributosRegistroContext listaAtributosRegistro = (ListaAtributosRegistroContext)ctx.getParent().getParent();
+            TipoDado tipoVariavel = TipoDado.obterTipoDadoPeloNome(listaAtributosRegistro.TIPO().getText());
+            String nomeVariavel = ctx.ID().getText();
+            NoDeclaracaoVariavelAtributo noDeclaracaoVariavelAtributo = new NoDeclaracaoVariavelAtributo(nomeVariavel, tipoVariavel);
+
+            noDeclaracaoVariavelAtributo.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID()));
+            noDeclaracaoVariavelAtributo.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(listaAtributosRegistro.TIPO()));
+
+            noDeclaracaoVariavelAtributo.setTrechoCodigoFonte(getTrechoCodigoFonte(listaAtributosRegistro.TIPO(), ctx.getText().length()));
+
+            return noDeclaracaoVariavelAtributo;
+        }
+
+        @Override
+        public No visitDeclaracaoMatrizAtributo(DeclaracaoMatrizAtributoContext ctx) {
+            ListaAtributosRegistroContext listaAtributosRegistro = (ListaAtributosRegistroContext)ctx.getParent().getParent();
+            TipoDado tipo = TipoDado.obterTipoDadoPeloNome(listaAtributosRegistro.TIPO().getText());
+            String nome = ctx.ID().getText();
+
+            NoExpressao expressaoLinhas = null;
+            if (ctx.linhaMatriz() != null) {
+                expressaoLinhas = (NoExpressao) ctx.linhaMatriz().accept(this);
+            }
+
+            NoExpressao expressaoColunas = null;
+            if (ctx.colunaMatriz() != null) {
+                expressaoColunas = (NoExpressao) ctx.colunaMatriz().accept(this);
+            }
+
+            NoDeclaracaoMatrizAtributo matriz = new NoDeclaracaoMatrizAtributo(nome, tipo, expressaoLinhas, expressaoColunas);
+
+            matriz.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID()));
+            matriz.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(listaAtributosRegistro.TIPO()));
+
+            matriz.setTrechoCodigoFonte(getTrechoCodigoFonte(listaAtributosRegistro.TIPO(), ctx.getText().length()));
+
+            return matriz;
+        }
+
+        @Override
+        public No visitDeclaracaoArrayAtributo(DeclaracaoArrayAtributoContext ctx) {
+            ListaAtributosRegistroContext listaAtributosRegistro = (ListaAtributosRegistroContext)ctx.getParent().getParent();
+            TipoDado tipo = TipoDado.obterTipoDadoPeloNome(listaAtributosRegistro.TIPO().getText());
+            String nome = ctx.ID().getText();
+
+            NoExpressao tamanho = null;
+            if (ctx.tamanhoArray() != null) {
+                tamanho = (NoExpressao) visitTamanhoArray(ctx.tamanhoArray());
+            }
+
+            NoDeclaracaoArrayAtributo array = new NoDeclaracaoArrayAtributo(nome, tipo, tamanho);
+
+            array.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID()));
+            array.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(listaAtributosRegistro.TIPO()));
+
+            array.setTrechoCodigoFonte(getTrechoCodigoFonte(listaAtributosRegistro.TIPO(), ctx.getText().length()));
+
+            return array;
+        }
+
+        @Override
+        public No visitDeclaracaoTipoRegistro(DeclaracaoTipoRegistroContext ctx) {
+
+            TipoDado tipo = TipoDado.obterTipoDadoPeloNome(ctx.REGISTRO().getText());
+            String nome = ctx.ID_REGISTRO().getText();
+            NoListaAtributosRegistro atributos = new NoListaAtributosRegistro(tipo);
+
+            for (DeclaracaoAtributoContext declaracaoContext : ctx.listaAtributosRegistro().declaracaoAtributo()) {
+                NoDeclaracaoAtributo noDeclaracaoAtributo = (NoDeclaracaoAtributo)declaracaoContext.accept(this);
+                atributos.adicionaDeclaracao(noDeclaracaoAtributo);
+            }
+
+            NoDeclaracaoTipoRegistro registro = new NoDeclaracaoTipoRegistro(nome, tipo, atributos);
+
+            return registro;
+        }
+
+
+        @Override
+        public No visitDeclaracaoVariavelRegistro(DeclaracaoVariavelRegistroContext ctx) {
+            String tipoVariavel = ctx.ID_REGISTRO().getText();
+            String nomeVariavel = ctx.ID_INSTANCIA_REGISTRO().getText();
+
+            NoDeclaracaoVariavelRegistro noDeclaracaoVariavelRegistro = new NoDeclaracaoVariavelRegistro(nomeVariavel, tipoVariavel);
+
+            noDeclaracaoVariavelRegistro.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID_INSTANCIA_REGISTRO()));
+            noDeclaracaoVariavelRegistro.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(ctx.ID_REGISTRO()));
+
+            noDeclaracaoVariavelRegistro.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.ID_REGISTRO(), ctx.getText().length()));
+
+            return noDeclaracaoVariavelRegistro;
+        }
+
+        @Override
+        public No visitAtribuicaoVariavelAtributo(AtribuicaoVariavelAtributoContext ctx) {
+
+//            NoOperacaoAtribuicao atribuicao = GeradorNoOperacao.gera(ctx, this, NoOperacaoAtribuicao.class);
+//
+//            NoExpressao esquerda = (NoExpressao) ctx.expressao(0).accept(this);
+//            atribuicao.setTrechoCodigoFonte(new TrechoCodigoFonte(esquerda.getTrechoCodigoFonte(), ctx.getText().length()));
+//
+//            return atribuicao;
+
+//            NoAtribuicaoVariavelAtributo noAtribuicaoVariavelAtributo = GeradorNoOperacao.gera(ctx, this, NoAtribuicaoVariavelAtributo.class);
+//
+//            NoExpressao instancia = (NoExpressao) ctx.ID_INSTANCIA_REGISTRO();
+//            NoExpressao nome = (NoExpressao) ctx.ID();
+
+            NoExpressao inicializacao = (NoExpressao) ctx.expressao().accept(this);
+
+            NoAtribuicaoVariavelAtributo noAtribuicaoVariavelAtributo = new NoAtribuicaoVariavelAtributo(inicializacao);
+
+            noAtribuicaoVariavelAtributo.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.ID_INSTANCIA_REGISTRO(), ctx.getText().length()));
+            return noAtribuicaoVariavelAtributo;
+        }
+
+        @Override
+        public No visitAtribuicaoArrayAtributo(AtribuicaoArrayAtributoContext ctx) {
+
+            List<Object> valores = new ArrayList<>();
+            if (ctx.inicializacaoArray().listaExpressoes() != null) { // quando o vetor é inicializado com uma lista vazia: inteiro v[] = {}
+                for (ExpressaoContext expressao : ctx.inicializacaoArray().listaExpressoes().expressao()) {
+                    valores.add(expressao.accept(this));
+                }
+            }
+            NoAtribuicaoArrayAtributo noArray = new NoAtribuicaoArrayAtributo(valores);
+
+            noArray.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.inicializacaoArray().ABRE_CHAVES(), ctx.getText().length()));
+
+            return noArray;
+        }
+
+        @Override
+        public No visitAtribuicaoMatrizAtributo(AtribuicaoMatrizAtributoContext ctx) {
+            List<List<Object>> linhas = new ArrayList<>();
+
+            for (InicializacaoArrayContext inicializacaoArrayContext : ctx.inicializacaoMatriz().inicializacaoArray()) {
+                List<Object> linha = new ArrayList<>();
+
+                if (inicializacaoArrayContext.listaExpressoes() != null) { // se as linhas da matriz não foram inicializadas com listas vazias: inteiro m[][] = {{}, {}}
+                    for (ExpressaoContext expressao : inicializacaoArrayContext.listaExpressoes().expressao()) {
+                        linha.add(expressao.accept(this));
+                    }
+                }
+
+                linhas.add(linha);
+            }
+
+            NoAtribuicaoMatrizAtributo matriz = new NoAtribuicaoMatrizAtributo(linhas);
+
+            matriz.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.inicializacaoMatriz().ABRE_CHAVES(), ctx.getText().length()));
+
+            return matriz;
+        }
+
+        //        @Override
 //        public No visitDeclaracaoListaMatriz(DeclaracaoListaMatrizContext ctx) {
 //            TipoDado tipo = TipoDado.obterTipoDadoPeloNome(ctx.declaracaoMatriz().TIPO().getText());
 //            boolean constante = ctx.declaracaoMatriz().CONSTANTE() != null;

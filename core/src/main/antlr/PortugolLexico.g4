@@ -80,6 +80,8 @@ ID:             (LETRA | '_') (LETRA | [0-9] | '_')* ;
 
 ID_REGISTRO: (LETRA | '_') (LETRA | [0-9] | '_')* ;
 
+ID_INSTANCIA_REGISTRO: (LETRA | '_') (LETRA | [0-9] | '_')* ;
+
 fragment LETRA: [a-zA-Z] ;
 
 REAL:   DIGITO+ '.' DIGITO* 

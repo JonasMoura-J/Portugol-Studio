@@ -378,6 +378,21 @@ public class AnalisadorDeclaracaoTamanhoVetorMatriz implements VisitanteASA{
     }
 
     @Override
+    public Object visitar(NoAtribuicaoVariavelAtributo noAtribuicaoVariavelAtributo) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
+    public Object visitar(NoAtribuicaoArrayAtributo noAtribuicaoArrayAtributo) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
+    public Object visitar(NoAtribuicaoMatrizAtributo noAtribuicaoMatrizAtributo) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
     public Object visitar(NoSenao noSenao) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA("Not supported yet.", null, null); //To change body of generated methods, choose Tools | Templates.
     }

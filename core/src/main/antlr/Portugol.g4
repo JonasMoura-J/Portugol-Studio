@@ -15,7 +15,7 @@ listaDeclaracoes
 //________________________________________________________________________
 
 listaAtributosRegistro
-    :  TIPO declaracaoAtributo;
+    :  TIPO declaracaoAtributo (VIRGULA declaracaoAtributo);
 
 declaracaoAtributo
     :   declaracaoVariavelAtributo | declaracaoArrayAtributo | declaracaoMatrizAtributo;
@@ -33,19 +33,19 @@ declaracaoTipoRegistro
     :   REGISTRO ID_REGISTRO ABRE_CHAVES listaAtributosRegistro FECHA_CHAVES;
 
 declaracaoVariavelRegistro
-    : ID_REGISTRO ID;
+    : ID_REGISTRO ID_INSTANCIA_REGISTRO;
 
 atribuicaoAtributoRegistro
     :   atribuicaoVariavelAtributo | atribuicaoArrayAtributo | atribuicaoMatrizAtributo;
 
 atribuicaoVariavelAtributo
-    : ID PONTO ID OP_ATRIBUICAO expressao;
+    : ID_INSTANCIA_REGISTRO PONTO ID OP_ATRIBUICAO expressao;
 
 atribuicaoMatrizAtributo
-    : ID PONTO ID OP_ATRIBUICAO inicializacaoMatriz;
+    : ID_INSTANCIA_REGISTRO PONTO ID OP_ATRIBUICAO inicializacaoMatriz;
 
 atribuicaoArrayAtributo
-    : ID PONTO ID OP_ATRIBUICAO inicializacaoArray;
+    : ID_INSTANCIA_REGISTRO PONTO ID OP_ATRIBUICAO inicializacaoArray;
 
 //____________________________________________________________________
 declaracao

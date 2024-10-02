@@ -2461,6 +2461,21 @@ public final class AnalisadorSemantico implements VisitanteASA
         return null;
     }
 
+    @Override
+    public Object visitar(NoAtribuicaoVariavelAtributo noAtribuicaoVariavelAtributo) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
+    public Object visitar(NoAtribuicaoArrayAtributo noAtribuicaoArrayAtributo) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
+    public Object visitar(NoAtribuicaoMatrizAtributo noAtribuicaoMatrizAtributo) throws ExcecaoVisitaASA {
+        return null;
+    }
+
     private TipoDado analisarReferenciaVariavelPrograma(NoReferenciaVariavel noReferenciaVariavel) throws ExcecaoImpossivelDeterminarTipoDado
     {
         Simbolo simbolo = memoria.getSimbolo(noReferenciaVariavel.getNome());

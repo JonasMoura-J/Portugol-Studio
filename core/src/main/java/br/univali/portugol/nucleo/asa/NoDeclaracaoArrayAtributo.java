@@ -8,12 +8,10 @@ public final class NoDeclaracaoArrayAtributo extends NoDeclaracaoBase{
      * @param nome      o nome deste vetor.
      * @param tipoDado  o tipo de dado deste vetor.
      * @param tamanho   a expressão que define o número de elementos deste vetor.
-     * @param constante define se os valores detse vetor serão constantes. Se
-     *                  <code>true</code> os valores não poderão ser alterados após a
-     *                  inicialização do vetor.
-     * @since 1.0
      */
-    public NoDeclaracaoArrayAtributo(String nome, TipoDado tipoDado, NoExpressao tamanho, boolean constante) {
+
+
+    public NoDeclaracaoArrayAtributo(String nome, TipoDado tipoDado, NoExpressao tamanho) {
         super(nome, tipoDado, false);
         this.tamanho = tamanho;
     }

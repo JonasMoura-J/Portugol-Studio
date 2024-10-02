@@ -17,13 +17,9 @@ public final class NoDeclaracaoMatrizAtributo extends NoDeclaracaoBase {
      * @param numeroColunas a expressão que define o número de colunas desta
      * matriz.
      *
-     * @param constante flag indicando se esta matriz terá valores constantes ou
-     * não. Se o valor for <code>true</code> os valores da matriz não poderão
-     * ser alterados após a inicialização.
-     *
      * @since 1.0
      */
-    public NoDeclaracaoMatrizAtributo(String nome, TipoDado tipoDado, NoExpressao numeroLinhas, NoExpressao numeroColunas, boolean constante)
+    public NoDeclaracaoMatrizAtributo(String nome, TipoDado tipoDado, NoExpressao numeroLinhas, NoExpressao numeroColunas)
     {
         super(nome, tipoDado, false);
         this.numeroLinhas = numeroLinhas;

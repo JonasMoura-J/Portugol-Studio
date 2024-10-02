@@ -127,4 +127,10 @@ public interface VisitanteASA
 
     public Object visitar(NoDeclaracaoVariavelRegistro noDeclaracaoVariavelRegistro) throws ExcecaoVisitaASA;
 
+    public Object visitar(NoAtribuicaoVariavelAtributo noAtribuicaoVariavelAtributo) throws ExcecaoVisitaASA;
+
+    public Object visitar(NoAtribuicaoArrayAtributo noAtribuicaoArrayAtributo) throws ExcecaoVisitaASA;
+
+    public Object visitar(NoAtribuicaoMatrizAtributo noAtribuicaoMatrizAtributo) throws ExcecaoVisitaASA;
+
 }

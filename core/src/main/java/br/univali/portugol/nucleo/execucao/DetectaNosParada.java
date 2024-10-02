@@ -413,6 +413,21 @@ public class DetectaNosParada implements VisitanteASA
     }
 
     @Override
+    public Object visitar(NoAtribuicaoVariavelAtributo noAtribuicaoVariavelAtributo) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
+    public Object visitar(NoAtribuicaoArrayAtributo noAtribuicaoArrayAtributo) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
+    public Object visitar(NoAtribuicaoMatrizAtributo noAtribuicaoMatrizAtributo) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
     public Object visitar(NoOperacaoBitwiseRightShift noOperacaoBitwiseRightShift) throws ExcecaoVisitaASA
     {
         return null;

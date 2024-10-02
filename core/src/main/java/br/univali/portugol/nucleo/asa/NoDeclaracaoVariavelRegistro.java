@@ -5,7 +5,7 @@ public final class NoDeclaracaoVariavelRegistro extends NoDeclaracaoBase{
 
     /**
      *
-     * @param nome define o nome detsa variável.
+     * @param nome define o nome desta variável.
      *
      * @param tipoRegistro define o tipo de registro desta variável.
      *

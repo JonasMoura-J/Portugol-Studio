@@ -4,9 +4,10 @@ public final class NoDeclaracaoTipoRegistro extends NoDeclaracaoBase{
 
     private NoListaAtributosRegistro atributos;
 
-    public NoDeclaracaoTipoRegistro(String nome, TipoDado tipoDado,  boolean constante)
+    public NoDeclaracaoTipoRegistro(String nome, TipoDado tipoDado, NoListaAtributosRegistro atributos)
     {
-        super(nome, TipoDado.REGISTRO, false);
+        super(nome, tipoDado, false);
+        this.atributos = atributos;
     }
 
     public NoListaAtributosRegistro getAtributos()
