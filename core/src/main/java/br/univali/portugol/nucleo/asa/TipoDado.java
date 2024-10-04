@@ -149,9 +149,9 @@ public enum TipoDado
     TODOS("todos", "todos", null, Object.class),
 
 
-    REGISTRO("registro", "registro", null, Object.class);
+    REGISTRO("registro", "registro", null, String.class);
     
-    private final String nome;
+    private String nome;
     private final String descricao;
     private final Object valorPadrao;
     private final Class tipoJava;
@@ -201,6 +201,11 @@ public enum TipoDado
     public String getNome()
     {
         return nome;
+    }
+
+    public void setNome(String nome)
+    {
+        this.nome = nome;
     }
 
     

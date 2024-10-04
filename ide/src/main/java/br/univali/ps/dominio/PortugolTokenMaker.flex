@@ -267,6 +267,7 @@ URL						= (((https?|f(tp|ile))"://"|"www.")({URLCharacters}{URLEndCharacter})?)
 	"caracter" |
 	"real" |
 	"inteiro" |
+	"registro" |
 	"vazio" 				{ addToken(Token.DATA_TYPE); }
 
 	

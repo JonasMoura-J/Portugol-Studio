@@ -2,6 +2,9 @@ package br.univali.portugol.nucleo.asa;
 
 public final class NoDeclaracaoVariavelRegistro extends NoDeclaracaoBase{
     private int indiceReferencia = -1;
+    private NoListaAtributosRegistro atributos;
+
+    public int idParaInspecao = -1; // usado para implementar a inspeção de símbolos
 
     /**
      *
@@ -15,9 +18,10 @@ public final class NoDeclaracaoVariavelRegistro extends NoDeclaracaoBase{
      * @since 1.0
      */
 
-    public NoDeclaracaoVariavelRegistro(String nome, String tipoRegistro)
+    public NoDeclaracaoVariavelRegistro(String nome, TipoDado tipoRegistro, NoListaAtributosRegistro atributos)
     {
-        super(nome, tipoRegistro);
+        super(nome, tipoRegistro, false);
+        this.atributos = atributos;
     }
 
     /**
@@ -27,6 +31,26 @@ public final class NoDeclaracaoVariavelRegistro extends NoDeclaracaoBase{
     public Object aceitar(VisitanteASA visitante) throws ExcecaoVisitaASA
     {
         return visitante.visitar(this);
+    }
+
+    public NoListaAtributosRegistro getAtributos()
+    {
+        return atributos;
+    }
+
+    public void setAtributos(NoListaAtributosRegistro atributos)
+    {
+        this.atributos = atributos;
+    }
+
+    public void setIdParaInspecao(int idParaInspecao)
+    {
+        this.idParaInspecao = idParaInspecao;
+    }
+
+    public int getIdParaInspecao()
+    {
+        return idParaInspecao;
     }
 
     public boolean ehPassadaPorReferencia()

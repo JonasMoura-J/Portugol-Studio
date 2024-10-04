@@ -4,7 +4,7 @@ import PortugolLexico;
 
 arquivo 
     :   PROGRAMA ABRE_CHAVES 
-        inclusaoBiblioteca* (declaracaoFuncao | listaDeclaracoes)* 
+        inclusaoBiblioteca* (declaracaoTipoRegistro | declaracaoFuncao | listaDeclaracoes)*
         FECHA_CHAVES ;
 
 inclusaoBiblioteca
@@ -15,7 +15,7 @@ listaDeclaracoes
 //________________________________________________________________________
 
 listaAtributosRegistro
-    :  TIPO declaracaoAtributo (VIRGULA declaracaoAtributo);
+    :  TIPO declaracaoAtributo (VIRGULA declaracaoAtributo)*;
 
 declaracaoAtributo
     :   declaracaoVariavelAtributo | declaracaoArrayAtributo | declaracaoMatrizAtributo;
@@ -30,7 +30,7 @@ declaracaoArrayAtributo
     :   ID ABRE_COLCHETES tamanhoArray? FECHA_COLCHETES;
 
 declaracaoTipoRegistro
-    :   REGISTRO ID_REGISTRO ABRE_CHAVES listaAtributosRegistro FECHA_CHAVES;
+    :   REGISTRO ID ABRE_CHAVES listaAtributosRegistro* FECHA_CHAVES;
 
 declaracaoVariavelRegistro
     : ID_REGISTRO ID_INSTANCIA_REGISTRO;
@@ -93,7 +93,8 @@ parametroMatriz
     :   ABRE_COLCHETES FECHA_COLCHETES ABRE_COLCHETES FECHA_COLCHETES ;
 
 comando
-    :   listaDeclaracoes   
+    :   listaDeclaracoes
+    |   declaracaoTipoRegistro
     |   se
     |   enquanto
     |   facaEnquanto
@@ -141,6 +142,7 @@ inicializacaoPara
     :   atribuicao                      // quando a variável é declarada fora do loop e apenas inicializada dentro dele
     |   listaDeclaracoes              
     |   ID
+    |   ID_REGISTRO
 ; 
 
 condicao

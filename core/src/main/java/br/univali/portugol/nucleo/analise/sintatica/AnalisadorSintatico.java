@@ -11,15 +11,13 @@ import br.univali.portugol.nucleo.analise.sintatica.erros.ErroTokenFaltando;
 import br.univali.portugol.nucleo.analise.sintatica.tradutores.TradutorMismatchedTokenException;
 import br.univali.portugol.nucleo.asa.ASA;
 import br.univali.portugol.nucleo.mensagens.ErroSintatico;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.BitSet;
-import java.util.Collection;
-import java.util.List;
+
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import org.antlr.runtime.UnwantedTokenException;
 import org.antlr.v4.runtime.*;
+import org.antlr.v4.runtime.InputMismatchException;
 import org.antlr.v4.runtime.atn.ATNConfigSet;
 import org.antlr.v4.runtime.dfa.DFA;
 import org.antlr.v4.runtime.misc.IntervalSet;
@@ -46,7 +44,7 @@ import org.antlr.v4.runtime.misc.ParseCancellationException;
  */
 public final class AnalisadorSintatico 
 {
-    public static enum TipoToken { PALAVRA_RESERVADA, OPERADOR, TIPO_PRIMITIVO, OUTRO, NAO_MAPEADO, ID };
+    public static enum TipoToken { PALAVRA_RESERVADA, OPERADOR, TIPO_PRIMITIVO, OUTRO, NAO_MAPEADO, ID, ID_REGISTRO, ID_INSTANCIA_REGISTRO };
 
     private static final List<String> palavrasReservadas = Arrays.asList(new String[]{
         "PR_BIBLIOTECA", "PR_CADEIA", "PR_CARACTER", "PR_CASO", "PR_CONST", "PR_CONTRARIO",
@@ -74,7 +72,7 @@ public final class AnalisadorSintatico
 
     private static final List<String> ids = Arrays.asList(new String[]
     {
-        "ID", "ID_BIBLIOTECA"
+        "ID", "ID_BIBLIOTECA", "ID_REGISTRO", "ID_INSTANCIA_REGISTRO"
     });
 
     private static final List<String> outros =  Arrays.asList(new String[]
@@ -341,6 +339,12 @@ public final class AnalisadorSintatico
         }
 
         if (ids.contains(token)) {
+            if(Objects.equals(token, "ID_REGISTRO")){
+                return TipoToken.ID_REGISTRO;
+            }
+            if(Objects.equals(token, "ID_INSTANCIA_REGISTRO")){
+                return TipoToken.ID_INSTANCIA_REGISTRO;
+            }
             return TipoToken.ID;
         }
 

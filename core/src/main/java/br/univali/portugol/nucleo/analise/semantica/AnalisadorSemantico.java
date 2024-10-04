@@ -1120,11 +1120,11 @@ public final class AnalisadorSemantico implements VisitanteASA
     public Object visitar(NoDeclaracaoVariavel declaracaoVariavel) throws ExcecaoVisitaASA
     {
         setarPaiDoNo(declaracaoVariavel);
-        
+
         declaracaoVariavel.setIdParaInspecao(totalVariaveisDeclaradas);
         //System.out.println(declaracaoVariavel.getNome() + " => " + totalVariaveisDeclaradas);
         totalVariaveisDeclaradas++;
-        
+
 //        if (declarandoSimbolosGlobais == memoria.isEscopoGlobal())
 //        {
             String nome = declaracaoVariavel.getNome();
@@ -2438,26 +2438,80 @@ public final class AnalisadorSemantico implements VisitanteASA
 
     @Override
     public Object visitar(NoDeclaracaoVariavelAtributo noDeclaracaoVariavelAtributo) throws ExcecaoVisitaASA {
-        return null;
+        setarPaiDoNo(noDeclaracaoVariavelAtributo);
+        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noDeclaracaoVariavelAtributo.getTrechoCodigoFonte()), asa, noDeclaracaoVariavelAtributo);
     }
 
     @Override
     public Object visitar(NoDeclaracaoArrayAtributo noDeclaracaoArrayAtributo) throws ExcecaoVisitaASA {
-        return null;
+        setarPaiDoNo(noDeclaracaoArrayAtributo);
+        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noDeclaracaoArrayAtributo.getTrechoCodigoFonte()), asa, noDeclaracaoArrayAtributo);
     }
 
     @Override
     public Object visitar(NoDeclaracaoMatrizAtributo noDeclaracaoMatrizAtributo) throws ExcecaoVisitaASA {
-        return null;
+        setarPaiDoNo(noDeclaracaoMatrizAtributo);
+        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noDeclaracaoMatrizAtributo.getTrechoCodigoFonte()), asa, noDeclaracaoMatrizAtributo);
     }
 
     @Override
     public Object visitar(NoDeclaracaoTipoRegistro noDeclaracaoTipoRegistro) throws ExcecaoVisitaASA {
-        return null;
+        setarPaiDoNo(noDeclaracaoTipoRegistro);
+        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noDeclaracaoTipoRegistro.getTrechoCodigoFonte()), asa, noDeclaracaoTipoRegistro);
     }
 
     @Override
     public Object visitar(NoDeclaracaoVariavelRegistro noDeclaracaoVariavelRegistro) throws ExcecaoVisitaASA {
+        setarPaiDoNo(noDeclaracaoVariavelRegistro);
+
+        noDeclaracaoVariavelRegistro.setIdParaInspecao(totalVariaveisDeclaradas);
+        totalVariaveisDeclaradas++;
+
+        String nome = noDeclaracaoVariavelRegistro.getNome();
+        TipoDado tipoDadoVariavel = noDeclaracaoVariavelRegistro.getTipoRegistro();
+
+        Variavel variavel = new Variavel(nome, tipoDadoVariavel, noDeclaracaoVariavelRegistro);
+        variavel.setTrechoCodigoFonteNome(noDeclaracaoVariavelRegistro.getTrechoCodigoFonteNome());
+        variavel.setTrechoCodigoFonteTipoDado(noDeclaracaoVariavelRegistro.getTrechoCodigoFonteTipoDado());
+
+        Simbolo simbolo = memoria.getSimbolo(nome);
+        if (simbolo != null) {
+
+            final boolean global = memoria.isGlobal(simbolo);
+            final boolean local = memoria.isLocal(simbolo);
+            memoria.empilharEscopo();
+            memoria.adicionarSimbolo(variavel);
+            final boolean global1 = memoria.isGlobal(variavel);
+            final boolean local1 = memoria.isLocal(variavel);
+            if ((global && global1) || (local && local1))
+            {
+                variavel.setRedeclarado(true);
+                notificarErroSemantico(new ErroSimboloRedeclarado(variavel, simbolo));
+                memoria.desempilharEscopo();
+            }
+            else
+            {
+                memoria.desempilharEscopo();
+                memoria.adicionarSimbolo(variavel);
+                Simbolo simboloGlobal = memoria.isGlobal(simbolo) ? simbolo : variavel;
+                Simbolo simboloLocal = memoria.isGlobal(simbolo) ? variavel : simbolo;
+
+                notificarAviso(new AvisoSimboloGlobalOcultado(simboloGlobal, simboloLocal, noDeclaracaoVariavelRegistro));
+            }
+        }
+        else// (ExcecaoSimboloNaoDeclarado excecaoSimboloNaoDeclarado)
+        {
+            if (FUNCOES_RESERVADAS.contains(nome))
+            {
+                variavel.setRedeclarado(true);
+                Funcao funcaoSistam = new Funcao(nome, TipoDado.VAZIO, Quantificador.VETOR);
+                notificarErroSemantico(new ErroSimboloRedeclarado(variavel, funcaoSistam));
+            }
+            else
+            {
+                memoria.adicionarSimbolo(variavel);
+            }
+        }
         return null;
     }
 

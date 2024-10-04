@@ -12,7 +12,7 @@ dp.sh.Brushes.Portugol = function()
         'programa inteiro real caracter cadeia logico const ' +
         'para pare retorne escolha funcao caso e ou nao ' + 
         'verdadeiro falso se senao enquanto faca contrario ' + 
-        'inclua biblioteca vazio';
+        'inclua biblioteca vazio registro';
         
     this.regexList = 
     [

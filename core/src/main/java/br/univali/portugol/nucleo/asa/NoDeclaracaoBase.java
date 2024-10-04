@@ -18,7 +18,7 @@ public abstract class NoDeclaracaoBase extends NoBloco implements NoDeclaracao
     private String nome;
     private final boolean constante;
     private final TipoDado tipoDado;
-    private String tipoRegistro;
+    private TipoDado tipoRegistro;
     private TrechoCodigoFonte trechoCodigoFonteNome;
     private TrechoCodigoFonte trechoCodigoFonteTipoDado;
     private final List<NoReferencia> referencias = new ArrayList<>();
@@ -41,7 +41,7 @@ public abstract class NoDeclaracaoBase extends NoBloco implements NoDeclaracao
         this.constante = constante;
     }
 
-    public NoDeclaracaoBase(String nome, String tipoRegistro)
+    public NoDeclaracaoBase(String nome, TipoDado tipoRegistro)
     {
         this.nome = nome;
         this.tipoRegistro = tipoRegistro;
@@ -63,12 +63,12 @@ public abstract class NoDeclaracaoBase extends NoBloco implements NoDeclaracao
      *
      * @since 1.0
      */
-    public String getTipoRegistro()
+    public TipoDado getTipoRegistro()
     {
         return tipoRegistro;
     }
 
-    public void setTipoRegistro(String tipoRegistro)
+    public void setTipoRegistro(TipoDado tipoRegistro)
     {
         this.tipoRegistro = tipoRegistro;
     }

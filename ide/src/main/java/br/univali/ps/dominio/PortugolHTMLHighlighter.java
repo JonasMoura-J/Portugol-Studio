@@ -117,6 +117,7 @@ public class PortugolHTMLHighlighter {
                             .append(token.getText())
                             .append("</span>");
                     break;
+                case PortugolLexer.REGISTRO:
                 default:
                     htmlDoPortugol
                             .append("<span class=\"")

@@ -97,7 +97,7 @@ public class GeradorASA {
         }
 
         @Override
-        public No visitDeclaracaoVariavelAtributo(PortugolParser.DeclaracaoVariavelAtributoContext ctx) {
+        public No visitDeclaracaoVariavelAtributo(DeclaracaoVariavelAtributoContext ctx) {
             ListaAtributosRegistroContext listaAtributosRegistro = (ListaAtributosRegistroContext)ctx.getParent().getParent();
             TipoDado tipoVariavel = TipoDado.obterTipoDadoPeloNome(listaAtributosRegistro.TIPO().getText());
             String nomeVariavel = ctx.ID().getText();
@@ -162,33 +162,51 @@ public class GeradorASA {
         public No visitDeclaracaoTipoRegistro(DeclaracaoTipoRegistroContext ctx) {
 
             TipoDado tipo = TipoDado.obterTipoDadoPeloNome(ctx.REGISTRO().getText());
-            String nome = ctx.ID_REGISTRO().getText();
-            NoListaAtributosRegistro atributos = new NoListaAtributosRegistro(tipo);
+            String nome = ctx.ID().getText();
 
-            for (DeclaracaoAtributoContext declaracaoContext : ctx.listaAtributosRegistro().declaracaoAtributo()) {
-                NoDeclaracaoAtributo noDeclaracaoAtributo = (NoDeclaracaoAtributo)declaracaoContext.accept(this);
-                atributos.adicionaDeclaracao(noDeclaracaoAtributo);
+            NoDeclaracaoTipoRegistro noDeclaracaoTipoRegistro = new NoDeclaracaoTipoRegistro(nome, tipo);
+
+            noDeclaracaoTipoRegistro.setAtributos(getAtributos(ctx.listaAtributosRegistro()));
+
+            noDeclaracaoTipoRegistro.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID()));
+            noDeclaracaoTipoRegistro.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.REGISTRO(), ctx.getText().length()));
+
+            return noDeclaracaoTipoRegistro;
+        }
+
+        private List<NoListaAtributosRegistro> getAtributos(List<ListaAtributosRegistroContext> ctx) {
+            List<NoListaAtributosRegistro> atributos = new ArrayList<>();
+            for (ListaAtributosRegistroContext comando : ctx) {
+                NoListaAtributosRegistro atributo = (NoListaAtributosRegistro)comando.accept(this);
+
+                // trata a lista de declarações (variáveis ou arrays) como um 'amontoado' de declarações
+                List<NoDeclaracaoAtributo> declaracoes = ((NoListaAtributosRegistro)atributo).getDeclaracoes();
+                for (NoDeclaracaoAtributo declaracao : declaracoes) {
+                    atributos.add((NoListaAtributosRegistro)declaracao);
+                }
+
             }
-
-            NoDeclaracaoTipoRegistro registro = new NoDeclaracaoTipoRegistro(nome, tipo, atributos);
-
-            return registro;
+            return atributos;
         }
 
 
         @Override
         public No visitDeclaracaoVariavelRegistro(DeclaracaoVariavelRegistroContext ctx) {
-            String tipoVariavel = ctx.ID_REGISTRO().getText();
+            TipoDado tipoVariavel = null;
+            tipoVariavel.setNome(ctx.ID_REGISTRO().getText());
+
             String nomeVariavel = ctx.ID_INSTANCIA_REGISTRO().getText();
 
-            NoDeclaracaoVariavelRegistro noDeclaracaoVariavelRegistro = new NoDeclaracaoVariavelRegistro(nomeVariavel, tipoVariavel);
-
-            noDeclaracaoVariavelRegistro.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID_INSTANCIA_REGISTRO()));
-            noDeclaracaoVariavelRegistro.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(ctx.ID_REGISTRO()));
-
-            noDeclaracaoVariavelRegistro.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.ID_REGISTRO(), ctx.getText().length()));
-
-            return noDeclaracaoVariavelRegistro;
+            //aqui eu preciso carregar todos os atributos do registro criado para a variavel de instancia dele********
+//            NoDeclaracaoVariavelRegistro noDeclaracaoVariavelRegistro = new NoDeclaracaoVariavelRegistro(nomeVariavel, tipoVariavel);
+//
+//            noDeclaracaoVariavelRegistro.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID_INSTANCIA_REGISTRO()));
+//            noDeclaracaoVariavelRegistro.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(ctx.ID_REGISTRO()));
+//
+//            noDeclaracaoVariavelRegistro.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.ID_REGISTRO(), ctx.getText().length()));
+//
+//            return noDeclaracaoVariavelRegistro;
+            return null;
         }
 
         @Override
