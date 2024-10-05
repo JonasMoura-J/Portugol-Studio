@@ -20,8 +20,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Stack;
 import java.util.TreeMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Percorre a {@link ASA} gerada a partir do código fonte para detectar
@@ -2437,42 +2435,42 @@ public final class AnalisadorSemantico implements VisitanteASA
     }
 
     @Override
-    public Object visitar(NoDeclaracaoVariavelAtributo noDeclaracaoVariavelAtributo) throws ExcecaoVisitaASA {
-        setarPaiDoNo(noDeclaracaoVariavelAtributo);
-        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noDeclaracaoVariavelAtributo.getTrechoCodigoFonte()), asa, noDeclaracaoVariavelAtributo);
+    public Object visitar(NoAtributoVariavel noAtributoVariavel) throws ExcecaoVisitaASA {
+        setarPaiDoNo(noAtributoVariavel);
+        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noAtributoVariavel.getTrechoCodigoFonte()), asa, noAtributoVariavel);
     }
 
     @Override
-    public Object visitar(NoDeclaracaoArrayAtributo noDeclaracaoArrayAtributo) throws ExcecaoVisitaASA {
-        setarPaiDoNo(noDeclaracaoArrayAtributo);
-        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noDeclaracaoArrayAtributo.getTrechoCodigoFonte()), asa, noDeclaracaoArrayAtributo);
+    public Object visitar(NoAtributoArray noAtributoArray) throws ExcecaoVisitaASA {
+        setarPaiDoNo(noAtributoArray);
+        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noAtributoArray.getTrechoCodigoFonte()), asa, noAtributoArray);
     }
 
     @Override
-    public Object visitar(NoDeclaracaoMatrizAtributo noDeclaracaoMatrizAtributo) throws ExcecaoVisitaASA {
-        setarPaiDoNo(noDeclaracaoMatrizAtributo);
-        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noDeclaracaoMatrizAtributo.getTrechoCodigoFonte()), asa, noDeclaracaoMatrizAtributo);
+    public Object visitar(NoAtributoMatriz noAtributoMatriz) throws ExcecaoVisitaASA {
+        setarPaiDoNo(noAtributoMatriz);
+        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noAtributoMatriz.getTrechoCodigoFonte()), asa, noAtributoMatriz);
     }
 
     @Override
-    public Object visitar(NoDeclaracaoTipoRegistro noDeclaracaoTipoRegistro) throws ExcecaoVisitaASA {
-        setarPaiDoNo(noDeclaracaoTipoRegistro);
-        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noDeclaracaoTipoRegistro.getTrechoCodigoFonte()), asa, noDeclaracaoTipoRegistro);
+    public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
+        setarPaiDoNo(noDeclaracaoRegistro);
+        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noDeclaracaoRegistro.getTrechoCodigoFonte()), asa, noDeclaracaoRegistro);
     }
 
     @Override
-    public Object visitar(NoDeclaracaoVariavelRegistro noDeclaracaoVariavelRegistro) throws ExcecaoVisitaASA {
-        setarPaiDoNo(noDeclaracaoVariavelRegistro);
+    public Object visitar(NoInstanciaRegistro noInstanciaRegistro) throws ExcecaoVisitaASA {
+        setarPaiDoNo(noInstanciaRegistro);
 
-        noDeclaracaoVariavelRegistro.setIdParaInspecao(totalVariaveisDeclaradas);
+        noInstanciaRegistro.setIdParaInspecao(totalVariaveisDeclaradas);
         totalVariaveisDeclaradas++;
 
-        String nome = noDeclaracaoVariavelRegistro.getNome();
-        TipoDado tipoDadoVariavel = noDeclaracaoVariavelRegistro.getTipoRegistro();
+        String nome = noInstanciaRegistro.getNome();
+        TipoDado tipoDadoVariavel = noInstanciaRegistro.getTipoRegistro();
 
-        Variavel variavel = new Variavel(nome, tipoDadoVariavel, noDeclaracaoVariavelRegistro);
-        variavel.setTrechoCodigoFonteNome(noDeclaracaoVariavelRegistro.getTrechoCodigoFonteNome());
-        variavel.setTrechoCodigoFonteTipoDado(noDeclaracaoVariavelRegistro.getTrechoCodigoFonteTipoDado());
+        Variavel variavel = new Variavel(nome, tipoDadoVariavel, noInstanciaRegistro);
+        variavel.setTrechoCodigoFonteNome(noInstanciaRegistro.getTrechoCodigoFonteNome());
+        variavel.setTrechoCodigoFonteTipoDado(noInstanciaRegistro.getTrechoCodigoFonteTipoDado());
 
         Simbolo simbolo = memoria.getSimbolo(nome);
         if (simbolo != null) {
@@ -2496,7 +2494,7 @@ public final class AnalisadorSemantico implements VisitanteASA
                 Simbolo simboloGlobal = memoria.isGlobal(simbolo) ? simbolo : variavel;
                 Simbolo simboloLocal = memoria.isGlobal(simbolo) ? variavel : simbolo;
 
-                notificarAviso(new AvisoSimboloGlobalOcultado(simboloGlobal, simboloLocal, noDeclaracaoVariavelRegistro));
+                notificarAviso(new AvisoSimboloGlobalOcultado(simboloGlobal, simboloLocal, noInstanciaRegistro));
             }
         }
         else// (ExcecaoSimboloNaoDeclarado excecaoSimboloNaoDeclarado)
@@ -2516,17 +2514,17 @@ public final class AnalisadorSemantico implements VisitanteASA
     }
 
     @Override
-    public Object visitar(NoAtribuicaoVariavelAtributo noAtribuicaoVariavelAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoInicializacaoAtributoVariavel noInicializacaoAtributoVariavel) throws ExcecaoVisitaASA {
         return null;
     }
 
     @Override
-    public Object visitar(NoAtribuicaoArrayAtributo noAtribuicaoArrayAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoInicializacaoAtributoArray noInicializacaoAtributoArray) throws ExcecaoVisitaASA {
         return null;
     }
 
     @Override
-    public Object visitar(NoAtribuicaoMatrizAtributo noAtribuicaoMatrizAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoInicializacaoAtributoMatriz noInicializacaoAtributoMatriz) throws ExcecaoVisitaASA {
         return null;
     }
 

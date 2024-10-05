@@ -2,7 +2,7 @@ package br.univali.portugol.nucleo.asa;
 
 import java.util.List;
 
-public class NoAtribuicaoArrayAtributo extends NoExpressao
+public class NoInicializacaoAtributoArray extends NoExpressao implements NoInicializacaoAtributo
 {
     private final List<Object> valores;
 
@@ -11,7 +11,7 @@ public class NoAtribuicaoArrayAtributo extends NoExpressao
      * @param valores     uma lista contendo os valores do vetor.
      * @since 1.0
      */
-    public NoAtribuicaoArrayAtributo(List<Object> valores)
+    public NoInicializacaoAtributoArray(List<Object> valores)
     {
         this.valores = valores;
     }

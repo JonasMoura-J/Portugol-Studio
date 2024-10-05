@@ -1,6 +1,6 @@
 package br.univali.portugol.nucleo.asa;
 
-public final class NoDeclaracaoMatrizAtributo extends NoDeclaracaoBase {
+public final class NoAtributoMatriz extends NoDeclaracaoBase implements NoAtributo {
 
     private final NoExpressao numeroLinhas;
     private final NoExpressao numeroColunas;
@@ -19,7 +19,7 @@ public final class NoDeclaracaoMatrizAtributo extends NoDeclaracaoBase {
      *
      * @since 1.0
      */
-    public NoDeclaracaoMatrizAtributo(String nome, TipoDado tipoDado, NoExpressao numeroLinhas, NoExpressao numeroColunas)
+    public NoAtributoMatriz(String nome, TipoDado tipoDado, NoExpressao numeroLinhas, NoExpressao numeroColunas)
     {
         super(nome, tipoDado, false);
         this.numeroLinhas = numeroLinhas;

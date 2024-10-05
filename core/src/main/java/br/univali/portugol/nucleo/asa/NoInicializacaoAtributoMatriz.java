@@ -2,7 +2,7 @@ package br.univali.portugol.nucleo.asa;
 
 import java.util.List;
 
-public class NoAtribuicaoMatrizAtributo extends NoExpressao
+public class NoInicializacaoAtributoMatriz extends NoExpressao implements NoInicializacaoAtributo
 {
     private List<List<Object>> valores;
 
@@ -11,7 +11,7 @@ public class NoAtribuicaoMatrizAtributo extends NoExpressao
      * @param valores uma lista de listas contendo os valores da matriz.
      * @since 1.0
      */
-    public NoAtribuicaoMatrizAtributo(List<List<Object>> valores)
+    public NoInicializacaoAtributoMatriz(List<List<Object>> valores)
     {
         this.valores = valores;
     }

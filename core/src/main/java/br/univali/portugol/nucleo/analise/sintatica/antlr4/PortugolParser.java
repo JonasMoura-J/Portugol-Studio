@@ -33,16 +33,16 @@ public class PortugolParser extends Parser {
 		VIRGULA=67, PONTOVIRGULA=68, DOISPONTOS=69;
 	public static final int
 		RULE_arquivo = 0, RULE_inclusaoBiblioteca = 1, RULE_listaDeclaracoes = 2, 
-		RULE_listaAtributosRegistro = 3, RULE_declaracaoAtributo = 4, RULE_declaracaoVariavelAtributo = 5, 
-		RULE_declaracaoMatrizAtributo = 6, RULE_declaracaoArrayAtributo = 7, RULE_declaracaoTipoRegistro = 8, 
-		RULE_declaracaoVariavelRegistro = 9, RULE_atribuicaoAtributoRegistro = 10, 
-		RULE_atribuicaoVariavelAtributo = 11, RULE_atribuicaoMatrizAtributo = 12, 
-		RULE_atribuicaoArrayAtributo = 13, RULE_declaracao = 14, RULE_declaracaoVariavel = 15, 
-		RULE_declaracaoMatriz = 16, RULE_inicializacaoMatriz = 17, RULE_linhaMatriz = 18, 
-		RULE_colunaMatriz = 19, RULE_declaracaoArray = 20, RULE_inicializacaoArray = 21, 
-		RULE_tamanhoArray = 22, RULE_declaracaoFuncao = 23, RULE_parametroFuncao = 24, 
-		RULE_listaParametros = 25, RULE_parametro = 26, RULE_parametroArray = 27, 
-		RULE_parametroMatriz = 28, RULE_comando = 29, RULE_atribuicao = 30, RULE_atribuicaoComposta = 31, 
+		RULE_listaAtributos = 3, RULE_atributo = 4, RULE_atributoVariavel = 5, 
+		RULE_atributoMatriz = 6, RULE_atributoArray = 7, RULE_declaracaoRegistro = 8, 
+		RULE_instanciaRegistro = 9, RULE_inicializacaoAtributo = 10, RULE_inicializacaoAtributoVariavel = 11, 
+		RULE_inicializacaoAtributoMatriz = 12, RULE_inicializacaoAtributoArray = 13, 
+		RULE_declaracao = 14, RULE_declaracaoVariavel = 15, RULE_declaracaoMatriz = 16, 
+		RULE_inicializacaoMatriz = 17, RULE_linhaMatriz = 18, RULE_colunaMatriz = 19, 
+		RULE_declaracaoArray = 20, RULE_inicializacaoArray = 21, RULE_tamanhoArray = 22, 
+		RULE_declaracaoFuncao = 23, RULE_parametroFuncao = 24, RULE_listaParametros = 25, 
+		RULE_parametro = 26, RULE_parametroArray = 27, RULE_parametroMatriz = 28, 
+		RULE_comando = 29, RULE_atribuicao = 30, RULE_atribuicaoComposta = 31, 
 		RULE_retorne = 32, RULE_se = 33, RULE_senao = 34, RULE_enquanto = 35, 
 		RULE_facaEnquanto = 36, RULE_para = 37, RULE_listaComandos = 38, RULE_inicializacaoPara = 39, 
 		RULE_condicao = 40, RULE_incrementoPara = 41, RULE_escolha = 42, RULE_caso = 43, 
@@ -50,18 +50,17 @@ public class PortugolParser extends Parser {
 		RULE_escopoBiblioteca = 48;
 	private static String[] makeRuleNames() {
 		return new String[] {
-			"arquivo", "inclusaoBiblioteca", "listaDeclaracoes", "listaAtributosRegistro", 
-			"declaracaoAtributo", "declaracaoVariavelAtributo", "declaracaoMatrizAtributo", 
-			"declaracaoArrayAtributo", "declaracaoTipoRegistro", "declaracaoVariavelRegistro", 
-			"atribuicaoAtributoRegistro", "atribuicaoVariavelAtributo", "atribuicaoMatrizAtributo", 
-			"atribuicaoArrayAtributo", "declaracao", "declaracaoVariavel", "declaracaoMatriz", 
-			"inicializacaoMatriz", "linhaMatriz", "colunaMatriz", "declaracaoArray", 
-			"inicializacaoArray", "tamanhoArray", "declaracaoFuncao", "parametroFuncao", 
-			"listaParametros", "parametro", "parametroArray", "parametroMatriz", 
-			"comando", "atribuicao", "atribuicaoComposta", "retorne", "se", "senao", 
-			"enquanto", "facaEnquanto", "para", "listaComandos", "inicializacaoPara", 
-			"condicao", "incrementoPara", "escolha", "caso", "pare", "indiceArray", 
-			"expressao", "listaExpressoes", "escopoBiblioteca"
+			"arquivo", "inclusaoBiblioteca", "listaDeclaracoes", "listaAtributos", 
+			"atributo", "atributoVariavel", "atributoMatriz", "atributoArray", "declaracaoRegistro", 
+			"instanciaRegistro", "inicializacaoAtributo", "inicializacaoAtributoVariavel", 
+			"inicializacaoAtributoMatriz", "inicializacaoAtributoArray", "declaracao", 
+			"declaracaoVariavel", "declaracaoMatriz", "inicializacaoMatriz", "linhaMatriz", 
+			"colunaMatriz", "declaracaoArray", "inicializacaoArray", "tamanhoArray", 
+			"declaracaoFuncao", "parametroFuncao", "listaParametros", "parametro", 
+			"parametroArray", "parametroMatriz", "comando", "atribuicao", "atribuicaoComposta", 
+			"retorne", "se", "senao", "enquanto", "facaEnquanto", "para", "listaComandos", 
+			"inicializacaoPara", "condicao", "incrementoPara", "escolha", "caso", 
+			"pare", "indiceArray", "expressao", "listaExpressoes", "escopoBiblioteca"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -157,11 +156,11 @@ public class PortugolParser extends Parser {
 		public InclusaoBibliotecaContext inclusaoBiblioteca(int i) {
 			return getRuleContext(InclusaoBibliotecaContext.class,i);
 		}
-		public List<DeclaracaoTipoRegistroContext> declaracaoTipoRegistro() {
-			return getRuleContexts(DeclaracaoTipoRegistroContext.class);
+		public List<DeclaracaoRegistroContext> declaracaoRegistro() {
+			return getRuleContexts(DeclaracaoRegistroContext.class);
 		}
-		public DeclaracaoTipoRegistroContext declaracaoTipoRegistro(int i) {
-			return getRuleContext(DeclaracaoTipoRegistroContext.class,i);
+		public DeclaracaoRegistroContext declaracaoRegistro(int i) {
+			return getRuleContext(DeclaracaoRegistroContext.class,i);
 		}
 		public List<DeclaracaoFuncaoContext> declaracaoFuncao() {
 			return getRuleContexts(DeclaracaoFuncaoContext.class);
@@ -222,7 +221,7 @@ public class PortugolParser extends Parser {
 				case REGISTRO:
 					{
 					setState(106);
-					declaracaoTipoRegistro();
+					declaracaoRegistro();
 					}
 					break;
 				case FUNCAO:
@@ -392,32 +391,32 @@ public class PortugolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class ListaAtributosRegistroContext extends ParserRuleContext {
+	public static class ListaAtributosContext extends ParserRuleContext {
 		public TerminalNode TIPO() { return getToken(PortugolParser.TIPO, 0); }
-		public List<DeclaracaoAtributoContext> declaracaoAtributo() {
-			return getRuleContexts(DeclaracaoAtributoContext.class);
+		public List<AtributoContext> atributo() {
+			return getRuleContexts(AtributoContext.class);
 		}
-		public DeclaracaoAtributoContext declaracaoAtributo(int i) {
-			return getRuleContext(DeclaracaoAtributoContext.class,i);
+		public AtributoContext atributo(int i) {
+			return getRuleContext(AtributoContext.class,i);
 		}
 		public List<TerminalNode> VIRGULA() { return getTokens(PortugolParser.VIRGULA); }
 		public TerminalNode VIRGULA(int i) {
 			return getToken(PortugolParser.VIRGULA, i);
 		}
-		public ListaAtributosRegistroContext(ParserRuleContext parent, int invokingState) {
+		public ListaAtributosContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_listaAtributosRegistro; }
+		@Override public int getRuleIndex() { return RULE_listaAtributos; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitListaAtributosRegistro(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitListaAtributos(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final ListaAtributosRegistroContext listaAtributosRegistro() throws RecognitionException {
-		ListaAtributosRegistroContext _localctx = new ListaAtributosRegistroContext(_ctx, getState());
-		enterRule(_localctx, 6, RULE_listaAtributosRegistro);
+	public final ListaAtributosContext listaAtributos() throws RecognitionException {
+		ListaAtributosContext _localctx = new ListaAtributosContext(_ctx, getState());
+		enterRule(_localctx, 6, RULE_listaAtributos);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -425,7 +424,7 @@ public class PortugolParser extends Parser {
 			setState(135);
 			match(TIPO);
 			setState(136);
-			declaracaoAtributo();
+			atributo();
 			setState(141);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
@@ -435,7 +434,7 @@ public class PortugolParser extends Parser {
 				setState(137);
 				match(VIRGULA);
 				setState(138);
-				declaracaoAtributo();
+				atributo();
 				}
 				}
 				setState(143);
@@ -455,30 +454,30 @@ public class PortugolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class DeclaracaoAtributoContext extends ParserRuleContext {
-		public DeclaracaoVariavelAtributoContext declaracaoVariavelAtributo() {
-			return getRuleContext(DeclaracaoVariavelAtributoContext.class,0);
+	public static class AtributoContext extends ParserRuleContext {
+		public AtributoVariavelContext atributoVariavel() {
+			return getRuleContext(AtributoVariavelContext.class,0);
 		}
-		public DeclaracaoArrayAtributoContext declaracaoArrayAtributo() {
-			return getRuleContext(DeclaracaoArrayAtributoContext.class,0);
+		public AtributoArrayContext atributoArray() {
+			return getRuleContext(AtributoArrayContext.class,0);
 		}
-		public DeclaracaoMatrizAtributoContext declaracaoMatrizAtributo() {
-			return getRuleContext(DeclaracaoMatrizAtributoContext.class,0);
+		public AtributoMatrizContext atributoMatriz() {
+			return getRuleContext(AtributoMatrizContext.class,0);
 		}
-		public DeclaracaoAtributoContext(ParserRuleContext parent, int invokingState) {
+		public AtributoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_declaracaoAtributo; }
+		@Override public int getRuleIndex() { return RULE_atributo; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitDeclaracaoAtributo(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitAtributo(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final DeclaracaoAtributoContext declaracaoAtributo() throws RecognitionException {
-		DeclaracaoAtributoContext _localctx = new DeclaracaoAtributoContext(_ctx, getState());
-		enterRule(_localctx, 8, RULE_declaracaoAtributo);
+	public final AtributoContext atributo() throws RecognitionException {
+		AtributoContext _localctx = new AtributoContext(_ctx, getState());
+		enterRule(_localctx, 8, RULE_atributo);
 		try {
 			setState(147);
 			_errHandler.sync(this);
@@ -487,21 +486,21 @@ public class PortugolParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(144);
-				declaracaoVariavelAtributo();
+				atributoVariavel();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(145);
-				declaracaoArrayAtributo();
+				atributoArray();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(146);
-				declaracaoMatrizAtributo();
+				atributoMatriz();
 				}
 				break;
 			}
@@ -517,22 +516,22 @@ public class PortugolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class DeclaracaoVariavelAtributoContext extends ParserRuleContext {
+	public static class AtributoVariavelContext extends ParserRuleContext {
 		public TerminalNode ID() { return getToken(PortugolParser.ID, 0); }
-		public DeclaracaoVariavelAtributoContext(ParserRuleContext parent, int invokingState) {
+		public AtributoVariavelContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_declaracaoVariavelAtributo; }
+		@Override public int getRuleIndex() { return RULE_atributoVariavel; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitDeclaracaoVariavelAtributo(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitAtributoVariavel(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final DeclaracaoVariavelAtributoContext declaracaoVariavelAtributo() throws RecognitionException {
-		DeclaracaoVariavelAtributoContext _localctx = new DeclaracaoVariavelAtributoContext(_ctx, getState());
-		enterRule(_localctx, 10, RULE_declaracaoVariavelAtributo);
+	public final AtributoVariavelContext atributoVariavel() throws RecognitionException {
+		AtributoVariavelContext _localctx = new AtributoVariavelContext(_ctx, getState());
+		enterRule(_localctx, 10, RULE_atributoVariavel);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -551,7 +550,7 @@ public class PortugolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class DeclaracaoMatrizAtributoContext extends ParserRuleContext {
+	public static class AtributoMatrizContext extends ParserRuleContext {
 		public TerminalNode ID() { return getToken(PortugolParser.ID, 0); }
 		public List<TerminalNode> ABRE_COLCHETES() { return getTokens(PortugolParser.ABRE_COLCHETES); }
 		public TerminalNode ABRE_COLCHETES(int i) {
@@ -567,20 +566,20 @@ public class PortugolParser extends Parser {
 		public ColunaMatrizContext colunaMatriz() {
 			return getRuleContext(ColunaMatrizContext.class,0);
 		}
-		public DeclaracaoMatrizAtributoContext(ParserRuleContext parent, int invokingState) {
+		public AtributoMatrizContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_declaracaoMatrizAtributo; }
+		@Override public int getRuleIndex() { return RULE_atributoMatriz; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitDeclaracaoMatrizAtributo(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitAtributoMatriz(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final DeclaracaoMatrizAtributoContext declaracaoMatrizAtributo() throws RecognitionException {
-		DeclaracaoMatrizAtributoContext _localctx = new DeclaracaoMatrizAtributoContext(_ctx, getState());
-		enterRule(_localctx, 12, RULE_declaracaoMatrizAtributo);
+	public final AtributoMatrizContext atributoMatriz() throws RecognitionException {
+		AtributoMatrizContext _localctx = new AtributoMatrizContext(_ctx, getState());
+		enterRule(_localctx, 12, RULE_atributoMatriz);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -628,27 +627,27 @@ public class PortugolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class DeclaracaoArrayAtributoContext extends ParserRuleContext {
+	public static class AtributoArrayContext extends ParserRuleContext {
 		public TerminalNode ID() { return getToken(PortugolParser.ID, 0); }
 		public TerminalNode ABRE_COLCHETES() { return getToken(PortugolParser.ABRE_COLCHETES, 0); }
 		public TerminalNode FECHA_COLCHETES() { return getToken(PortugolParser.FECHA_COLCHETES, 0); }
 		public TamanhoArrayContext tamanhoArray() {
 			return getRuleContext(TamanhoArrayContext.class,0);
 		}
-		public DeclaracaoArrayAtributoContext(ParserRuleContext parent, int invokingState) {
+		public AtributoArrayContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_declaracaoArrayAtributo; }
+		@Override public int getRuleIndex() { return RULE_atributoArray; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitDeclaracaoArrayAtributo(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitAtributoArray(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final DeclaracaoArrayAtributoContext declaracaoArrayAtributo() throws RecognitionException {
-		DeclaracaoArrayAtributoContext _localctx = new DeclaracaoArrayAtributoContext(_ctx, getState());
-		enterRule(_localctx, 14, RULE_declaracaoArrayAtributo);
+	public final AtributoArrayContext atributoArray() throws RecognitionException {
+		AtributoArrayContext _localctx = new AtributoArrayContext(_ctx, getState());
+		enterRule(_localctx, 14, RULE_atributoArray);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -682,31 +681,31 @@ public class PortugolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class DeclaracaoTipoRegistroContext extends ParserRuleContext {
+	public static class DeclaracaoRegistroContext extends ParserRuleContext {
 		public TerminalNode REGISTRO() { return getToken(PortugolParser.REGISTRO, 0); }
 		public TerminalNode ID() { return getToken(PortugolParser.ID, 0); }
 		public TerminalNode ABRE_CHAVES() { return getToken(PortugolParser.ABRE_CHAVES, 0); }
 		public TerminalNode FECHA_CHAVES() { return getToken(PortugolParser.FECHA_CHAVES, 0); }
-		public List<ListaAtributosRegistroContext> listaAtributosRegistro() {
-			return getRuleContexts(ListaAtributosRegistroContext.class);
+		public List<ListaAtributosContext> listaAtributos() {
+			return getRuleContexts(ListaAtributosContext.class);
 		}
-		public ListaAtributosRegistroContext listaAtributosRegistro(int i) {
-			return getRuleContext(ListaAtributosRegistroContext.class,i);
+		public ListaAtributosContext listaAtributos(int i) {
+			return getRuleContext(ListaAtributosContext.class,i);
 		}
-		public DeclaracaoTipoRegistroContext(ParserRuleContext parent, int invokingState) {
+		public DeclaracaoRegistroContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_declaracaoTipoRegistro; }
+		@Override public int getRuleIndex() { return RULE_declaracaoRegistro; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitDeclaracaoTipoRegistro(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitDeclaracaoRegistro(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final DeclaracaoTipoRegistroContext declaracaoTipoRegistro() throws RecognitionException {
-		DeclaracaoTipoRegistroContext _localctx = new DeclaracaoTipoRegistroContext(_ctx, getState());
-		enterRule(_localctx, 16, RULE_declaracaoTipoRegistro);
+	public final DeclaracaoRegistroContext declaracaoRegistro() throws RecognitionException {
+		DeclaracaoRegistroContext _localctx = new DeclaracaoRegistroContext(_ctx, getState());
+		enterRule(_localctx, 16, RULE_declaracaoRegistro);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -724,7 +723,7 @@ public class PortugolParser extends Parser {
 				{
 				{
 				setState(173);
-				listaAtributosRegistro();
+				listaAtributos();
 				}
 				}
 				setState(178);
@@ -746,23 +745,23 @@ public class PortugolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class DeclaracaoVariavelRegistroContext extends ParserRuleContext {
+	public static class InstanciaRegistroContext extends ParserRuleContext {
 		public TerminalNode ID_REGISTRO() { return getToken(PortugolParser.ID_REGISTRO, 0); }
 		public TerminalNode ID_INSTANCIA_REGISTRO() { return getToken(PortugolParser.ID_INSTANCIA_REGISTRO, 0); }
-		public DeclaracaoVariavelRegistroContext(ParserRuleContext parent, int invokingState) {
+		public InstanciaRegistroContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_declaracaoVariavelRegistro; }
+		@Override public int getRuleIndex() { return RULE_instanciaRegistro; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitDeclaracaoVariavelRegistro(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitInstanciaRegistro(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final DeclaracaoVariavelRegistroContext declaracaoVariavelRegistro() throws RecognitionException {
-		DeclaracaoVariavelRegistroContext _localctx = new DeclaracaoVariavelRegistroContext(_ctx, getState());
-		enterRule(_localctx, 18, RULE_declaracaoVariavelRegistro);
+	public final InstanciaRegistroContext instanciaRegistro() throws RecognitionException {
+		InstanciaRegistroContext _localctx = new InstanciaRegistroContext(_ctx, getState());
+		enterRule(_localctx, 18, RULE_instanciaRegistro);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -783,30 +782,30 @@ public class PortugolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class AtribuicaoAtributoRegistroContext extends ParserRuleContext {
-		public AtribuicaoVariavelAtributoContext atribuicaoVariavelAtributo() {
-			return getRuleContext(AtribuicaoVariavelAtributoContext.class,0);
+	public static class InicializacaoAtributoContext extends ParserRuleContext {
+		public InicializacaoAtributoVariavelContext inicializacaoAtributoVariavel() {
+			return getRuleContext(InicializacaoAtributoVariavelContext.class,0);
 		}
-		public AtribuicaoArrayAtributoContext atribuicaoArrayAtributo() {
-			return getRuleContext(AtribuicaoArrayAtributoContext.class,0);
+		public InicializacaoAtributoMatrizContext inicializacaoAtributoMatriz() {
+			return getRuleContext(InicializacaoAtributoMatrizContext.class,0);
 		}
-		public AtribuicaoMatrizAtributoContext atribuicaoMatrizAtributo() {
-			return getRuleContext(AtribuicaoMatrizAtributoContext.class,0);
+		public InicializacaoAtributoArrayContext inicializacaoAtributoArray() {
+			return getRuleContext(InicializacaoAtributoArrayContext.class,0);
 		}
-		public AtribuicaoAtributoRegistroContext(ParserRuleContext parent, int invokingState) {
+		public InicializacaoAtributoContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_atribuicaoAtributoRegistro; }
+		@Override public int getRuleIndex() { return RULE_inicializacaoAtributo; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitAtribuicaoAtributoRegistro(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitInicializacaoAtributo(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final AtribuicaoAtributoRegistroContext atribuicaoAtributoRegistro() throws RecognitionException {
-		AtribuicaoAtributoRegistroContext _localctx = new AtribuicaoAtributoRegistroContext(_ctx, getState());
-		enterRule(_localctx, 20, RULE_atribuicaoAtributoRegistro);
+	public final InicializacaoAtributoContext inicializacaoAtributo() throws RecognitionException {
+		InicializacaoAtributoContext _localctx = new InicializacaoAtributoContext(_ctx, getState());
+		enterRule(_localctx, 20, RULE_inicializacaoAtributo);
 		try {
 			setState(187);
 			_errHandler.sync(this);
@@ -815,21 +814,21 @@ public class PortugolParser extends Parser {
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(184);
-				atribuicaoVariavelAtributo();
+				inicializacaoAtributoVariavel();
 				}
 				break;
 			case 2:
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(185);
-				atribuicaoArrayAtributo();
+				inicializacaoAtributoMatriz();
 				}
 				break;
 			case 3:
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(186);
-				atribuicaoMatrizAtributo();
+				inicializacaoAtributoArray();
 				}
 				break;
 			}
@@ -845,7 +844,7 @@ public class PortugolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class AtribuicaoVariavelAtributoContext extends ParserRuleContext {
+	public static class InicializacaoAtributoVariavelContext extends ParserRuleContext {
 		public TerminalNode ID_INSTANCIA_REGISTRO() { return getToken(PortugolParser.ID_INSTANCIA_REGISTRO, 0); }
 		public TerminalNode PONTO() { return getToken(PortugolParser.PONTO, 0); }
 		public TerminalNode ID() { return getToken(PortugolParser.ID, 0); }
@@ -853,20 +852,20 @@ public class PortugolParser extends Parser {
 		public ExpressaoContext expressao() {
 			return getRuleContext(ExpressaoContext.class,0);
 		}
-		public AtribuicaoVariavelAtributoContext(ParserRuleContext parent, int invokingState) {
+		public InicializacaoAtributoVariavelContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_atribuicaoVariavelAtributo; }
+		@Override public int getRuleIndex() { return RULE_inicializacaoAtributoVariavel; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitAtribuicaoVariavelAtributo(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitInicializacaoAtributoVariavel(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final AtribuicaoVariavelAtributoContext atribuicaoVariavelAtributo() throws RecognitionException {
-		AtribuicaoVariavelAtributoContext _localctx = new AtribuicaoVariavelAtributoContext(_ctx, getState());
-		enterRule(_localctx, 22, RULE_atribuicaoVariavelAtributo);
+	public final InicializacaoAtributoVariavelContext inicializacaoAtributoVariavel() throws RecognitionException {
+		InicializacaoAtributoVariavelContext _localctx = new InicializacaoAtributoVariavelContext(_ctx, getState());
+		enterRule(_localctx, 22, RULE_inicializacaoAtributoVariavel);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -893,7 +892,7 @@ public class PortugolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class AtribuicaoMatrizAtributoContext extends ParserRuleContext {
+	public static class InicializacaoAtributoMatrizContext extends ParserRuleContext {
 		public TerminalNode ID_INSTANCIA_REGISTRO() { return getToken(PortugolParser.ID_INSTANCIA_REGISTRO, 0); }
 		public TerminalNode PONTO() { return getToken(PortugolParser.PONTO, 0); }
 		public TerminalNode ID() { return getToken(PortugolParser.ID, 0); }
@@ -901,20 +900,20 @@ public class PortugolParser extends Parser {
 		public InicializacaoMatrizContext inicializacaoMatriz() {
 			return getRuleContext(InicializacaoMatrizContext.class,0);
 		}
-		public AtribuicaoMatrizAtributoContext(ParserRuleContext parent, int invokingState) {
+		public InicializacaoAtributoMatrizContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_atribuicaoMatrizAtributo; }
+		@Override public int getRuleIndex() { return RULE_inicializacaoAtributoMatriz; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitAtribuicaoMatrizAtributo(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitInicializacaoAtributoMatriz(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final AtribuicaoMatrizAtributoContext atribuicaoMatrizAtributo() throws RecognitionException {
-		AtribuicaoMatrizAtributoContext _localctx = new AtribuicaoMatrizAtributoContext(_ctx, getState());
-		enterRule(_localctx, 24, RULE_atribuicaoMatrizAtributo);
+	public final InicializacaoAtributoMatrizContext inicializacaoAtributoMatriz() throws RecognitionException {
+		InicializacaoAtributoMatrizContext _localctx = new InicializacaoAtributoMatrizContext(_ctx, getState());
+		enterRule(_localctx, 24, RULE_inicializacaoAtributoMatriz);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -941,7 +940,7 @@ public class PortugolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class AtribuicaoArrayAtributoContext extends ParserRuleContext {
+	public static class InicializacaoAtributoArrayContext extends ParserRuleContext {
 		public TerminalNode ID_INSTANCIA_REGISTRO() { return getToken(PortugolParser.ID_INSTANCIA_REGISTRO, 0); }
 		public TerminalNode PONTO() { return getToken(PortugolParser.PONTO, 0); }
 		public TerminalNode ID() { return getToken(PortugolParser.ID, 0); }
@@ -949,20 +948,20 @@ public class PortugolParser extends Parser {
 		public InicializacaoArrayContext inicializacaoArray() {
 			return getRuleContext(InicializacaoArrayContext.class,0);
 		}
-		public AtribuicaoArrayAtributoContext(ParserRuleContext parent, int invokingState) {
+		public InicializacaoAtributoArrayContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_atribuicaoArrayAtributo; }
+		@Override public int getRuleIndex() { return RULE_inicializacaoAtributoArray; }
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitAtribuicaoArrayAtributo(this);
+			if ( visitor instanceof PortugolVisitor ) return ((PortugolVisitor<? extends T>)visitor).visitInicializacaoAtributoArray(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final AtribuicaoArrayAtributoContext atribuicaoArrayAtributo() throws RecognitionException {
-		AtribuicaoArrayAtributoContext _localctx = new AtribuicaoArrayAtributoContext(_ctx, getState());
-		enterRule(_localctx, 26, RULE_atribuicaoArrayAtributo);
+	public final InicializacaoAtributoArrayContext inicializacaoAtributoArray() throws RecognitionException {
+		InicializacaoAtributoArrayContext _localctx = new InicializacaoAtributoArrayContext(_ctx, getState());
+		enterRule(_localctx, 26, RULE_inicializacaoAtributoArray);
 		try {
 			enterOuterAlt(_localctx, 1);
 			{
@@ -1840,8 +1839,8 @@ public class PortugolParser extends Parser {
 		public ListaDeclaracoesContext listaDeclaracoes() {
 			return getRuleContext(ListaDeclaracoesContext.class,0);
 		}
-		public DeclaracaoTipoRegistroContext declaracaoTipoRegistro() {
-			return getRuleContext(DeclaracaoTipoRegistroContext.class,0);
+		public DeclaracaoRegistroContext declaracaoRegistro() {
+			return getRuleContext(DeclaracaoRegistroContext.class,0);
 		}
 		public SeContext se() {
 			return getRuleContext(SeContext.class,0);
@@ -1902,7 +1901,7 @@ public class PortugolParser extends Parser {
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(312);
-				declaracaoTipoRegistro();
+				declaracaoRegistro();
 				}
 				break;
 			case 3:
@@ -4484,7 +4483,7 @@ public class PortugolParser extends Parser {
 		"\3\2\2\2\u00b1\u00b4\3\2\2\2\u00b2\u00b0\3\2\2\2\u00b2\u00b3\3\2\2\2\u00b3"+
 		"\u00b5\3\2\2\2\u00b4\u00b2\3\2\2\2\u00b5\u00b6\7\b\2\2\u00b6\23\3\2\2"+
 		"\2\u00b7\u00b8\7<\2\2\u00b8\u00b9\7=\2\2\u00b9\25\3\2\2\2\u00ba\u00be"+
-		"\5\30\r\2\u00bb\u00be\5\34\17\2\u00bc\u00be\5\32\16\2\u00bd\u00ba\3\2"+
+		"\5\30\r\2\u00bb\u00be\5\32\16\2\u00bc\u00be\5\34\17\2\u00bd\u00ba\3\2"+
 		"\2\2\u00bd\u00bb\3\2\2\2\u00bd\u00bc\3\2\2\2\u00be\27\3\2\2\2\u00bf\u00c0"+
 		"\7=\2\2\u00c0\u00c1\7D\2\2\u00c1\u00c2\7;\2\2\u00c2\u00c3\7\"\2\2\u00c3"+
 		"\u00c4\5^\60\2\u00c4\31\3\2\2\2\u00c5\u00c6\7=\2\2\u00c6\u00c7\7D\2\2"+

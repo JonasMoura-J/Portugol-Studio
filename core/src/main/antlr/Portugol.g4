@@ -4,7 +4,7 @@ import PortugolLexico;
 
 arquivo 
     :   PROGRAMA ABRE_CHAVES 
-        inclusaoBiblioteca* (declaracaoTipoRegistro | declaracaoFuncao | listaDeclaracoes)*
+        inclusaoBiblioteca* (declaracaoRegistro | declaracaoFuncao | listaDeclaracoes)*
         FECHA_CHAVES ;
 
 inclusaoBiblioteca
@@ -14,37 +14,37 @@ listaDeclaracoes
     :  CONSTANTE? TIPO declaracao (VIRGULA declaracao)*;
 //________________________________________________________________________
 
-listaAtributosRegistro
-    :  TIPO declaracaoAtributo (VIRGULA declaracaoAtributo)*;
+listaAtributos
+    :  TIPO atributo (VIRGULA atributo)*;
 
-declaracaoAtributo
-    :   declaracaoVariavelAtributo | declaracaoArrayAtributo | declaracaoMatrizAtributo;
+atributo
+    :   atributoVariavel | atributoArray | atributoMatriz;
 
-declaracaoVariavelAtributo
+atributoVariavel
     : ID;
 
-declaracaoMatrizAtributo
+atributoMatriz
     :   ID ABRE_COLCHETES linhaMatriz? FECHA_COLCHETES ABRE_COLCHETES colunaMatriz? FECHA_COLCHETES;
 
-declaracaoArrayAtributo
+atributoArray
     :   ID ABRE_COLCHETES tamanhoArray? FECHA_COLCHETES;
 
-declaracaoTipoRegistro
-    :   REGISTRO ID ABRE_CHAVES listaAtributosRegistro* FECHA_CHAVES;
+declaracaoRegistro
+    :   REGISTRO ID ABRE_CHAVES listaAtributos* FECHA_CHAVES;
 
-declaracaoVariavelRegistro
+instanciaRegistro
     : ID_REGISTRO ID_INSTANCIA_REGISTRO;
 
-atribuicaoAtributoRegistro
-    :   atribuicaoVariavelAtributo | atribuicaoArrayAtributo | atribuicaoMatrizAtributo;
+inicializacaoAtributo
+    :   inicializacaoAtributoVariavel | inicializacaoAtributoMatriz | inicializacaoAtributoArray;
 
-atribuicaoVariavelAtributo
+inicializacaoAtributoVariavel
     : ID_INSTANCIA_REGISTRO PONTO ID OP_ATRIBUICAO expressao;
 
-atribuicaoMatrizAtributo
+inicializacaoAtributoMatriz
     : ID_INSTANCIA_REGISTRO PONTO ID OP_ATRIBUICAO inicializacaoMatriz;
 
-atribuicaoArrayAtributo
+inicializacaoAtributoArray
     : ID_INSTANCIA_REGISTRO PONTO ID OP_ATRIBUICAO inicializacaoArray;
 
 //____________________________________________________________________
@@ -58,7 +58,7 @@ declaracaoMatriz
     : ID ABRE_COLCHETES linhaMatriz? FECHA_COLCHETES ABRE_COLCHETES colunaMatriz? FECHA_COLCHETES (OP_ATRIBUICAO inicializacaoMatriz)? ;
 
 inicializacaoMatriz
-    :  ABRE_CHAVES inicializacaoArray (VIRGULA inicializacaoArray)* FECHA_CHAVES;  
+    :  ABRE_CHAVES inicializacaoArray (VIRGULA inicializacaoArray)* FECHA_CHAVES;
 
 linhaMatriz
     :   tamanhoArray ;
@@ -72,11 +72,11 @@ declaracaoArray
 inicializacaoArray
     :   ABRE_CHAVES listaExpressoes? FECHA_CHAVES ;
 
-tamanhoArray 
+tamanhoArray
     :   expressao; // aceita inteiro ou variável como tamanho do array, o semântico verifica se a variável é constante
 
 declaracaoFuncao
-    :   FUNCAO TIPO? ID parametroFuncao ABRE_CHAVES comando* FECHA_CHAVES ; 
+    :   FUNCAO TIPO? ID parametroFuncao ABRE_CHAVES comando* FECHA_CHAVES ;
 
 parametroFuncao
 	:	ABRE_PARENTESES listaParametros? FECHA_PARENTESES ;
@@ -94,7 +94,7 @@ parametroMatriz
 
 comando
     :   listaDeclaracoes
-    |   declaracaoTipoRegistro
+    |   declaracaoRegistro
     |   se
     |   enquanto
     |   facaEnquanto

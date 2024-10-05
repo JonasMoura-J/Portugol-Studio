@@ -1,6 +1,6 @@
 package br.univali.portugol.nucleo.asa;
 
-public final class NoDeclaracaoVariavelAtributo extends NoDeclaracaoBase{
+public final class NoAtributoVariavel extends NoDeclaracaoBase implements NoAtributo {
     private int indiceReferencia = -1;
     /**
      *
@@ -13,12 +13,12 @@ public final class NoDeclaracaoVariavelAtributo extends NoDeclaracaoBase{
      *
      * @since 1.0
      */
-    public NoDeclaracaoVariavelAtributo(String nome, TipoDado tipoDado, boolean constante)
+    public NoAtributoVariavel(String nome, TipoDado tipoDado, boolean constante)
     {
         super(nome, tipoDado, false);
     }
 
-    public NoDeclaracaoVariavelAtributo(String nome, TipoDado tipoDado)
+    public NoAtributoVariavel(String nome, TipoDado tipoDado)
     {
         super(nome, tipoDado, false);
     }

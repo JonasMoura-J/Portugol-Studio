@@ -1,6 +1,6 @@
 package br.univali.portugol.nucleo.asa;
 
-public interface NoDeclaracaoAtributo {
+public interface NoAtributo {
 
     Object aceitar(VisitanteASA visitante) throws ExcecaoVisitaASA;
 

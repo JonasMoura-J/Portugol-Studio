@@ -353,42 +353,42 @@ public class AnalisadorDeclaracaoTamanhoVetorMatriz implements VisitanteASA{
     }
 
     @Override
-    public Object visitar(NoDeclaracaoVariavelAtributo noDeclaracaoVariavelAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoAtributoVariavel noAtributoVariavel) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA("Not supported yet.", null, null); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Object visitar(NoDeclaracaoArrayAtributo noDeclaracaoArrayAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoAtributoArray noAtributoArray) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA("Not supported yet.", null, null); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Object visitar(NoDeclaracaoMatrizAtributo noDeclaracaoMatrizAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoAtributoMatriz noAtributoMatriz) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA("Not supported yet.", null, null); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Object visitar(NoDeclaracaoTipoRegistro noDeclaracaoTipoRegistro) throws ExcecaoVisitaASA {
+    public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA("Not supported yet.", null, null); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Object visitar(NoDeclaracaoVariavelRegistro noDeclaracaoVariavelRegistro) throws ExcecaoVisitaASA {
+    public Object visitar(NoInstanciaRegistro noInstanciaRegistro) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA("Not supported yet.", null, null); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
-    public Object visitar(NoAtribuicaoVariavelAtributo noAtribuicaoVariavelAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoInicializacaoAtributoVariavel noInicializacaoAtributoVariavel) throws ExcecaoVisitaASA {
         return null;
     }
 
     @Override
-    public Object visitar(NoAtribuicaoArrayAtributo noAtribuicaoArrayAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoInicializacaoAtributoArray noInicializacaoAtributoArray) throws ExcecaoVisitaASA {
         return null;
     }
 
     @Override
-    public Object visitar(NoAtribuicaoMatrizAtributo noAtribuicaoMatrizAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoInicializacaoAtributoMatriz noInicializacaoAtributoMatriz) throws ExcecaoVisitaASA {
         return null;
     }
 

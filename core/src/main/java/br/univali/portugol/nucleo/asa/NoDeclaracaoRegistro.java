@@ -3,21 +3,21 @@ package br.univali.portugol.nucleo.asa;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class NoDeclaracaoTipoRegistro extends NoDeclaracaoBase{
+public final class NoDeclaracaoRegistro extends NoDeclaracaoBase{
 
-    private List<NoListaAtributosRegistro> atributos = new ArrayList<>();
+    private List<NoListaAtributos> atributos = new ArrayList<>();
 
-    public NoDeclaracaoTipoRegistro(String nome, TipoDado tipoDado)
+    public NoDeclaracaoRegistro(String nome, TipoDado tipoDado)
     {
         super(nome, tipoDado, false);
     }
 
-    public List<NoListaAtributosRegistro> getAtributos()
+    public List<NoListaAtributos> getAtributos()
     {
         return atributos;
     }
 
-    public void setAtributos(List<NoListaAtributosRegistro> atributos)
+    public void setAtributos(List<NoListaAtributos> atributos)
     {
         this.atributos = atributos;
     }

@@ -322,42 +322,42 @@ public abstract class VisitanteASABasico implements VisitanteASA
     }
 
     @Override
-    public Object visitar(NoDeclaracaoVariavelAtributo noDeclaracaoVariavelAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoAtributoVariavel noAtributoVariavel) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA(new UnsupportedOperationException("Esta operação ainda não foi implementada. " + this.getClass() + ":" + Thread.currentThread().getStackTrace()[1].getMethodName()), null, null) ;
     }
 
     @Override
-    public Object visitar(NoDeclaracaoArrayAtributo noDeclaracaoArrayAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoAtributoArray noAtributoArray) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA(new UnsupportedOperationException("Esta operação ainda não foi implementada. " + this.getClass() + ":" + Thread.currentThread().getStackTrace()[1].getMethodName()), null, null) ;
     }
 
     @Override
-    public Object visitar(NoDeclaracaoMatrizAtributo noDeclaracaoMatrizAtributo)throws ExcecaoVisitaASA {
+    public Object visitar(NoAtributoMatriz noAtributoMatriz)throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA(new UnsupportedOperationException("Esta operação ainda não foi implementada. " + this.getClass() + ":" + Thread.currentThread().getStackTrace()[1].getMethodName()), null, null) ;
     }
 
     @Override
-    public Object visitar(NoDeclaracaoTipoRegistro noDeclaracaoTipoRegistro) throws ExcecaoVisitaASA {
+    public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA(new UnsupportedOperationException("Esta operação ainda não foi implementada. " + this.getClass() + ":" + Thread.currentThread().getStackTrace()[1].getMethodName()), null, null) ;
     }
 
     @Override
-    public Object visitar(NoDeclaracaoVariavelRegistro noDeclaracaoVariavelRegistro) throws ExcecaoVisitaASA {
+    public Object visitar(NoInstanciaRegistro noInstanciaRegistro) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA(new UnsupportedOperationException("Esta operação ainda não foi implementada. " + this.getClass() + ":" + Thread.currentThread().getStackTrace()[1].getMethodName()), null, null) ;
     }
 
     @Override
-    public Object visitar(NoAtribuicaoVariavelAtributo noAtribuicaoVariavelAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoInicializacaoAtributoVariavel noInicializacaoAtributoVariavel) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA(new UnsupportedOperationException("Esta operação ainda não foi implementada. " + this.getClass() + ":" + Thread.currentThread().getStackTrace()[1].getMethodName()), null, null) ;
     }
 
     @Override
-    public Object visitar(NoAtribuicaoArrayAtributo noAtribuicaoArrayAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoInicializacaoAtributoArray noInicializacaoAtributoArray) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA(new UnsupportedOperationException("Esta operação ainda não foi implementada. " + this.getClass() + ":" + Thread.currentThread().getStackTrace()[1].getMethodName()), null, null) ;
     }
 
     @Override
-    public Object visitar(NoAtribuicaoMatrizAtributo noAtribuicaoArrayAtributo) throws ExcecaoVisitaASA {
+    public Object visitar(NoInicializacaoAtributoMatriz noInicializacaoAtributoArray) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA(new UnsupportedOperationException("Esta operação ainda não foi implementada. " + this.getClass() + ":" + Thread.currentThread().getStackTrace()[1].getMethodName()), null, null) ;
     }
 }

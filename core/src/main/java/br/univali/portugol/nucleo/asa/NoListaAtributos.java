@@ -3,22 +3,22 @@ package br.univali.portugol.nucleo.asa;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoListaAtributosRegistro  extends NoBloco implements NoDeclaracaoAtributo {
+public class NoListaAtributos extends NoBloco implements NoAtributo {
 
-    protected final List<NoDeclaracaoAtributo> declaracoes = new ArrayList<>();
+    protected final List<NoAtributo> declaracoes = new ArrayList<>();
     protected final TipoDado tipo;
 
-    public NoListaAtributosRegistro(TipoDado tipo) {
+    public NoListaAtributos(TipoDado tipo) {
         this.tipo = tipo;
     }
 
-    public void adicionaDeclaracao(NoDeclaracaoAtributo declaracao) {
+    public void adicionaDeclaracao(NoAtributo declaracao) {
         declaracoes.add(declaracao);
     }
 
     @Override
     public Object aceitar(VisitanteASA visitante) throws ExcecaoVisitaASA {
-        for (NoDeclaracaoAtributo declaracao : declaracoes) {
+        for (NoAtributo declaracao : declaracoes) {
             declaracao.aceitar(visitante);
         }
         return null;
@@ -28,7 +28,7 @@ public class NoListaAtributosRegistro  extends NoBloco implements NoDeclaracaoAt
         return tipo;
     }
 
-    public List<NoDeclaracaoAtributo> getDeclaracoes() {
+    public List<NoAtributo> getDeclaracoes() {
         return declaracoes;
     }
 

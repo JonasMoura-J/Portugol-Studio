@@ -29,71 +29,71 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitListaDeclaracoes(PortugolParser.ListaDeclaracoesContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#listaAtributosRegistro}.
+	 * Visit a parse tree produced by {@link PortugolParser#listaAtributos}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitListaAtributosRegistro(PortugolParser.ListaAtributosRegistroContext ctx);
+	T visitListaAtributos(PortugolParser.ListaAtributosContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#declaracaoAtributo}.
+	 * Visit a parse tree produced by {@link PortugolParser#atributo}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDeclaracaoAtributo(PortugolParser.DeclaracaoAtributoContext ctx);
+	T visitAtributo(PortugolParser.AtributoContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#declaracaoVariavelAtributo}.
+	 * Visit a parse tree produced by {@link PortugolParser#atributoVariavel}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDeclaracaoVariavelAtributo(PortugolParser.DeclaracaoVariavelAtributoContext ctx);
+	T visitAtributoVariavel(PortugolParser.AtributoVariavelContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#declaracaoMatrizAtributo}.
+	 * Visit a parse tree produced by {@link PortugolParser#atributoMatriz}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDeclaracaoMatrizAtributo(PortugolParser.DeclaracaoMatrizAtributoContext ctx);
+	T visitAtributoMatriz(PortugolParser.AtributoMatrizContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#declaracaoArrayAtributo}.
+	 * Visit a parse tree produced by {@link PortugolParser#atributoArray}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDeclaracaoArrayAtributo(PortugolParser.DeclaracaoArrayAtributoContext ctx);
+	T visitAtributoArray(PortugolParser.AtributoArrayContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#declaracaoTipoRegistro}.
+	 * Visit a parse tree produced by {@link PortugolParser#declaracaoRegistro}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDeclaracaoTipoRegistro(PortugolParser.DeclaracaoTipoRegistroContext ctx);
+	T visitDeclaracaoRegistro(PortugolParser.DeclaracaoRegistroContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#declaracaoVariavelRegistro}.
+	 * Visit a parse tree produced by {@link PortugolParser#instanciaRegistro}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitDeclaracaoVariavelRegistro(PortugolParser.DeclaracaoVariavelRegistroContext ctx);
+	T visitInstanciaRegistro(PortugolParser.InstanciaRegistroContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#atribuicaoAtributoRegistro}.
+	 * Visit a parse tree produced by {@link PortugolParser#inicializacaoAtributo}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAtribuicaoAtributoRegistro(PortugolParser.AtribuicaoAtributoRegistroContext ctx);
+	T visitInicializacaoAtributo(PortugolParser.InicializacaoAtributoContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#atribuicaoVariavelAtributo}.
+	 * Visit a parse tree produced by {@link PortugolParser#inicializacaoAtributoVariavel}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAtribuicaoVariavelAtributo(PortugolParser.AtribuicaoVariavelAtributoContext ctx);
+	T visitInicializacaoAtributoVariavel(PortugolParser.InicializacaoAtributoVariavelContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#atribuicaoMatrizAtributo}.
+	 * Visit a parse tree produced by {@link PortugolParser#inicializacaoAtributoMatriz}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAtribuicaoMatrizAtributo(PortugolParser.AtribuicaoMatrizAtributoContext ctx);
+	T visitInicializacaoAtributoMatriz(PortugolParser.InicializacaoAtributoMatrizContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#atribuicaoArrayAtributo}.
+	 * Visit a parse tree produced by {@link PortugolParser#inicializacaoAtributoArray}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitAtribuicaoArrayAtributo(PortugolParser.AtribuicaoArrayAtributoContext ctx);
+	T visitInicializacaoAtributoArray(PortugolParser.InicializacaoAtributoArrayContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link PortugolParser#declaracao}.
 	 * @param ctx the parse tree

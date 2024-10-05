@@ -1,6 +1,6 @@
 package br.univali.portugol.nucleo.asa;
 
-public final class NoDeclaracaoArrayAtributo extends NoDeclaracaoBase{
+public final class NoAtributoArray extends NoDeclaracaoBase implements NoAtributo{
 
     private final NoExpressao tamanho;
 
@@ -11,7 +11,7 @@ public final class NoDeclaracaoArrayAtributo extends NoDeclaracaoBase{
      */
 
 
-    public NoDeclaracaoArrayAtributo(String nome, TipoDado tipoDado, NoExpressao tamanho) {
+    public NoAtributoArray(String nome, TipoDado tipoDado, NoExpressao tamanho) {
         super(nome, tipoDado, false);
         this.tamanho = tamanho;
     }

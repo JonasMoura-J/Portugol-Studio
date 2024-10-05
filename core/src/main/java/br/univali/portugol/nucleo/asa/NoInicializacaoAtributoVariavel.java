@@ -1,12 +1,12 @@
 package br.univali.portugol.nucleo.asa;
 
 
-public final class NoAtribuicaoVariavelAtributo extends NoExpressao {
+public final class NoInicializacaoAtributoVariavel extends NoExpressao implements NoInicializacaoAtributo {
 
     private final Object valor;
 
 
-    public NoAtribuicaoVariavelAtributo(Object valor) {
+    public NoInicializacaoAtributoVariavel(Object valor) {
         this.valor = valor;
     }
 
