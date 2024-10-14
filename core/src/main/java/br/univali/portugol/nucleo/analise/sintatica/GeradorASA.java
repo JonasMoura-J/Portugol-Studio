@@ -166,6 +166,7 @@ public class GeradorASA {
             noDeclaracaoRegistro.setAtributos(getAtributos(ctx.listaAtributos()));
 
             noDeclaracaoRegistro.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID()));
+            noDeclaracaoRegistro.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(ctx.REGISTRO()));
             noDeclaracaoRegistro.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.REGISTRO(), ctx.getText().length()));
 
             return noDeclaracaoRegistro;
@@ -175,13 +176,7 @@ public class GeradorASA {
             List<NoListaAtributos> atributos = new ArrayList<>();
             for (ListaAtributosContext comando : ctx) {
                 NoListaAtributos atributo = (NoListaAtributos)comando.accept(this);
-
-                // trata a lista de declarações (variáveis ou arrays) como um 'amontoado' de declarações
-                List<NoAtributo> declaracoes = ((NoListaAtributos)atributo).getDeclaracoes();
-                for (NoAtributo declaracao : declaracoes) {
-                    atributos.add((NoListaAtributos)declaracao);
-                }
-
+                atributos.add(atributo);
             }
             return atributos;
         }
@@ -208,6 +203,13 @@ public class GeradorASA {
 
         @Override
         public No visitInicializacaoAtributoVariavel(InicializacaoAtributoVariavelContext ctx) {
+
+//            PortugolParser.EscopoBibliotecaContext escopoBiblioteca = ctx.escopoBiblioteca();
+//            if (escopoBiblioteca != null) {
+//                escopo = escopoBiblioteca.ID().getText();
+//            }
+//
+//            return criaNoReferenciaVariavel(ctx.ID(), escopo, ctx.getText().length());
 
 //            NoOperacaoAtribuicao atribuicao = GeradorNoOperacao.gera(ctx, this, NoOperacaoAtribuicao.class);
 //

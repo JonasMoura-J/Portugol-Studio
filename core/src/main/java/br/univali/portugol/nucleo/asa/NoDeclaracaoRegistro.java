@@ -3,7 +3,9 @@ package br.univali.portugol.nucleo.asa;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class NoDeclaracaoRegistro extends NoDeclaracaoBase{
+public final class NoDeclaracaoRegistro extends NoDeclaracaoBase implements NoDeclaracaoInspecionavel{
+
+    private int idParaInspecao = -1;
 
     private List<NoListaAtributos> atributos = new ArrayList<>();
 
@@ -27,4 +29,16 @@ public final class NoDeclaracaoRegistro extends NoDeclaracaoBase{
     {
         return visitante.visitar(this);
     }
+
+    public void setIdParaInspecao(int idParaInspecao)
+    {
+        this.idParaInspecao = idParaInspecao;
+    }
+
+    @Override
+    public int getIdParaInspecao()
+    {
+        return idParaInspecao;
+    }
+
 }

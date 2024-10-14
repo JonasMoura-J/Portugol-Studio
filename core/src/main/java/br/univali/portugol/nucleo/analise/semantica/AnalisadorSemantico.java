@@ -2374,7 +2374,8 @@ public final class AnalisadorSemantico implements VisitanteASA
             NoDeclaracaoVariavel.class, NoDeclaracaoVetor.class, NoDeclaracaoMatriz.class, NoListaDeclaracoes.class,
             NoCaso.class, NoEnquanto.class, NoEscolha.class, NoFacaEnquanto.class, NoPara.class, NoSe.class,
             NoPare.class, NoRetorne.class, NoTitulo.class, NoVaPara.class,
-            NoOperacaoAtribuicao.class, NoChamadaFuncao.class
+            NoOperacaoAtribuicao.class, NoChamadaFuncao.class, NoListaAtributos.class, NoAtributoArray.class, NoAtributoVariavel.class,
+            NoAtributoMatriz.class, NoDeclaracaoRegistro.class
         };
 
         for (Class classe : classesPermitidas)
@@ -2455,7 +2456,95 @@ public final class AnalisadorSemantico implements VisitanteASA
     @Override
     public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
         setarPaiDoNo(noDeclaracaoRegistro);
-        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noDeclaracaoRegistro.getTrechoCodigoFonte()), asa, noDeclaracaoRegistro);
+
+        noDeclaracaoRegistro.setIdParaInspecao(totalVariaveisDeclaradas);
+        totalVariaveisDeclaradas++;
+
+        String nome = noDeclaracaoRegistro.getNome();
+
+        Variavel variavel = new Variavel(nome, TipoDado.REGISTRO, noDeclaracaoRegistro);
+        variavel.setTrechoCodigoFonteNome(noDeclaracaoRegistro.getTrechoCodigoFonteNome());
+        variavel.setTrechoCodigoFonteTipoDado(noDeclaracaoRegistro.getTrechoCodigoFonteTipoDado());
+
+        Simbolo simbolo = memoria.getSimbolo(nome);
+
+        if (simbolo != null) {
+
+            final boolean global = memoria.isGlobal(simbolo);
+            final boolean local = memoria.isLocal(simbolo);
+            memoria.empilharEscopo();
+            memoria.adicionarSimbolo(variavel);
+            final boolean global1 = memoria.isGlobal(variavel);
+            final boolean local1 = memoria.isLocal(variavel);
+            if ((global && global1) || (local && local1))
+            {
+                variavel.setRedeclarado(true);
+                notificarErroSemantico(new ErroSimboloRedeclarado(variavel, simbolo));
+                memoria.desempilharEscopo();
+            }
+            else
+            {
+                memoria.desempilharEscopo();
+                memoria.adicionarSimbolo(variavel);
+                Simbolo simboloGlobal = memoria.isGlobal(simbolo) ? simbolo : variavel;
+                Simbolo simboloLocal = memoria.isGlobal(simbolo) ? variavel : simbolo;
+
+                notificarAviso(new AvisoSimboloGlobalOcultado(simboloGlobal, simboloLocal, noDeclaracaoRegistro));
+            }
+        }
+        else// (ExcecaoSimboloNaoDeclarado excecaoSimboloNaoDeclarado)
+        {
+            if (FUNCOES_RESERVADAS.contains(nome))
+            {
+                variavel.setRedeclarado(true);
+                Funcao funcaoSistam = new Funcao(nome, TipoDado.VAZIO, Quantificador.VETOR);
+                notificarErroSemantico(new ErroSimboloRedeclarado(variavel, funcaoSistam));
+            }
+            else
+            {
+                memoria.adicionarSimbolo(variavel);
+            }
+        }
+
+
+//        NoExpressao inicializacao = declaracaoVariavel.getInicializacao();
+//        NoReferenciaVariavel referencia = new NoReferenciaVariavel(null, nome);
+//        referencia.setTrechoCodigoFonteNome(declaracaoVariavel.getTrechoCodigoFonteNome());
+//        NoOperacao operacao = new NoOperacaoAtribuicao(referencia, inicializacao);
+
+        memoria.empilharEscopo();
+        memoria.adicionarSimbolo(variavel);
+
+//        if (declaracaoVariavel.constante())
+//        {
+//            if (inicializacao instanceof NoMenosUnario)
+//            {
+//                if (!(((NoMenosUnario) inicializacao).getExpressao() instanceof NoExpressaoLiteral))
+//                {
+//                    notificarErroSemantico(new ErroInicializacaoConstante(declaracaoVariavel));
+//                }
+//            }
+//            else if (!(inicializacao instanceof NoExpressaoLiteral))
+//            {
+//                notificarErroSemantico(new ErroInicializacaoConstante(declaracaoVariavel));
+//            }
+//        }
+
+//        try
+//        {
+//            operacao.aceitar(this);
+//        }
+//        catch (ExcecaoVisitaASA excecao)
+//        {
+//            if (!(excecao.getCause() instanceof ExcecaoImpossivelDeterminarTipoDado))
+//            {
+//                throw excecao;
+//            }
+//        }
+
+        memoria.desempilharEscopo();
+
+        return null;
     }
 
     @Override
