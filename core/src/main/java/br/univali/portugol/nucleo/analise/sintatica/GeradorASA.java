@@ -184,21 +184,18 @@ public class GeradorASA {
 
         @Override
         public No visitInstanciaRegistro(InstanciaRegistroContext ctx) {
-            TipoDado tipoVariavel = null;
-            tipoVariavel.setNome(ctx.ID_REGISTRO().getText());
+            String tipoInstancia = ctx.ID(0).getText();
+            String nomeInstancia = ctx.ID(1).getText();
 
-            String nomeVariavel = ctx.ID_INSTANCIA_REGISTRO().getText();
+            NoInstanciaRegistro noInstanciaRegistro = new NoInstanciaRegistro(nomeInstancia, TipoDado.REGISTRO, tipoInstancia);
 
-            //aqui eu preciso carregar todos os atributos do registro criado para a variavel de instancia dele********
-//            NoDeclaracaoVariavelRegistro noDeclaracaoVariavelRegistro = new NoDeclaracaoVariavelRegistro(nomeVariavel, tipoVariavel);
-//
-//            noDeclaracaoVariavelRegistro.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID_INSTANCIA_REGISTRO()));
-//            noDeclaracaoVariavelRegistro.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(ctx.ID_REGISTRO()));
-//
-//            noDeclaracaoVariavelRegistro.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.ID_REGISTRO(), ctx.getText().length()));
-//
-//            return noDeclaracaoVariavelRegistro;
-            return null;
+            noInstanciaRegistro.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID(1)));
+            //qual tipo de dado passar para que o analisador semantico possa recuperar?
+            noInstanciaRegistro.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(ctx.ID(0)));
+
+            noInstanciaRegistro.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.ID(0), ctx.getText().length()));
+
+            return noInstanciaRegistro;
         }
 
         @Override

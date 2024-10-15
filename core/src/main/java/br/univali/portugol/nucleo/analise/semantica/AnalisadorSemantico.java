@@ -2371,7 +2371,7 @@ public final class AnalisadorSemantico implements VisitanteASA
         Class classeBloco = bloco.getClass();
         Class<? extends NoBloco>[] classesPermitidas = new Class[]
         {
-            NoDeclaracaoVariavel.class, NoDeclaracaoVetor.class, NoDeclaracaoMatriz.class, NoListaDeclaracoes.class,
+            NoInstanciaRegistro.class, NoDeclaracaoVariavel.class, NoDeclaracaoVetor.class, NoDeclaracaoMatriz.class, NoListaDeclaracoes.class,
             NoCaso.class, NoEnquanto.class, NoEscolha.class, NoFacaEnquanto.class, NoPara.class, NoSe.class,
             NoPare.class, NoRetorne.class, NoTitulo.class, NoVaPara.class,
             NoOperacaoAtribuicao.class, NoChamadaFuncao.class, NoListaAtributos.class, NoAtributoArray.class, NoAtributoVariavel.class,
@@ -2461,8 +2461,9 @@ public final class AnalisadorSemantico implements VisitanteASA
         totalVariaveisDeclaradas++;
 
         String nome = noDeclaracaoRegistro.getNome();
+        List<NoListaAtributos> atributos = noDeclaracaoRegistro.getAtributos();
 
-        Variavel variavel = new Variavel(nome, TipoDado.REGISTRO, noDeclaracaoRegistro);
+        Variavel variavel = new Variavel(nome, TipoDado.TODOS, noDeclaracaoRegistro, atributos);
         variavel.setTrechoCodigoFonteNome(noDeclaracaoRegistro.getTrechoCodigoFonteNome());
         variavel.setTrechoCodigoFonteTipoDado(noDeclaracaoRegistro.getTrechoCodigoFonteTipoDado());
 
@@ -2555,9 +2556,13 @@ public final class AnalisadorSemantico implements VisitanteASA
         totalVariaveisDeclaradas++;
 
         String nome = noInstanciaRegistro.getNome();
-        TipoDado tipoDadoVariavel = noInstanciaRegistro.getTipoRegistro();
+//        TipoDado tipoDadoVariavel = noInstanciaRegistro.getTipoRegistro();
 
-        Variavel variavel = new Variavel(nome, tipoDadoVariavel, noInstanciaRegistro);
+        Simbolo tipoInstancia = memoria.getSimbolo(noInstanciaRegistro.getTipoInstancia());
+
+        List<NoListaAtributos> atributos = tipoInstancia.getAtributos();
+
+        Variavel variavel = new Variavel(nome, TipoDado.REGISTRO, noInstanciaRegistro, atributos);
         variavel.setTrechoCodigoFonteNome(noInstanciaRegistro.getTrechoCodigoFonteNome());
         variavel.setTrechoCodigoFonteTipoDado(noInstanciaRegistro.getTrechoCodigoFonteTipoDado());
 
@@ -2599,6 +2604,7 @@ public final class AnalisadorSemantico implements VisitanteASA
                 memoria.adicionarSimbolo(variavel);
             }
         }
+
         return null;
     }
 

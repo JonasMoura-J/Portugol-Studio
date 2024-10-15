@@ -1,7 +1,10 @@
 package br.univali.portugol.nucleo.simbolos;
 
 import br.univali.portugol.nucleo.asa.NoDeclaracaoBase;
+import br.univali.portugol.nucleo.asa.NoListaAtributos;
 import br.univali.portugol.nucleo.asa.TipoDado;
+
+import java.util.List;
 
 /**
  * Representa uma variável alocada em memória durante a execução de um programa.
@@ -27,6 +30,11 @@ public final class Variavel extends Simbolo
     public Variavel(String nome, TipoDado tipoDado, NoDeclaracaoBase declaracaoOrigem)
     {
         super(nome, tipoDado, declaracaoOrigem);
+    }
+
+    public Variavel(String nome, TipoDado tipoDado, NoDeclaracaoBase declaracaoOrigem, List<NoListaAtributos> atributos)
+    {
+        super(nome, tipoDado, declaracaoOrigem, atributos);
     }
 
     /**

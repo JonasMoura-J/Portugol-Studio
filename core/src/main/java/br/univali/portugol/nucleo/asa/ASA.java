@@ -45,7 +45,9 @@ public abstract class ASA
         declaracoes.addAll(getDeclaracoes(NoInclusaoBiblioteca.class));
         declaracoes.addAll(getDeclaracoes(NoDeclaracaoInicializavel.class));
         declaracoes.addAll(getDeclaracoes(NoDeclaracaoFuncao.class));
-        
+        declaracoes.addAll(getDeclaracoes(NoInstanciaRegistro.class));
+        declaracoes.addAll(getDeclaracoes(NoDeclaracaoRegistro.class));
+
         return declaracoes;
     }
     

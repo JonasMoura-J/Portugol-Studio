@@ -33,7 +33,7 @@ declaracaoRegistro
     :   REGISTRO ID ABRE_CHAVES listaAtributos* FECHA_CHAVES;
 
 instanciaRegistro
-    : ID_REGISTRO ID_INSTANCIA_REGISTRO;
+    : ID ID;
 
 inicializacaoAtributo
     :   inicializacaoAtributoVariavel | inicializacaoAtributoMatriz | inicializacaoAtributoArray;
@@ -94,6 +94,7 @@ parametroMatriz
 
 comando
     :   listaDeclaracoes
+    |   instanciaRegistro
     |   declaracaoRegistro
     |   se
     |   enquanto

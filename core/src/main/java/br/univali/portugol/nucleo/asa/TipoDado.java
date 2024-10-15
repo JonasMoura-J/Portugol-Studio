@@ -149,7 +149,8 @@ public enum TipoDado
     TODOS("todos", "todos", null, Object.class),
 
 
-    REGISTRO("registro", "registro", null, String.class);
+    REGISTRO("registro", "registro", null, Object.class);
+
     
     private String nome;
     private final String descricao;

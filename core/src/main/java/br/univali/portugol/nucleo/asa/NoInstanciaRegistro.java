@@ -2,15 +2,14 @@ package br.univali.portugol.nucleo.asa;
 
 public final class NoInstanciaRegistro extends NoDeclaracaoBase{
     private int indiceReferencia = -1;
-    private NoListaAtributos atributos;
 
     public int idParaInspecao = -1; // usado para implementar a inspeção de símbolos
-
+    private String tipoInstancia;
     /**
      *
      * @param nome define o nome desta variável.
      *
-     * @param tipoRegistro define o tipo de registro desta variável.
+     * @param tipoRegistro define o tipo registro desta variável.
      *
      * Se <code>true</code>, o valor não poderá ser alterado após a
      * inicialização.
@@ -18,10 +17,10 @@ public final class NoInstanciaRegistro extends NoDeclaracaoBase{
      * @since 1.0
      */
 
-    public NoInstanciaRegistro(String nome, TipoDado tipoRegistro, NoListaAtributos atributos)
+    public NoInstanciaRegistro(String nome, TipoDado tipoRegistro, String tipoInstancia)
     {
         super(nome, tipoRegistro, false);
-        this.atributos = atributos;
+        this.tipoInstancia = tipoInstancia;
     }
 
     /**
@@ -31,16 +30,6 @@ public final class NoInstanciaRegistro extends NoDeclaracaoBase{
     public Object aceitar(VisitanteASA visitante) throws ExcecaoVisitaASA
     {
         return visitante.visitar(this);
-    }
-
-    public NoListaAtributos getAtributos()
-    {
-        return atributos;
-    }
-
-    public void setAtributos(NoListaAtributos atributos)
-    {
-        this.atributos = atributos;
     }
 
     public void setIdParaInspecao(int idParaInspecao)
@@ -67,4 +56,10 @@ public final class NoInstanciaRegistro extends NoDeclaracaoBase{
     {
         this.indiceReferencia = indiceReferencia;
     }
+
+    public String getTipoInstancia(){
+        return tipoInstancia;
+    }
+
+    public void setTipoInstancia(String tipoInstancia){this.tipoInstancia = tipoInstancia;}
 }

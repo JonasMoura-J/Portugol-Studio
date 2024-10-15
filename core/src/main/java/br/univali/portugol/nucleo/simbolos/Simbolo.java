@@ -1,8 +1,11 @@
 package br.univali.portugol.nucleo.simbolos;
 
 import br.univali.portugol.nucleo.asa.NoDeclaracaoBase;
+import br.univali.portugol.nucleo.asa.NoListaAtributos;
 import br.univali.portugol.nucleo.asa.TipoDado;
 import br.univali.portugol.nucleo.asa.TrechoCodigoFonte;
+
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -40,6 +43,7 @@ public abstract class Simbolo
     }
     private String nome;
     protected TipoDado tipoDado;
+    private List<NoListaAtributos> atributos;
     private TrechoCodigoFonte trechoCodigoFonteNome;
     private TrechoCodigoFonte trechoCodigoFonteTipoDado;
     private boolean constante = false;
@@ -61,6 +65,14 @@ public abstract class Simbolo
         setNome(nome);
         setTipoDado(tipoDado);
         setOrigemDoSimbolo(declaracaoOrigem);
+    }
+
+    public Simbolo(String nome, TipoDado tipoDado, NoDeclaracaoBase declaracaoOrigem, List<NoListaAtributos> atributos)
+    {
+        setNome(nome);
+        setTipoDado(tipoDado);
+        setOrigemDoSimbolo(declaracaoOrigem);
+        setAtributos(atributos);
     }
 
     /**
@@ -273,6 +285,16 @@ public abstract class Simbolo
     final void setOrigemDoSimbolo(NoDeclaracaoBase origemDoSimbolo)
     {
         this.origemDoSimbolo = origemDoSimbolo;
+    }
+
+    public List<NoListaAtributos> getAtributos()
+    {
+        return atributos;
+    }
+
+    public void setAtributos(List<NoListaAtributos> atributos)
+    {
+        this.atributos = atributos;
     }
 
     /**
