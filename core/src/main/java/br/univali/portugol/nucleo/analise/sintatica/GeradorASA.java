@@ -201,30 +201,17 @@ public class GeradorASA {
         @Override
         public No visitInicializacaoAtributoVariavel(InicializacaoAtributoVariavelContext ctx) {
 
-//            PortugolParser.EscopoBibliotecaContext escopoBiblioteca = ctx.escopoBiblioteca();
-//            if (escopoBiblioteca != null) {
-//                escopo = escopoBiblioteca.ID().getText();
-//            }
-//
-//            return criaNoReferenciaVariavel(ctx.ID(), escopo, ctx.getText().length());
-
-//            NoOperacaoAtribuicao atribuicao = GeradorNoOperacao.gera(ctx, this, NoOperacaoAtribuicao.class);
-//
-//            NoExpressao esquerda = (NoExpressao) ctx.expressao(0).accept(this);
-//            atribuicao.setTrechoCodigoFonte(new TrechoCodigoFonte(esquerda.getTrechoCodigoFonte(), ctx.getText().length()));
-//
-//            return atribuicao;
-
-//            NoAtribuicaoVariavelAtributo noAtribuicaoVariavelAtributo = GeradorNoOperacao.gera(ctx, this, NoAtribuicaoVariavelAtributo.class);
-//
-//            NoExpressao instancia = (NoExpressao) ctx.ID_INSTANCIA_REGISTRO();
-//            NoExpressao nome = (NoExpressao) ctx.ID();
-
+            String tipoRegistro = ctx.ID(0).getText();
+            String nomeAtributo = ctx.ID(1).getText();
             NoExpressao inicializacao = (NoExpressao) ctx.expressao().accept(this);
 
-            NoInicializacaoAtributoVariavel noInicializacaoAtributoVariavel = new NoInicializacaoAtributoVariavel(inicializacao);
+            NoInicializacaoAtributoVariavel noInicializacaoAtributoVariavel =
+                    new NoInicializacaoAtributoVariavel(tipoRegistro, nomeAtributo, inicializacao);
 
-            noInicializacaoAtributoVariavel.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.ID_INSTANCIA_REGISTRO(), ctx.getText().length()));
+            noInicializacaoAtributoVariavel.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID(1)));
+            noInicializacaoAtributoVariavel.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(ctx.ID(0)));
+
+            noInicializacaoAtributoVariavel.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.ID(0), ctx.getText().length()));
             return noInicializacaoAtributoVariavel;
         }
 

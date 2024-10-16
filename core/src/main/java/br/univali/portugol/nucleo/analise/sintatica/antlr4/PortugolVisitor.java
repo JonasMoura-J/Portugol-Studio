@@ -71,12 +71,6 @@ public interface PortugolVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitInstanciaRegistro(PortugolParser.InstanciaRegistroContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link PortugolParser#inicializacaoAtributo}.
-	 * @param ctx the parse tree
-	 * @return the visitor result
-	 */
-	T visitInicializacaoAtributo(PortugolParser.InicializacaoAtributoContext ctx);
-	/**
 	 * Visit a parse tree produced by {@link PortugolParser#inicializacaoAtributoVariavel}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

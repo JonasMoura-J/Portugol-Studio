@@ -2,7 +2,7 @@ package br.univali.portugol.nucleo.asa;
 
 import java.util.List;
 
-public class NoInicializacaoAtributoArray extends NoExpressao implements NoInicializacaoAtributo
+public class NoInicializacaoAtributoArray extends NoExpressao
 {
     private final List<Object> valores;
 

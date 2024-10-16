@@ -35,17 +35,14 @@ declaracaoRegistro
 instanciaRegistro
     : ID ID;
 
-inicializacaoAtributo
-    :   inicializacaoAtributoVariavel | inicializacaoAtributoMatriz | inicializacaoAtributoArray;
-
 inicializacaoAtributoVariavel
-    : ID_INSTANCIA_REGISTRO PONTO ID OP_ATRIBUICAO expressao;
+    : ID PONTO ID OP_ATRIBUICAO expressao;
 
 inicializacaoAtributoMatriz
-    : ID_INSTANCIA_REGISTRO PONTO ID OP_ATRIBUICAO inicializacaoMatriz;
+    : ID PONTO ID OP_ATRIBUICAO inicializacaoMatriz;
 
 inicializacaoAtributoArray
-    : ID_INSTANCIA_REGISTRO PONTO ID OP_ATRIBUICAO inicializacaoArray;
+    : ID PONTO ID OP_ATRIBUICAO inicializacaoArray;
 
 //____________________________________________________________________
 declaracao
@@ -96,6 +93,9 @@ comando
     :   listaDeclaracoes
     |   instanciaRegistro
     |   declaracaoRegistro
+    |   inicializacaoAtributoVariavel
+    |   inicializacaoAtributoArray
+    |   inicializacaoAtributoMatriz
     |   se
     |   enquanto
     |   facaEnquanto
