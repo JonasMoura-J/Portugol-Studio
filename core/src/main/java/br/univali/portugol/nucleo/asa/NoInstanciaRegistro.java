@@ -1,10 +1,15 @@
 package br.univali.portugol.nucleo.asa;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public final class NoInstanciaRegistro extends NoDeclaracaoBase{
     private int indiceReferencia = -1;
 
     public int idParaInspecao = -1; // usado para implementar a inspeção de símbolos
     private String tipoInstancia;
+
+    private List<NoListaAtributos> atributos = new ArrayList<>();
     /**
      *
      * @param nome define o nome desta variável.
@@ -59,6 +64,16 @@ public final class NoInstanciaRegistro extends NoDeclaracaoBase{
 
     public String getTipoInstancia(){
         return tipoInstancia;
+    }
+
+    public List<NoListaAtributos> getAtributos()
+    {
+        return atributos;
+    }
+
+    public void setAtributos(List<NoListaAtributos> atributos)
+    {
+        this.atributos = atributos;
     }
 
     public void setTipoInstancia(String tipoInstancia){this.tipoInstancia = tipoInstancia;}

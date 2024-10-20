@@ -2523,11 +2523,14 @@ public final class AnalisadorSemantico implements VisitanteASA
         totalVariaveisDeclaradas++;
 
         String nome = noInstanciaRegistro.getNome();
-//        TipoDado tipoDadoVariavel = noInstanciaRegistro.getTipoRegistro();
+
 
         Simbolo tipoInstancia = memoria.getSimbolo(noInstanciaRegistro.getTipoInstancia());
 
         List<NoListaAtributos> atributos = tipoInstancia.getAtributos();
+
+        //fiz isso agora para salvar toos os atributos do registro herando
+        noInstanciaRegistro.setAtributos(atributos);
 
         Variavel variavel = new Variavel(nome, TipoDado.REGISTRO, noInstanciaRegistro, atributos);
         variavel.setTrechoCodigoFonteNome(noInstanciaRegistro.getTrechoCodigoFonteNome());
@@ -2589,114 +2592,42 @@ public final class AnalisadorSemantico implements VisitanteASA
 
         TipoDado tipoDadoVariavel = null;
 
-        /*
-        recuperando os atributos do registro salvo em memoria para verificar se
-        o atributo existe no registro, e verificar se o tipo está compatível.
-        */
         Simbolo registro = memoria.getSimbolo(tipoRegistro);
 
-        //aqui eu já recuperei os atributos do registro
         List<NoListaAtributos> atributos = registro.getAtributos();
 
-        /*agora tenho que percorrer esta lista para identificar se existe algum
-        atributo com o nome passado
-         */
-
         for (NoListaAtributos atributo : atributos) {
-            for(NoAtributo s : atributo.getDeclaracoes())
+            for(NoAtributo s : atributo.getDeclaracoes()) {
                 if (s.getNome().equals(nomeAtributo)) {
                     tipoDadoVariavel = atributo.getTipo();
-                    ehAtributoDeclarado = true;
-                    break;
+                    if (tipoDadoVariavel == valor.getTipoResultante()) {
+                        ehAtributoDeclarado = true;
+                        atributo.setInicializacao(valor);
+                        break;
+                    } else {
+                        notificarErroSemantico(new ErroTiposIncompativeis(inicializacao, valor.getTipoResultante(), tipoDadoVariavel));
+                    }
                 }
+            }
             if(ehAtributoDeclarado) {
                 break;
             }
         }
 
-        String nome = inicializacao.getNomeDeclaracaoMemoria();
-        NoDeclaracaoVariavel noDeclaracaoVariavel = new NoDeclaracaoVariavel(nome, tipoDadoVariavel);
-
         if(ehAtributoDeclarado) {
-
-            Variavel variavel = new Variavel(nome, tipoDadoVariavel, noDeclaracaoVariavel);
+            Variavel variavel = new Variavel(tipoRegistro, TipoDado.REGISTRO, registro.getOrigemDoSimbolo(), atributos);
             variavel.setTrechoCodigoFonteNome(inicializacao.getTrechoCodigoFonteNome());
-
             variavel.setTrechoCodigoFonteTipoDado(inicializacao.getTrechoCodigoFonteTipoDado());
 
-            Simbolo simbolo = memoria.getSimbolo(nome);
+            memoria.adicionarSimbolo(variavel);
+            Simbolo simboloGlobal = memoria.isGlobal(registro) ? registro : variavel;
+            Simbolo simboloLocal = memoria.isGlobal(registro) ? variavel : registro;
 
-            if(simbolo != null) {
-                final boolean global = memoria.isGlobal(simbolo);
-                final boolean local = memoria.isLocal(simbolo);
-                memoria.empilharEscopo();
-                memoria.adicionarSimbolo(variavel);
-                final boolean global1 = memoria.isGlobal(variavel);
-                final boolean local1 = memoria.isLocal(variavel);
-                if ((global && global1) || (local && local1))
-                {
-                    variavel.setRedeclarado(true);
-                    notificarErroSemantico(new ErroSimboloRedeclarado(variavel, simbolo));
-                    memoria.desempilharEscopo();
-                }
-                else
-                {
-                    memoria.desempilharEscopo();
-                    memoria.adicionarSimbolo(variavel);
-                    Simbolo simboloGlobal = memoria.isGlobal(simbolo) ? simbolo : variavel;
-                    Simbolo simboloLocal = memoria.isGlobal(simbolo) ? variavel : simbolo;
+            notificarAviso(new AvisoSimboloGlobalOcultado(simboloGlobal, simboloLocal, registro.getOrigemDoSimbolo()));
 
-                    notificarAviso(new AvisoSimboloGlobalOcultado(simboloGlobal, simboloLocal, noDeclaracaoVariavel));
-                }
-            }
-            else// (ExcecaoSimboloNaoDeclarado excecaoSimboloNaoDeclarado)
-            {
-                if (FUNCOES_RESERVADAS.contains(nome))
-                {
-                    variavel.setRedeclarado(true);
-                    Funcao funcaoSistam = new Funcao(nome, TipoDado.VAZIO, Quantificador.VETOR);
-                    notificarErroSemantico(new ErroSimboloRedeclarado(variavel, funcaoSistam));
-                }
-                else
-                {
-                    memoria.adicionarSimbolo(variavel);
-                }
-            }
-            if (!(inicializacao.getValor() instanceof NoVetor) &&
-                    !(inicializacao.getValor() instanceof NoMatriz))
-            {
-                NoExpressao ini = inicializacao.getValor();
-                NoReferenciaVariavel referencia = new NoReferenciaVariavel(null, nome);
-
-                //TODO
-                //aqui acho que terei que criar um objeto TrechoCodigoFonte com as informacoes de linha, coluna e tamanho do texto
-                referencia.setTrechoCodigoFonteNome(inicializacao.getTrechoCodigoFonteNome());
-                NoOperacao operacao = new NoOperacaoAtribuicao(referencia, ini);
-
-                memoria.empilharEscopo();
-                memoria.adicionarSimbolo(variavel);
-
-                try
-                {
-                    operacao.aceitar(this);
-                }
-                catch (ExcecaoVisitaASA excecao)
-                {
-                    if (!(excecao.getCause() instanceof ExcecaoImpossivelDeterminarTipoDado))
-                    {
-                        throw excecao;
-                    }
-                }
-
-                memoria.desempilharEscopo();
-            }
-            else
-            {
-                notificarErroSemantico(new ErroInicializacaoInvalida(noDeclaracaoVariavel));
-            }
         }
         else{
-            notificarErroSemantico(new ErroInicializacaoInvalida(noDeclaracaoVariavel));
+            notificarErroSemantico(new ErroAtributoNaoDeclarado(inicializacao.getTrechoCodigoFonte(), nomeAtributo, tipoRegistro));
         }
 
         return null;

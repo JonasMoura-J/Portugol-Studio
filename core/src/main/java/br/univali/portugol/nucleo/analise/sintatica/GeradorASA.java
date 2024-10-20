@@ -17,6 +17,8 @@ import org.antlr.v4.runtime.tree.TerminalNode;
 public class GeradorASA {
 
     private final PortugolParser parser;
+    public List<NoInclusaoBiblioteca> inclusoes = new ArrayList<>();
+    public List<NoInclusaoBiblioteca> inclusoesLocais = new ArrayList<>();
 
     public GeradorASA(PortugolParser parser) {
         this.parser = parser;
@@ -42,7 +44,7 @@ public class GeradorASA {
         @Override
         public No visitArquivo(ArquivoContext ctx) {
 
-            List<NoInclusaoBiblioteca> inclusoes = new ArrayList<>();
+
             for (InclusaoBibliotecaContext inclusaoBibliotecaContext : ctx.inclusaoBiblioteca()) {
                 inclusoes.add((NoInclusaoBiblioteca)inclusaoBibliotecaContext.accept(this));
             }
@@ -412,9 +414,13 @@ public class GeradorASA {
         }
 
 
-        private NoReferenciaVariavel criaNoReferenciaVariavel(TerminalNode id, String escopo, int trechoCodigoFonteLenght) {
+        private NoReferenciaVariavel criaNoReferenciaVariavel(TerminalNode id, String escopo,
+                                                              String registro, int trechoCodigoFonteLenght) {
             String nome = id.getText();
             NoReferenciaVariavel no = new NoReferenciaVariavel(escopo, nome);
+            if(registro != null) {
+                no.setRegistro(registro);
+            }
 
             no.setTrechoCodigoFonteNome(getTrechoCodigoFonte(id));
             no.setTrechoCodigoFonte(getTrechoCodigoFonte(id, trechoCodigoFonteLenght));
@@ -424,14 +430,30 @@ public class GeradorASA {
 
         @Override
         public No visitReferenciaParaVariavel(PortugolParser.ReferenciaParaVariavelContext ctx) {
-
+            String registro = null;
             String escopo = null;
             PortugolParser.EscopoBibliotecaContext escopoBiblioteca = ctx.escopoBiblioteca();
+
             if (escopoBiblioteca != null) {
-                escopo = escopoBiblioteca.ID().getText();
+                String referencia = escopoBiblioteca.ID().getText();
+
+                for(NoInclusaoBiblioteca no : inclusoes){
+                    if(no.getNome().equals(referencia)){
+                        escopo = escopoBiblioteca.ID().getText();
+                    }
+                }
+                for(NoInclusaoBiblioteca no : inclusoesLocais){
+                    if(no.getNome().equals(referencia)){
+                        escopo = escopoBiblioteca.ID().getText();
+                    }
+                }
+
+                if(escopo == null){
+                    registro = referencia;
+                }
             }
 
-            return criaNoReferenciaVariavel(ctx.ID(), escopo, ctx.getText().length());
+            return criaNoReferenciaVariavel(ctx.ID(), escopo, registro, ctx.getText().length());
         }
 
         @Override
@@ -564,7 +586,7 @@ public class GeradorASA {
             }
 
             // é uma variável
-            NoReferenciaVariavel referenciaVariavel = criaNoReferenciaVariavel(id, null, ctxLenght);
+            NoReferenciaVariavel referenciaVariavel = criaNoReferenciaVariavel(id, null, null, ctxLenght);
             NoOperacaoAtribuicao atribuicao = new NoOperacaoAtribuicao(referenciaVariavel, new NoOperacaoSoma(referenciaVariavel, new NoInteiro(1)));
             atribuicao.setTrechoCodigoFonte(new TrechoCodigoFonte(referenciaVariavel.getTrechoCodigoFonte(), ctxLenght));
 
@@ -606,7 +628,7 @@ public class GeradorASA {
             }
 
             // é uma variável
-            NoReferenciaVariavel referenciaVariavel = criaNoReferenciaVariavel(id, null, ctxLenght);
+            NoReferenciaVariavel referenciaVariavel = criaNoReferenciaVariavel(id, null, null, ctxLenght);
             NoOperacaoAtribuicao atribuicao = new NoOperacaoAtribuicao(referenciaVariavel, new NoOperacaoSubtracao(referenciaVariavel, new NoInteiro(1)));
             atribuicao.setTrechoCodigoFonte(new TrechoCodigoFonte(referenciaVariavel.getTrechoCodigoFonte(), ctxLenght));
 
@@ -699,6 +721,7 @@ public class GeradorASA {
                 no.setTrechoCodigoFonteAlias(getTrechoCodigoFonte(ctx.ID(1)));
             }
 
+            inclusoesLocais.add(no);
             return no;
         }
 

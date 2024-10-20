@@ -41,6 +41,10 @@ public final class NoReferenciaVariavel extends NoReferencia<NoDeclaracaoBase>
     {
         super(escopo, nome);
     }
+    public NoReferenciaVariavel(String escopo, String nome, String registro)
+    {
+        super(escopo, nome, registro);
+    }
 
     /**
      * {@inheritDoc }

@@ -7,6 +7,7 @@ public class NoListaAtributos extends NoBloco implements NoAtributo {
 
     protected final List<NoAtributo> declaracoes = new ArrayList<>();
     protected final TipoDado tipo;
+    protected NoExpressao inicializacao;
 
     public NoListaAtributos(TipoDado tipo) {
         this.tipo = tipo;
@@ -31,6 +32,10 @@ public class NoListaAtributos extends NoBloco implements NoAtributo {
     public List<NoAtributo> getDeclaracoes() {
         return declaracoes;
     }
+
+    public NoExpressao getInicializacao() {return inicializacao;}
+
+    public void setInicializacao(NoExpressao inicializacao) {this.inicializacao = inicializacao;}
 
     @Override
     public String getNome() { // TODO remover este método da Interface NoDeclaracao

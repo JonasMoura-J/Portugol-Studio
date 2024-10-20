@@ -25,6 +25,7 @@ public abstract class NoReferencia<T extends NoDeclaracaoBase> extends NoExpress
     private String escopoBiblioteca;
     private TrechoCodigoFonte trechoCodigoFonteNome;
     protected T origemDaReferencia;
+    private String registro;
 
     /**
      * @param nome o nome do símbolo referenciado.
@@ -39,6 +40,13 @@ public abstract class NoReferencia<T extends NoDeclaracaoBase> extends NoExpress
     {
         this.escopoBiblioteca = escopo;
         this.nome = nome;
+    }
+
+    public NoReferencia(String escopo, String nome, String registro)
+    {
+        this.escopoBiblioteca = escopo;
+        this.nome = nome;
+        this.registro = registro;
     }
 
     public void setEscopo(String escopo)
@@ -120,5 +128,13 @@ public abstract class NoReferencia<T extends NoDeclaracaoBase> extends NoExpress
     public NoDeclaracaoBase getOrigemDaReferencia()
     {
         return origemDaReferencia;
+    }
+
+    public String getRegistro() {
+        return registro;
+    }
+
+    public void setRegistro(String registro) {
+        this.registro = registro;
     }
 }
