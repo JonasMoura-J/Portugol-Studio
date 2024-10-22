@@ -201,8 +201,12 @@ public class PreCompilador extends VisitanteNulo
         no.setNome(geraNomeValido(no.getNome()));
         return super.visitar(no);
     }
-    
-    
+
+    @Override
+    public Object visitar(NoDeclaracaoRegistro no) throws ExcecaoVisitaASA {
+        no.setNome(geraNomeValido(no.getNome()));
+        return super.visitar(no);
+    }
     
     @Override
     public Object visitar(NoVetor noVetor) throws ExcecaoVisitaASA
@@ -216,6 +220,8 @@ public class PreCompilador extends VisitanteNulo
         }
         return null;
     }
+
+
 
     public Map<TipoDado, List<NoDeclaracao>> getVariaveisPassadasPorReferencia()
     {

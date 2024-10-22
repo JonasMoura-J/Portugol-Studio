@@ -382,4 +382,9 @@ public class VisitanteNulo extends VisitanteASABasico {
     public Object visitar(NoInclusaoBiblioteca noInclusaoBiblioteca) throws ExcecaoVisitaASA {
         return null;
     }
+
+    @Override
+    public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
+        return null;
+    }
 }

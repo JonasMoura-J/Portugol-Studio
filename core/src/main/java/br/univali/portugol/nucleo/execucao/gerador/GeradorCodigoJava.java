@@ -955,6 +955,28 @@ public class GeradorCodigoJava
             return null;
         }
 
+        @Override
+        public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
+            String identacao = Utils.geraIdentacao(nivelEscopo);
+            System.out.println(saida.toString());
+            saida.append(identacao)
+                    .append("class ")
+                    .append(noDeclaracaoRegistro.getNome()).println();
+            saida.append("{").println();
+
+            List<NoListaAtributos> atributos = noDeclaracaoRegistro.getAtributos();
+
+            for(NoListaAtributos atributo : atributos){
+                for(NoAtributo s : atributo.getDeclaracoes()) {
+                    saida.append("public " + Utils.getNomeTipoJava(atributo.getTipo()) + " " + s.getNome())
+                            .append(";").println();
+                }
+            }
+            saida.append("}").println();
+
+            return null;
+        }
+
         /**
          * Gera o comando Java para importação de uma determinada classe.
          * @param classe classe para gerar o comando import
