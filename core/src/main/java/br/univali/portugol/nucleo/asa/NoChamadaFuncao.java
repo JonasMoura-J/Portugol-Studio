@@ -27,6 +27,7 @@ public final class NoChamadaFuncao extends NoReferencia<NoDeclaracaoFuncao>
 {
     private boolean funcaoDeBiblioteca = false;
     private List<NoExpressao> parametros;
+    private List<String> referenciaRegistro;
     private TipoDado tipoRetornoBiblioteca = TipoDado.VAZIO;
 
     /**

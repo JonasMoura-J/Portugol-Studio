@@ -27,6 +27,8 @@ public final class NoReferenciaVariavel extends NoReferencia<NoDeclaracaoBase>
     private TipoDado tipoBiblioteca = TipoDado.VAZIO;
     
     private int indiceReferencia = -1;
+
+
     
     /**
      *
@@ -106,4 +108,14 @@ public final class NoReferenciaVariavel extends NoReferencia<NoDeclaracaoBase>
     {
         this.indiceReferencia = indiceReferencia;
     }
+
+//    @Override
+//    public String getRegistro() {
+//        return registro;
+//    }
+//
+//    @Override
+//    public void setRegistro(String registro) {
+//        super.registro = registro;
+//    }
 }

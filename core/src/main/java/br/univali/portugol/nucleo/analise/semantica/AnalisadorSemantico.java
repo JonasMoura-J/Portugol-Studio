@@ -14,12 +14,7 @@ import br.univali.portugol.nucleo.mensagens.AvisoAnalise;
 import br.univali.portugol.nucleo.mensagens.ErroSemantico;
 import br.univali.portugol.nucleo.simbolos.*;
 import java.math.BigInteger;
-import java.util.ArrayList;
-import java.util.EmptyStackException;
-import java.util.List;
-import java.util.Map;
-import java.util.Stack;
-import java.util.TreeMap;
+import java.util.*;
 
 /**
  * Percorre a {@link ASA} gerada a partir do código fonte para detectar
@@ -700,7 +695,26 @@ public final class AnalisadorSemantico implements VisitanteASA
                         variavel.setInicializado(true);
                     }
                     passandoParametro = (chamadaFuncao.getEscopoBiblioteca() == null && !FUNCOES_RESERVADAS.contains(chamadaFuncao.getNome()));
-                    tipos.add((TipoDado) parametro.aceitar(this));
+
+                    //se for um registro
+                    if(((NoReferenciaVariavel) parametro).getRegistro() != null){
+                        //recuperando o registro salvo em memoria
+                        Simbolo registro = memoria.getSimbolo(((NoReferenciaVariavel) parametro).getRegistro());
+
+                        List<NoListaAtributos> atributos = registro.getAtributos();
+
+                        for(NoListaAtributos atributo : atributos){
+                            for(NoAtributo s : atributo.getDeclaracoes()) {
+                                if(Objects.equals(s.getNome(), ((NoReferenciaVariavel) parametro).getNome())){
+                                    tipos.add(atributo.getTipo());
+                                }
+                            }
+                        }
+                    }
+                    else{
+                        tipos.add((TipoDado) parametro.aceitar(this));
+                    }
+
                     passandoParametro = false;
                 }
                 catch (ExcecaoVisitaASA ex)
@@ -2016,8 +2030,15 @@ public final class AnalisadorSemantico implements VisitanteASA
     public Object visitar(NoReferenciaVariavel noReferenciaVariavel) throws ExcecaoVisitaASA
     {
         setarPaiDoNo(noReferenciaVariavel);
-        
-        if (noReferenciaVariavel.getEscopoBiblioteca() == null)
+
+        if(noReferenciaVariavel.getRegistro() != null) {
+            try {
+                return analisarReferenciaVariavelRegistro(noReferenciaVariavel);
+            } catch (ExcecaoImpossivelDeterminarTipoDado ex) {
+                throw new ExcecaoVisitaASA(ex, asa, noReferenciaVariavel);
+            }
+        }
+        else if (noReferenciaVariavel.getEscopoBiblioteca() == null)
         {
             try
             {
@@ -2706,6 +2727,43 @@ public final class AnalisadorSemantico implements VisitanteASA
         }
 
         throw new ExcecaoVisitaASA(new ExcecaoImpossivelDeterminarTipoDado(), asa, noReferenciaVariavel);
+    }
+
+    private TipoDado analisarReferenciaVariavelRegistro(NoReferenciaVariavel noReferenciaVariavel) throws ExcecaoImpossivelDeterminarTipoDado
+    {
+        Simbolo simbolo = memoria.getSimbolo(noReferenciaVariavel.getRegistro());
+        if (simbolo != null) {
+
+            if (!simbolo.inicializado())
+            {
+                notificarErroSemantico(new ErroSimboloNaoInicializado(noReferenciaVariavel, simbolo));
+            }
+
+            if (!(simbolo instanceof Variavel) && !declarandoVetor && !declarandoMatriz && !passandoReferencia && !passandoParametro)
+            {
+                notificarErroSemantico(new ErroReferenciaInvalida(noReferenciaVariavel, simbolo));
+            }
+            else if (simbolo instanceof Variavel)
+            {
+                ((Variavel) simbolo).getOrigemDoSimbolo().adicionarReferencia(noReferenciaVariavel);
+            }
+//            else if (simbolo instanceof Vetor)
+//            {
+//                simbolo.getOrigemDoSimbolo().adicionarReferencia(noReferenciaVariavel);
+//            }
+//            else if (simbolo instanceof Matriz)
+//            {
+//                simbolo.getOrigemDoSimbolo().adicionarReferencia(noReferenciaVariavel);
+//            }
+
+            return simbolo.getTipoDado();
+        }
+        else// (ExcecaoSimboloNaoDeclarado excecaoSimboloNaoDeclarado)
+        {
+            notificarErroSemantico(new ErroSimboloNaoDeclarado(noReferenciaVariavel));
+        }
+
+        throw new ExcecaoImpossivelDeterminarTipoDado();
     }
 
     private Integer obterTamanhoVetorMatriz(final NoExpressao expTamanho, NoDeclaracaoBase noDeclaracao) throws ExcecaoVisitaASA

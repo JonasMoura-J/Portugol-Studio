@@ -919,15 +919,28 @@ public class GeradorASA {
             PortugolParser.EscopoBibliotecaContext escopoBiblioteca = ctx.escopoBiblioteca();
 
             String escopo = (escopoBiblioteca != null) ? escopoBiblioteca.ID().getText() : null;
+
             String nomeFuncao = ctx.ID().getText();
 
             NoChamadaFuncao noChamadaFuncao = new NoChamadaFuncao(escopo, nomeFuncao);
 
             if (ctx.listaExpressoes() != null) { // se existem parâmetros sendo passados para a função
                 List<NoExpressao> parametros = new ArrayList<>();
+
                 for (ParserRuleContext expressaoContext : ctx.listaExpressoes().getRuleContexts(ParserRuleContext.class)) {
-                    parametros.add((NoExpressao)expressaoContext.accept(this));
+
+                    int start = expressaoContext.getStart().getStopIndex();
+                    int stop = expressaoContext.getStop().getStopIndex();
+                    if(start < stop){ //parametro registro
+                        NoReferenciaVariavel registro = new NoReferenciaVariavel(null, expressaoContext.getStop().getText(),
+                                expressaoContext.getStart().getText());
+                        parametros.add(registro);
+                    }
+                    else {
+                        parametros.add((NoExpressao) expressaoContext.accept(this));
+                    }
                 }
+
                 noChamadaFuncao.setParametros(parametros);
             }
 
