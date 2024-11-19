@@ -697,7 +697,8 @@ public final class AnalisadorSemantico implements VisitanteASA
                     passandoParametro = (chamadaFuncao.getEscopoBiblioteca() == null && !FUNCOES_RESERVADAS.contains(chamadaFuncao.getNome()));
 
                     //se for um registro
-                    if(((NoReferenciaVariavel) parametro).getRegistro() != null){
+                    if(parametro.getTipoResultante() == TipoDado.REGISTRO &&
+                            ((NoReferenciaVariavel) parametro).getRegistro() != null){
                         //recuperando o registro salvo em memoria
                         Simbolo registro = memoria.getSimbolo(((NoReferenciaVariavel) parametro).getRegistro());
 
@@ -2606,7 +2607,7 @@ public final class AnalisadorSemantico implements VisitanteASA
         inicializacao.setIdParaInspecao(totalVariaveisDeclaradas);
         totalVariaveisDeclaradas++;
 
-        String nomeAtributo = inicializacao.getNomeAtributo();
+        String nomeAtributo = inicializacao.getNome();
         String tipoRegistro = inicializacao.getTipoRegistro();
         NoExpressao valor = inicializacao.getValor();
         boolean ehAtributoDeclarado = false;
@@ -2621,6 +2622,7 @@ public final class AnalisadorSemantico implements VisitanteASA
             for(NoAtributo s : atributo.getDeclaracoes()) {
                 if (s.getNome().equals(nomeAtributo)) {
                     tipoDadoVariavel = atributo.getTipo();
+                    //aqui eu posso ter variaveis de tipos diferentes mas com nomes iguais dentro do registro
                     if (tipoDadoVariavel == valor.getTipoResultante()) {
                         ehAtributoDeclarado = true;
                         atributo.setInicializacao(valor);

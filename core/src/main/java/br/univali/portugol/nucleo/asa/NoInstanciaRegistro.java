@@ -3,7 +3,7 @@ package br.univali.portugol.nucleo.asa;
 import java.util.ArrayList;
 import java.util.List;
 
-public final class NoInstanciaRegistro extends NoDeclaracaoBase{
+public final class NoInstanciaRegistro extends NoDeclaracaoBase implements NoDeclaracao{
     private int indiceReferencia = -1;
 
     public int idParaInspecao = -1; // usado para implementar a inspeção de símbolos

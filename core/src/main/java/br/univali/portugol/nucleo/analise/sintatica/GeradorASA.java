@@ -192,7 +192,7 @@ public class GeradorASA {
             NoInstanciaRegistro noInstanciaRegistro = new NoInstanciaRegistro(nomeInstancia, TipoDado.REGISTRO, tipoInstancia);
 
             noInstanciaRegistro.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID(1)));
-            //qual tipo de dado passar para que o analisador semantico possa recuperar?
+
             noInstanciaRegistro.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(ctx.ID(0)));
 
             noInstanciaRegistro.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.ID(0), ctx.getText().length()));
@@ -220,8 +220,11 @@ public class GeradorASA {
         @Override
         public No visitInicializacaoAtributoArray(InicializacaoAtributoArrayContext ctx) {
 
+            String tipoRegistro = ctx.ID(0).getText();
+            String nomeAtributo = ctx.ID(1).getText();
+
             List<Object> valores = new ArrayList<>();
-            if (ctx.inicializacaoArray().listaExpressoes() != null) { // quando o vetor é inicializado com uma lista vazia: inteiro v[] = {}
+            if (ctx.inicializacaoArray().listaExpressoes() != null) {
                 for (ExpressaoContext expressao : ctx.inicializacaoArray().listaExpressoes().expressao()) {
                     valores.add(expressao.accept(this));
                 }

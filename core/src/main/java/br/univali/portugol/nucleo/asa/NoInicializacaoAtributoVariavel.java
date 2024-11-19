@@ -6,15 +6,15 @@ public final class NoInicializacaoAtributoVariavel extends NoExpressao {
     public int idParaInspecao = -1;
     private NoExpressao valor;
     private String tipoRegistro;
-    private String nomeAtributo;
+    private String nome;
     private TrechoCodigoFonte trechoCodigoFonteNome;
     private TrechoCodigoFonte trechoCodigoFonteTipoDado;
 
 
-    public NoInicializacaoAtributoVariavel(String tipoRegistro, String nomeAtributo, NoExpressao valor) {
+    public NoInicializacaoAtributoVariavel(String tipoRegistro, String nome, NoExpressao valor) {
         this.valor = valor;
         this.tipoRegistro = tipoRegistro;
-        this.nomeAtributo = nomeAtributo;
+        this.nome = nome;
     }
 
     public NoExpressao getValor() {
@@ -27,9 +27,9 @@ public final class NoInicializacaoAtributoVariavel extends NoExpressao {
 
     public void setTipoRegistro(String tipoRegistro) {this.tipoRegistro = tipoRegistro;}
 
-    public String getNomeAtributo() {return nomeAtributo;}
+    public String getNome() {return nome;}
 
-    public void setNomeAtributo(String nomeAtributo) {this.nomeAtributo = nomeAtributo;}
+    public void setNome(String nomeAtributo) {this.nome = nomeAtributo;}
 
     @Override
     public Object aceitar(VisitanteASA visitante) throws ExcecaoVisitaASA {
@@ -47,7 +47,7 @@ public final class NoInicializacaoAtributoVariavel extends NoExpressao {
     }
 
     public String getNomeDeclaracaoMemoria(){
-        return this.tipoRegistro + "." + this.nomeAtributo;
+        return this.tipoRegistro + "." + this.nome;
     }
 
     @Override
