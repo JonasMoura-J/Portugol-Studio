@@ -30,6 +30,7 @@ public class GeradorCodigoJava
     private final GeradorDeclaracaoVariavel geradorDeclaracaoVariavel = new GeradorDeclaracaoVariavel();
     private final GeradorAtribuicao geradorAtribuicao = new GeradorAtribuicao();
     private final GeradorLoops geradorLoops = new GeradorLoops();
+    private final GeradorInstanciaRegistro geradorInstanciaRegistro = new GeradorInstanciaRegistro();
     private final long seed;
     private boolean processandoVariaveisGlobais = false; // não inicializa as variáveis quando está processando as variáveis globais
     
@@ -958,21 +959,30 @@ public class GeradorCodigoJava
         @Override
         public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
             String identacao = Utils.geraIdentacao(nivelEscopo);
-            System.out.println(saida.toString());
-            saida.append(identacao)
-                    .append("class ")
-                    .append(noDeclaracaoRegistro.getNome()).println();
-            saida.append("{").println();
 
-            List<NoListaAtributos> atributos = noDeclaracaoRegistro.getAtributos();
+            saida.append(identacao).format("class %s {", noDeclaracaoRegistro.getNome()).println();
 
-            for(NoListaAtributos atributo : atributos){
-                for(NoAtributo s : atributo.getDeclaracoes()) {
-                    saida.append("public " + Utils.getNomeTipoJava(atributo.getTipo()) + " " + s.getNome())
-                            .append(";").println();
+            List<NoListaDeclaracoes> campos = noDeclaracaoRegistro.getCampos();
+
+            for(NoListaDeclaracoes campo : campos){
+                for(NoDeclaracao s : campo.getDeclaracoes()) {
+                    saida.format("public %s %s;", Utils.getNomeTipoJava(campo.getTipo()), s.getNome()).println();
                 }
             }
             saida.append("}").println();
+
+            return null;
+        }
+
+        @Override
+        public Object visitar(NoInstanciaRegistro noInstanciaRegistro) throws ExcecaoVisitaASA {
+            String nome = noInstanciaRegistro.getNome();
+            String tipoRegistro = noInstanciaRegistro.getTipoInstancia();
+
+            String identacao = Utils.geraIdentacao(nivelEscopo);
+
+            saida.append(identacao).format("%s %s = ", tipoRegistro, nome);
+            saida.format("new %s();", tipoRegistro).println();
 
             return null;
         }

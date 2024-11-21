@@ -78,9 +78,7 @@ STRING : '"' ( SEQ_ESC | . )*? '"' ;
 
 ID:             (LETRA | '_') (LETRA | [0-9] | '_')* ;
 
-ID_REGISTRO: (LETRA | '_') (LETRA | [0-9] | '_')* ;
-
-ID_INSTANCIA_REGISTRO: (LETRA | '_') (LETRA | [0-9] | '_')* ;
+ID_COMPOSTO: ID (PONTO ID)*;
 
 fragment LETRA: [a-zA-Z] ;
 

@@ -9,7 +9,7 @@ public final class NoInstanciaRegistro extends NoDeclaracaoBase implements NoDec
     public int idParaInspecao = -1; // usado para implementar a inspeção de símbolos
     private String tipoInstancia;
 
-    private List<NoListaAtributos> atributos = new ArrayList<>();
+    private List<NoListaDeclaracoes> campos = new ArrayList<>();
     /**
      *
      * @param nome define o nome desta variável.
@@ -66,14 +66,14 @@ public final class NoInstanciaRegistro extends NoDeclaracaoBase implements NoDec
         return tipoInstancia;
     }
 
-    public List<NoListaAtributos> getAtributos()
+    public List<NoListaDeclaracoes> getCampos()
     {
-        return atributos;
+        return campos;
     }
 
-    public void setAtributos(List<NoListaAtributos> atributos)
+    public void setCampos(List<NoListaDeclaracoes> campos)
     {
-        this.atributos = atributos;
+        this.campos = campos;
     }
 
     public void setTipoInstancia(String tipoInstancia){this.tipoInstancia = tipoInstancia;}

@@ -1,9 +1,6 @@
 package br.univali.portugol.nucleo.simbolos;
 
-import br.univali.portugol.nucleo.asa.NoDeclaracaoBase;
-import br.univali.portugol.nucleo.asa.NoListaAtributos;
-import br.univali.portugol.nucleo.asa.TipoDado;
-import br.univali.portugol.nucleo.asa.TrechoCodigoFonte;
+import br.univali.portugol.nucleo.asa.*;
 
 import java.util.List;
 import java.util.Objects;
@@ -43,7 +40,7 @@ public abstract class Simbolo
     }
     private String nome;
     protected TipoDado tipoDado;
-    private List<NoListaAtributos> atributos;
+    private List<NoListaDeclaracoes> campos;
     private TrechoCodigoFonte trechoCodigoFonteNome;
     private TrechoCodigoFonte trechoCodigoFonteTipoDado;
     private boolean constante = false;
@@ -67,12 +64,12 @@ public abstract class Simbolo
         setOrigemDoSimbolo(declaracaoOrigem);
     }
 
-    public Simbolo(String nome, TipoDado tipoDado, NoDeclaracaoBase declaracaoOrigem, List<NoListaAtributos> atributos)
+    public Simbolo(String nome, TipoDado tipoDado, NoDeclaracaoBase declaracaoOrigem, List<NoListaDeclaracoes> campos)
     {
         setNome(nome);
         setTipoDado(tipoDado);
         setOrigemDoSimbolo(declaracaoOrigem);
-        setAtributos(atributos);
+        setCampos(campos);
     }
 
     /**
@@ -287,14 +284,14 @@ public abstract class Simbolo
         this.origemDoSimbolo = origemDoSimbolo;
     }
 
-    public List<NoListaAtributos> getAtributos()
+    public List<NoListaDeclaracoes> getCampos()
     {
-        return atributos;
+        return campos;
     }
 
-    public void setAtributos(List<NoListaAtributos> atributos)
+    public void setCampos(List<NoListaDeclaracoes> campos)
     {
-        this.atributos = atributos;
+        this.campos = campos;
     }
 
     /**

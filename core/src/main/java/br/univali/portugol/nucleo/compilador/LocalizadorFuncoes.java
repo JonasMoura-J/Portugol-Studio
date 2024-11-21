@@ -83,4 +83,9 @@ final class LocalizadorFuncoes extends VisitanteASABasico {
 
         return null;
     }
+
+    @Override
+    public Object visitar(NoDeclaracaoRegistro declaracaoRegistro) throws ExcecaoVisitaASA {
+        return null;
+    }
 }

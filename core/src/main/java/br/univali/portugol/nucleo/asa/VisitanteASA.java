@@ -117,20 +117,7 @@ public interface VisitanteASA
     
     public Object visitar(NoInclusaoBiblioteca noInclusaoBiblioteca) throws ExcecaoVisitaASA;
 
-    public Object visitar(NoAtributoVariavel noAtributoVariavel) throws ExcecaoVisitaASA;
-
-    public Object visitar(NoAtributoArray noAtributoArray) throws ExcecaoVisitaASA;
-
-    public Object visitar(NoAtributoMatriz noAtributoMatriz) throws ExcecaoVisitaASA;
-
     public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA;
 
     public Object visitar(NoInstanciaRegistro noInstanciaRegistro) throws ExcecaoVisitaASA;
-
-    public Object visitar(NoInicializacaoAtributoVariavel noInicializacaoAtributoVariavel) throws ExcecaoVisitaASA;
-
-    public Object visitar(NoInicializacaoAtributoArray noInicializacaoAtributoArray) throws ExcecaoVisitaASA;
-
-    public Object visitar(NoInicializacaoAtributoMatriz noInicializacaoAtributoMatriz) throws ExcecaoVisitaASA;
-
 }

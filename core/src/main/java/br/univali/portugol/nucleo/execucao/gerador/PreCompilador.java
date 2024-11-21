@@ -207,7 +207,13 @@ public class PreCompilador extends VisitanteNulo
         no.setNome(geraNomeValido(no.getNome()));
         return super.visitar(no);
     }
-    
+
+    @Override
+    public Object visitar(NoInstanciaRegistro no) throws ExcecaoVisitaASA {
+        no.setNome(geraNomeValido(no.getNome()));
+        return super.visitar(no);
+    }
+
     @Override
     public Object visitar(NoVetor noVetor) throws ExcecaoVisitaASA
     {

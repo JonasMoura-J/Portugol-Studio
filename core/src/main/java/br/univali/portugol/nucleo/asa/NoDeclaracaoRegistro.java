@@ -7,21 +7,21 @@ public final class NoDeclaracaoRegistro extends NoDeclaracaoBase implements NoDe
 
     private int idParaInspecao = -1;
 
-    private List<NoListaAtributos> atributos = new ArrayList<>();
+    private List<NoListaDeclaracoes> campos = new ArrayList<>();
 
     public NoDeclaracaoRegistro(String nome, TipoDado tipoDado)
     {
         super(nome, tipoDado, false);
     }
 
-    public List<NoListaAtributos> getAtributos()
+    public List<NoListaDeclaracoes> getCampos()
     {
-        return atributos;
+        return campos;
     }
 
-    public void setAtributos(List<NoListaAtributos> atributos)
+    public void setCampos(List<NoListaDeclaracoes> campos)
     {
-        this.atributos = atributos;
+        this.campos = campos;
     }
 
     @Override

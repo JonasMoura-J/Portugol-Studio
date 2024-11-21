@@ -545,42 +545,12 @@ public final class SymbolTypeFilter implements ASTFilter
         }
 
         @Override
-        public Object visitar(NoAtributoVariavel noAtributoVariavel) throws ExcecaoVisitaASA {
-            return null;
-        }
-
-        @Override
-        public Object visitar(NoAtributoArray noAtributoArray) throws ExcecaoVisitaASA {
-            return null;
-        }
-
-        @Override
-        public Object visitar(NoAtributoMatriz noAtributoMatriz) throws ExcecaoVisitaASA {
-            return null;
-        }
-
-        @Override
         public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
             return null;
         }
 
         @Override
         public Object visitar(NoInstanciaRegistro noInstanciaRegistro) throws ExcecaoVisitaASA {
-            return null;
-        }
-
-        @Override
-        public Object visitar(NoInicializacaoAtributoVariavel noInicializacaoAtributoVariavel) throws ExcecaoVisitaASA {
-            return null;
-        }
-
-        @Override
-        public Object visitar(NoInicializacaoAtributoArray noInicializacaoAtributoArray) throws ExcecaoVisitaASA {
-            return null;
-        }
-
-        @Override
-        public Object visitar(NoInicializacaoAtributoMatriz noInicializacaoAtributoMatriz) throws ExcecaoVisitaASA {
             return null;
         }
 

@@ -1,7 +1,7 @@
 package br.univali.portugol.nucleo.simbolos;
 
 import br.univali.portugol.nucleo.asa.NoDeclaracaoBase;
-import br.univali.portugol.nucleo.asa.NoListaAtributos;
+import br.univali.portugol.nucleo.asa.NoListaDeclaracoes;
 import br.univali.portugol.nucleo.asa.TipoDado;
 
 import java.util.List;
@@ -32,9 +32,9 @@ public final class Variavel extends Simbolo
         super(nome, tipoDado, declaracaoOrigem);
     }
 
-    public Variavel(String nome, TipoDado tipoDado, NoDeclaracaoBase declaracaoOrigem, List<NoListaAtributos> atributos)
+    public Variavel(String nome, TipoDado tipoDado, NoDeclaracaoBase declaracaoOrigem, List<NoListaDeclaracoes> campos)
     {
-        super(nome, tipoDado, declaracaoOrigem, atributos);
+        super(nome, tipoDado, declaracaoOrigem, campos);
     }
 
     /**

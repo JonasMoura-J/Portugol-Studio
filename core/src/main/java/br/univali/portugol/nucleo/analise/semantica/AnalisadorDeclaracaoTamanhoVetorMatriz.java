@@ -353,21 +353,6 @@ public class AnalisadorDeclaracaoTamanhoVetorMatriz implements VisitanteASA{
     }
 
     @Override
-    public Object visitar(NoAtributoVariavel noAtributoVariavel) throws ExcecaoVisitaASA {
-        throw new ExcecaoVisitaASA("Not supported yet.", null, null); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitar(NoAtributoArray noAtributoArray) throws ExcecaoVisitaASA {
-        throw new ExcecaoVisitaASA("Not supported yet.", null, null); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitar(NoAtributoMatriz noAtributoMatriz) throws ExcecaoVisitaASA {
-        throw new ExcecaoVisitaASA("Not supported yet.", null, null); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA("Not supported yet.", null, null); //To change body of generated methods, choose Tools | Templates.
     }
@@ -375,21 +360,6 @@ public class AnalisadorDeclaracaoTamanhoVetorMatriz implements VisitanteASA{
     @Override
     public Object visitar(NoInstanciaRegistro noInstanciaRegistro) throws ExcecaoVisitaASA {
         throw new ExcecaoVisitaASA("Not supported yet.", null, null); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public Object visitar(NoInicializacaoAtributoVariavel noInicializacaoAtributoVariavel) throws ExcecaoVisitaASA {
-        throw new ExcecaoVisitaASA("Not supported yet.", null, null);
-    }
-
-    @Override
-    public Object visitar(NoInicializacaoAtributoArray noInicializacaoAtributoArray) throws ExcecaoVisitaASA {
-        throw new ExcecaoVisitaASA("Not supported yet.", null, null);
-    }
-
-    @Override
-    public Object visitar(NoInicializacaoAtributoMatriz noInicializacaoAtributoMatriz) throws ExcecaoVisitaASA {
-        throw new ExcecaoVisitaASA("Not supported yet.", null, null);
     }
 
     @Override

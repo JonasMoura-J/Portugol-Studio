@@ -12,39 +12,16 @@ inclusaoBiblioteca
 
 listaDeclaracoes
     :  CONSTANTE? TIPO declaracao (VIRGULA declaracao)*;
-//________________________________________________________________________
-
-listaAtributos
-    :  TIPO atributo (VIRGULA atributo)*;
-
-atributo
-    :   atributoVariavel | atributoArray | atributoMatriz;
-
-atributoVariavel
-    : ID;
-
-atributoMatriz
-    :   ID ABRE_COLCHETES linhaMatriz? FECHA_COLCHETES ABRE_COLCHETES colunaMatriz? FECHA_COLCHETES;
-
-atributoArray
-    :   ID ABRE_COLCHETES tamanhoArray? FECHA_COLCHETES;
 
 declaracaoRegistro
-    :   REGISTRO ID ABRE_CHAVES listaAtributos* FECHA_CHAVES;
+    :   REGISTRO ID ABRE_CHAVES listaDeclaracoes* FECHA_CHAVES;
 
 instanciaRegistro
     : ID ID;
 
-inicializacaoAtributoVariavel
-    : ID PONTO ID OP_ATRIBUICAO expressao;
+id
+    :   (ID | ID_COMPOSTO);
 
-inicializacaoAtributoMatriz
-    : ID PONTO ID OP_ATRIBUICAO inicializacaoMatriz;
-
-inicializacaoAtributoArray
-    : ID PONTO ID OP_ATRIBUICAO inicializacaoArray;
-
-//____________________________________________________________________
 declaracao
     :   declaracaoVariavel | declaracaoArray | declaracaoMatriz;
 
@@ -93,9 +70,6 @@ comando
     :   listaDeclaracoes
     |   instanciaRegistro
     |   declaracaoRegistro
-    |   inicializacaoAtributoVariavel
-    |   inicializacaoAtributoArray
-    |   inicializacaoAtributoMatriz
     |   se
     |   enquanto
     |   facaEnquanto
@@ -142,8 +116,7 @@ listaComandos
 inicializacaoPara
     :   atribuicao                      // quando a variável é declarada fora do loop e apenas inicializada dentro dele
     |   listaDeclaracoes              
-    |   ID
-    |   ID_REGISTRO
+    |   id
 ; 
 
 condicao
@@ -195,7 +168,7 @@ expressao
     |   expressao OP_SHIFT_RIGHT expressao                                                      #operacaoShiftRight
     |   expressao E_COMERCIAL expressao                                                         #operacaoAndBitwise
     |   expressao OP_OU_BITWISE expressao                                                       #operacaoOrBitwise
-    |   escopoBiblioteca? ID                                                                    #referenciaParaVariavel           // referência para variável
+    |   id                                                                                      #referenciaParaVariavel           // referência para variável
     |   (INT | HEXADECIMAL)                                                                     #numeroInteiro 
     |   REAL                                                                                    #numeroReal  
     |   LOGICO                                                                                  #valorLogico

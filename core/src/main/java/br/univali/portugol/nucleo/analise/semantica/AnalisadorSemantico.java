@@ -695,26 +695,26 @@ public final class AnalisadorSemantico implements VisitanteASA
                         variavel.setInicializado(true);
                     }
                     passandoParametro = (chamadaFuncao.getEscopoBiblioteca() == null && !FUNCOES_RESERVADAS.contains(chamadaFuncao.getNome()));
-
-                    //se for um registro
-                    if(parametro.getTipoResultante() == TipoDado.REGISTRO &&
-                            ((NoReferenciaVariavel) parametro).getRegistro() != null){
-                        //recuperando o registro salvo em memoria
-                        Simbolo registro = memoria.getSimbolo(((NoReferenciaVariavel) parametro).getRegistro());
-
-                        List<NoListaAtributos> atributos = registro.getAtributos();
-
-                        for(NoListaAtributos atributo : atributos){
-                            for(NoAtributo s : atributo.getDeclaracoes()) {
-                                if(Objects.equals(s.getNome(), ((NoReferenciaVariavel) parametro).getNome())){
-                                    tipos.add(atributo.getTipo());
-                                }
-                            }
-                        }
-                    }
-                    else{
+//
+//                    //se for um registro
+//                    if(parametro.getTipoResultante() == TipoDado.REGISTRO &&
+//                            ((NoReferenciaVariavel) parametro).getRegistro() != null){
+//                        //recuperando o registro salvo em memoria
+//                        Simbolo registro = memoria.getSimbolo(((NoReferenciaVariavel) parametro).getRegistro());
+//
+//                        List<NoListaAtributos> atributos = registro.getAtributos();
+//
+//                        for(NoListaAtributos atributo : atributos){
+//                            for(NoAtributo s : atributo.getDeclaracoes()) {
+//                                if(Objects.equals(s.getNome(), ((NoReferenciaVariavel) parametro).getNome())){
+//                                    tipos.add(atributo.getTipo());
+//                                }
+//                            }
+//                        }
+//                    }
+//                    else{
                         tipos.add((TipoDado) parametro.aceitar(this));
-                    }
+//                    }
 
                     passandoParametro = false;
                 }
@@ -2250,7 +2250,6 @@ public final class AnalisadorSemantico implements VisitanteASA
         Simbolo simboloExistente = memoria.getSimbolo(nome);
         if (simboloExistente != null)
         {
-            
 
             final boolean global = memoria.isGlobal(simboloExistente);
             final boolean local = memoria.isLocal(simboloExistente);
@@ -2393,12 +2392,10 @@ public final class AnalisadorSemantico implements VisitanteASA
         Class classeBloco = bloco.getClass();
         Class<? extends NoBloco>[] classesPermitidas = new Class[]
         {
-            NoInstanciaRegistro.class, NoDeclaracaoVariavel.class, NoDeclaracaoVetor.class, NoDeclaracaoMatriz.class, NoListaDeclaracoes.class,
+            NoDeclaracaoVariavel.class, NoDeclaracaoVetor.class, NoDeclaracaoMatriz.class, NoListaDeclaracoes.class,
             NoCaso.class, NoEnquanto.class, NoEscolha.class, NoFacaEnquanto.class, NoPara.class, NoSe.class,
             NoPare.class, NoRetorne.class, NoTitulo.class, NoVaPara.class,
-            NoOperacaoAtribuicao.class, NoChamadaFuncao.class, NoListaAtributos.class, NoAtributoArray.class, NoAtributoVariavel.class,
-            NoAtributoMatriz.class, NoDeclaracaoRegistro.class, NoInicializacaoAtributoVariavel.class, NoInicializacaoAtributoArray.class,
-            NoInicializacaoAtributoMatriz.class
+            NoOperacaoAtribuicao.class, NoChamadaFuncao.class, NoDeclaracaoRegistro.class, NoInstanciaRegistro.class
         };
 
         for (Class classe : classesPermitidas)
@@ -2459,24 +2456,6 @@ public final class AnalisadorSemantico implements VisitanteASA
     }
 
     @Override
-    public Object visitar(NoAtributoVariavel noAtributoVariavel) throws ExcecaoVisitaASA {
-        setarPaiDoNo(noAtributoVariavel);
-        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noAtributoVariavel.getTrechoCodigoFonte()), asa, noAtributoVariavel);
-    }
-
-    @Override
-    public Object visitar(NoAtributoArray noAtributoArray) throws ExcecaoVisitaASA {
-        setarPaiDoNo(noAtributoArray);
-        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noAtributoArray.getTrechoCodigoFonte()), asa, noAtributoArray);
-    }
-
-    @Override
-    public Object visitar(NoAtributoMatriz noAtributoMatriz) throws ExcecaoVisitaASA {
-        setarPaiDoNo(noAtributoMatriz);
-        throw new ExcecaoVisitaASA("Erro", new ErroComandoNaoSuportado(noAtributoMatriz.getTrechoCodigoFonte()), asa, noAtributoMatriz);
-    }
-
-    @Override
     public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
         setarPaiDoNo(noDeclaracaoRegistro);
 
@@ -2484,9 +2463,9 @@ public final class AnalisadorSemantico implements VisitanteASA
         totalVariaveisDeclaradas++;
 
         String nome = noDeclaracaoRegistro.getNome();
-        List<NoListaAtributos> atributos = noDeclaracaoRegistro.getAtributos();
+        List<NoListaDeclaracoes> campos = noDeclaracaoRegistro.getCampos();
 
-        Variavel variavel = new Variavel(nome, TipoDado.TODOS, noDeclaracaoRegistro, atributos);
+        Variavel variavel = new Variavel(nome, TipoDado.TODOS, noDeclaracaoRegistro, campos);
         variavel.setTrechoCodigoFonteNome(noDeclaracaoRegistro.getTrechoCodigoFonteNome());
         variavel.setTrechoCodigoFonteTipoDado(noDeclaracaoRegistro.getTrechoCodigoFonteTipoDado());
 
@@ -2545,18 +2524,17 @@ public final class AnalisadorSemantico implements VisitanteASA
         totalVariaveisDeclaradas++;
 
         String nome = noInstanciaRegistro.getNome();
-
-
         Simbolo tipoInstancia = memoria.getSimbolo(noInstanciaRegistro.getTipoInstancia());
 
-        List<NoListaAtributos> atributos = tipoInstancia.getAtributos();
+        //todo verificar se o simbolo referente ao tipo instância realmente é um tipo registro para depois recuperar os atributos
+        List<NoListaDeclaracoes> campos = tipoInstancia.getCampos();
 
-        //fiz isso agora para salvar toos os atributos do registro herando
-        noInstanciaRegistro.setAtributos(atributos);
+        //salvar todos os atributos do registro definido no No de instancia
+        noInstanciaRegistro.setCampos(campos);
 
-        Variavel variavel = new Variavel(nome, TipoDado.REGISTRO, noInstanciaRegistro, atributos);
+        Variavel variavel = new Variavel(nome, TipoDado.REGISTRO, noInstanciaRegistro, campos);
         variavel.setTrechoCodigoFonteNome(noInstanciaRegistro.getTrechoCodigoFonteNome());
-        variavel.setTrechoCodigoFonteTipoDado(noInstanciaRegistro.getTrechoCodigoFonteTipoDado());
+//        variavel.setTrechoCodigoFonteTipoDado(noInstanciaRegistro.getTrechoCodigoFonteTipoDado());
 
         Simbolo simbolo = memoria.getSimbolo(nome);
         if (simbolo != null) {
@@ -2567,6 +2545,7 @@ public final class AnalisadorSemantico implements VisitanteASA
             memoria.adicionarSimbolo(variavel);
             final boolean global1 = memoria.isGlobal(variavel);
             final boolean local1 = memoria.isLocal(variavel);
+
             if ((global && global1) || (local && local1))
             {
                 variavel.setRedeclarado(true);
@@ -2583,7 +2562,7 @@ public final class AnalisadorSemantico implements VisitanteASA
                 notificarAviso(new AvisoSimboloGlobalOcultado(simboloGlobal, simboloLocal, noInstanciaRegistro));
             }
         }
-        else// (ExcecaoSimboloNaoDeclarado excecaoSimboloNaoDeclarado)
+        else
         {
             if (FUNCOES_RESERVADAS.contains(nome))
             {
@@ -2597,72 +2576,6 @@ public final class AnalisadorSemantico implements VisitanteASA
             }
         }
 
-        return null;
-    }
-
-    @Override
-    public Object visitar(NoInicializacaoAtributoVariavel inicializacao) throws ExcecaoVisitaASA {
-        setarPaiDoNo(inicializacao);
-
-        inicializacao.setIdParaInspecao(totalVariaveisDeclaradas);
-        totalVariaveisDeclaradas++;
-
-        String nomeAtributo = inicializacao.getNome();
-        String tipoRegistro = inicializacao.getTipoRegistro();
-        NoExpressao valor = inicializacao.getValor();
-        boolean ehAtributoDeclarado = false;
-
-        TipoDado tipoDadoVariavel = null;
-
-        Simbolo registro = memoria.getSimbolo(tipoRegistro);
-
-        List<NoListaAtributos> atributos = registro.getAtributos();
-
-        for (NoListaAtributos atributo : atributos) {
-            for(NoAtributo s : atributo.getDeclaracoes()) {
-                if (s.getNome().equals(nomeAtributo)) {
-                    tipoDadoVariavel = atributo.getTipo();
-                    //aqui eu posso ter variaveis de tipos diferentes mas com nomes iguais dentro do registro
-                    if (tipoDadoVariavel == valor.getTipoResultante()) {
-                        ehAtributoDeclarado = true;
-                        atributo.setInicializacao(valor);
-                        break;
-                    } else {
-                        notificarErroSemantico(new ErroTiposIncompativeis(inicializacao, valor.getTipoResultante(), tipoDadoVariavel));
-                    }
-                }
-            }
-            if(ehAtributoDeclarado) {
-                break;
-            }
-        }
-
-        if(ehAtributoDeclarado) {
-            Variavel variavel = new Variavel(tipoRegistro, TipoDado.REGISTRO, registro.getOrigemDoSimbolo(), atributos);
-            variavel.setTrechoCodigoFonteNome(inicializacao.getTrechoCodigoFonteNome());
-            variavel.setTrechoCodigoFonteTipoDado(inicializacao.getTrechoCodigoFonteTipoDado());
-
-            memoria.adicionarSimbolo(variavel);
-            Simbolo simboloGlobal = memoria.isGlobal(registro) ? registro : variavel;
-            Simbolo simboloLocal = memoria.isGlobal(registro) ? variavel : registro;
-
-            notificarAviso(new AvisoSimboloGlobalOcultado(simboloGlobal, simboloLocal, registro.getOrigemDoSimbolo()));
-
-        }
-        else{
-            notificarErroSemantico(new ErroAtributoNaoDeclarado(inicializacao.getTrechoCodigoFonte(), nomeAtributo, tipoRegistro));
-        }
-
-        return null;
-    }
-
-    @Override
-    public Object visitar(NoInicializacaoAtributoArray noInicializacaoAtributoArray) throws ExcecaoVisitaASA {
-        return null;
-    }
-
-    @Override
-    public Object visitar(NoInicializacaoAtributoMatriz noInicializacaoAtributoMatriz) throws ExcecaoVisitaASA {
         return null;
     }
 

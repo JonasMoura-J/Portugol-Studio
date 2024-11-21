@@ -82,82 +82,6 @@ public class GeradorASA {
         }
 
         @Override
-        public No visitListaAtributos(ListaAtributosContext ctx) {
-            TipoDado tipo = TipoDado.obterTipoDadoPeloNome(ctx.TIPO().getText());
-
-            NoListaAtributos lista = new NoListaAtributos(tipo);
-
-            for (AtributoContext declaracaoAtributoContext : ctx.atributo()) {
-                NoAtributo noAtributo = (NoAtributo)declaracaoAtributoContext.accept(this);
-                lista.adicionaDeclaracao(noAtributo);
-            }
-
-            return lista;
-        }
-
-        @Override
-        public No visitAtributoVariavel(AtributoVariavelContext ctx) {
-            ListaAtributosContext listaAtributos = (ListaAtributosContext)ctx.getParent().getParent();
-            TipoDado tipoVariavel = TipoDado.obterTipoDadoPeloNome(listaAtributos.TIPO().getText());
-            String nomeVariavel = ctx.ID().getText();
-            NoAtributoVariavel noAtributoVariavel = new NoAtributoVariavel(nomeVariavel, tipoVariavel);
-
-            noAtributoVariavel.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID()));
-            noAtributoVariavel.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(listaAtributos.TIPO()));
-
-            noAtributoVariavel.setTrechoCodigoFonte(getTrechoCodigoFonte(listaAtributos.TIPO(), ctx.getText().length()));
-
-            return noAtributoVariavel;
-        }
-
-        @Override
-        public No visitAtributoMatriz(AtributoMatrizContext ctx) {
-            ListaAtributosContext listaAtributosRegistro = (ListaAtributosContext)ctx.getParent().getParent();
-            TipoDado tipo = TipoDado.obterTipoDadoPeloNome(listaAtributosRegistro.TIPO().getText());
-            String nome = ctx.ID().getText();
-
-            NoExpressao expressaoLinhas = null;
-            if (ctx.linhaMatriz() != null) {
-                expressaoLinhas = (NoExpressao) ctx.linhaMatriz().accept(this);
-            }
-
-            NoExpressao expressaoColunas = null;
-            if (ctx.colunaMatriz() != null) {
-                expressaoColunas = (NoExpressao) ctx.colunaMatriz().accept(this);
-            }
-
-            NoAtributoMatriz matriz = new NoAtributoMatriz(nome, tipo, expressaoLinhas, expressaoColunas);
-
-            matriz.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID()));
-            matriz.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(listaAtributosRegistro.TIPO()));
-
-            matriz.setTrechoCodigoFonte(getTrechoCodigoFonte(listaAtributosRegistro.TIPO(), ctx.getText().length()));
-
-            return matriz;
-        }
-
-        @Override
-        public No visitAtributoArray(AtributoArrayContext ctx) {
-            ListaAtributosContext listaAtributosRegistro = (ListaAtributosContext)ctx.getParent().getParent();
-            TipoDado tipo = TipoDado.obterTipoDadoPeloNome(listaAtributosRegistro.TIPO().getText());
-            String nome = ctx.ID().getText();
-
-            NoExpressao tamanho = null;
-            if (ctx.tamanhoArray() != null) {
-                tamanho = (NoExpressao) visitTamanhoArray(ctx.tamanhoArray());
-            }
-
-            NoAtributoArray array = new NoAtributoArray(nome, tipo, tamanho);
-
-            array.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID()));
-            array.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(listaAtributosRegistro.TIPO()));
-
-            array.setTrechoCodigoFonte(getTrechoCodigoFonte(listaAtributosRegistro.TIPO(), ctx.getText().length()));
-
-            return array;
-        }
-
-        @Override
         public No visitDeclaracaoRegistro(DeclaracaoRegistroContext ctx) {
 
             TipoDado tipo = TipoDado.obterTipoDadoPeloNome(ctx.REGISTRO().getText());
@@ -165,7 +89,7 @@ public class GeradorASA {
 
             NoDeclaracaoRegistro noDeclaracaoRegistro = new NoDeclaracaoRegistro(nome, tipo);
 
-            noDeclaracaoRegistro.setAtributos(getAtributos(ctx.listaAtributos()));
+            noDeclaracaoRegistro.setCampos(getCampos(ctx.listaDeclaracoes()));
 
             noDeclaracaoRegistro.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID()));
             noDeclaracaoRegistro.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(ctx.REGISTRO()));
@@ -174,13 +98,13 @@ public class GeradorASA {
             return noDeclaracaoRegistro;
         }
 
-        private List<NoListaAtributos> getAtributos(List<ListaAtributosContext> ctx) {
-            List<NoListaAtributos> atributos = new ArrayList<>();
-            for (ListaAtributosContext comando : ctx) {
-                NoListaAtributos atributo = (NoListaAtributos)comando.accept(this);
-                atributos.add(atributo);
+        private List<NoListaDeclaracoes> getCampos(List<ListaDeclaracoesContext> ctx) {
+            List<NoListaDeclaracoes> campos = new ArrayList<>();
+            for (ListaDeclaracoesContext comando : ctx) {
+                NoListaDeclaracoes campo = (NoListaDeclaracoes)comando.accept(this);
+                campos.add(campo);
             }
-            return atributos;
+            return campos;
         }
 
 
@@ -193,70 +117,11 @@ public class GeradorASA {
 
             noInstanciaRegistro.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID(1)));
 
-            noInstanciaRegistro.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(ctx.ID(0)));
+//            noInstanciaRegistro.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(ctx.ID(0)));
 
             noInstanciaRegistro.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.ID(0), ctx.getText().length()));
 
             return noInstanciaRegistro;
-        }
-
-        @Override
-        public No visitInicializacaoAtributoVariavel(InicializacaoAtributoVariavelContext ctx) {
-
-            String tipoRegistro = ctx.ID(0).getText();
-            String nomeAtributo = ctx.ID(1).getText();
-            NoExpressao inicializacao = (NoExpressao) ctx.expressao().accept(this);
-
-            NoInicializacaoAtributoVariavel noInicializacaoAtributoVariavel =
-                    new NoInicializacaoAtributoVariavel(tipoRegistro, nomeAtributo, inicializacao);
-
-            noInicializacaoAtributoVariavel.setTrechoCodigoFonteNome(getTrechoCodigoFonte(ctx.ID(1)));
-            noInicializacaoAtributoVariavel.setTrechoCodigoFonteTipoDado(getTrechoCodigoFonte(ctx.ID(0)));
-
-            noInicializacaoAtributoVariavel.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.ID(0), ctx.getText().length()));
-            return noInicializacaoAtributoVariavel;
-        }
-
-        @Override
-        public No visitInicializacaoAtributoArray(InicializacaoAtributoArrayContext ctx) {
-
-            String tipoRegistro = ctx.ID(0).getText();
-            String nomeAtributo = ctx.ID(1).getText();
-
-            List<Object> valores = new ArrayList<>();
-            if (ctx.inicializacaoArray().listaExpressoes() != null) {
-                for (ExpressaoContext expressao : ctx.inicializacaoArray().listaExpressoes().expressao()) {
-                    valores.add(expressao.accept(this));
-                }
-            }
-            NoInicializacaoAtributoArray noArray = new NoInicializacaoAtributoArray(valores);
-
-            noArray.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.inicializacaoArray().ABRE_CHAVES(), ctx.getText().length()));
-
-            return noArray;
-        }
-
-        @Override
-        public No visitInicializacaoAtributoMatriz(InicializacaoAtributoMatrizContext ctx) {
-            List<List<Object>> linhas = new ArrayList<>();
-
-            for (InicializacaoArrayContext inicializacaoArrayContext : ctx.inicializacaoMatriz().inicializacaoArray()) {
-                List<Object> linha = new ArrayList<>();
-
-                if (inicializacaoArrayContext.listaExpressoes() != null) { // se as linhas da matriz não foram inicializadas com listas vazias: inteiro m[][] = {{}, {}}
-                    for (ExpressaoContext expressao : inicializacaoArrayContext.listaExpressoes().expressao()) {
-                        linha.add(expressao.accept(this));
-                    }
-                }
-
-                linhas.add(linha);
-            }
-
-            NoInicializacaoAtributoMatriz matriz = new NoInicializacaoAtributoMatriz(linhas);
-
-            matriz.setTrechoCodigoFonte(getTrechoCodigoFonte(ctx.inicializacaoMatriz().ABRE_CHAVES(), ctx.getText().length()));
-
-            return matriz;
         }
 
         //        @Override
@@ -435,7 +300,7 @@ public class GeradorASA {
         public No visitReferenciaParaVariavel(PortugolParser.ReferenciaParaVariavelContext ctx) {
             String registro = null;
             String escopo = null;
-            PortugolParser.EscopoBibliotecaContext escopoBiblioteca = ctx.escopoBiblioteca();
+            PortugolParser.EscopoBibliotecaContext escopoBiblioteca = (EscopoBibliotecaContext) ctx.id().ID_COMPOSTO();
 
             if (escopoBiblioteca != null) {
                 String referencia = escopoBiblioteca.ID().getText();
@@ -456,7 +321,7 @@ public class GeradorASA {
                 }
             }
 
-            return criaNoReferenciaVariavel(ctx.ID(), escopo, registro, ctx.getText().length());
+            return criaNoReferenciaVariavel(ctx.id().ID(), escopo, registro, ctx.getText().length());
         }
 
         @Override
@@ -847,7 +712,7 @@ public class GeradorASA {
 
             if (inicializacaoPara != null) {
                 List<NoBloco> inicializacoes = new ArrayList<>();
-                if (inicializacaoPara.ID() == null) { // se NÃO foi usada uma referência para variável na inicialização do para
+                if (inicializacaoPara.id() == null) { // se NÃO foi usada uma referência para variável na inicialização do para
                     NoBloco blocoInicializacao = (NoBloco)inicializacaoPara.accept(this);
                     if (blocoInicializacao instanceof NoListaDeclaracoes) {
                         List<NoDeclaracao> declaracoes = ((NoListaDeclaracoes)blocoInicializacao).getDeclaracoes();
@@ -860,7 +725,7 @@ public class GeradorASA {
                     }
                 }
                 else { // o para foi inicializado apenas com uma referência para variável, como 'para(j; j< 10; j++) ... "
-                    inicializacoes.add(new NoReferenciaVariavel(null, inicializacaoPara.ID().getText()));
+                    inicializacoes.add(new NoReferenciaVariavel(null, inicializacaoPara.id().getText()));
                 }
                 noPara.setInicializacoes(inicializacoes);
             }
