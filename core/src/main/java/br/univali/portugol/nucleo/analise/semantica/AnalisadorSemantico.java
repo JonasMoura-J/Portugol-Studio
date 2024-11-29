@@ -1,5 +1,6 @@
 package br.univali.portugol.nucleo.analise.semantica;
 
+import br.univali.portugol.nucleo.ErroAoTentarObterDeclaracaoDoSimbolo;
 import br.univali.portugol.nucleo.analise.semantica.avisos.AvisoMatrizPodeSerVariavel;
 import br.univali.portugol.nucleo.analise.semantica.avisos.AvisoMatrizPodeSerVetor;
 import br.univali.portugol.nucleo.analise.semantica.avisos.AvisoSimboloGlobalOcultado;
@@ -2393,11 +2394,11 @@ public final class AnalisadorSemantico implements VisitanteASA
         Class classeBloco = bloco.getClass();
         Class<? extends NoBloco>[] classesPermitidas = new Class[]
         {
-            NoInstanciaRegistro.class, NoDeclaracaoVariavel.class, NoDeclaracaoVetor.class, NoDeclaracaoMatriz.class, NoListaDeclaracoes.class,
+            NoDeclaracaoRegistro.class,NoDeclaracaoVariavel.class, NoDeclaracaoVetor.class, NoDeclaracaoMatriz.class, NoListaDeclaracoes.class,
             NoCaso.class, NoEnquanto.class, NoEscolha.class, NoFacaEnquanto.class, NoPara.class, NoSe.class,
             NoPare.class, NoRetorne.class, NoTitulo.class, NoVaPara.class,
             NoOperacaoAtribuicao.class, NoChamadaFuncao.class, NoListaAtributos.class, NoAtributoArray.class, NoAtributoVariavel.class,
-            NoAtributoMatriz.class, NoDeclaracaoRegistro.class, NoInicializacaoAtributoVariavel.class, NoInicializacaoAtributoArray.class,
+            NoAtributoMatriz.class, NoInstanciaRegistro.class, NoInicializacaoAtributoVariavel.class, NoInicializacaoAtributoArray.class,
             NoInicializacaoAtributoMatriz.class
         };
 
@@ -2485,53 +2486,36 @@ public final class AnalisadorSemantico implements VisitanteASA
 
         String nome = noDeclaracaoRegistro.getNome();
         List<NoListaAtributos> atributos = noDeclaracaoRegistro.getAtributos();
+        List<NoAtributo> atributosVerificados = new ArrayList<>();
 
-        Variavel variavel = new Variavel(nome, TipoDado.TODOS, noDeclaracaoRegistro, atributos);
+        Simbolo simboloMemoria = memoria.getSimbolo(nome);
+
+        //VERIFICANDO SE O REGISTRO Jï¿½? FOI DECLARADO
+        if(simboloMemoria != null) {
+            if(simboloMemoria.getTipoDado().equals(TipoDado.REGISTRO)){
+                notificarErroSemantico(new ErroSimboloRedeclarado(simboloMemoria, simboloMemoria));
+            }
+        }
+
+        //VERIFICANDO SE ALGUM ATRIBUTO DO REGISTRO ESTï¿½o DUPLICADO
+        for (NoListaAtributos atributo : atributos) {
+            for(NoAtributo simbolo : atributo.getDeclaracoes()) {
+                //verifica se o atributo Ã© duplicado
+                if (!atributosVerificados.contains(simbolo)) {
+                    atributosVerificados.add(simbolo);
+                } else {
+                    notificarErroSemantico(new ErroSimboloRedeclarado((Simbolo) simbolo, (Simbolo) simbolo));
+                }
+            }
+        }
+
+        Variavel variavel = new Variavel(nome, TipoDado.REGISTRO, noDeclaracaoRegistro, atributos);
         variavel.setTrechoCodigoFonteNome(noDeclaracaoRegistro.getTrechoCodigoFonteNome());
         variavel.setTrechoCodigoFonteTipoDado(noDeclaracaoRegistro.getTrechoCodigoFonteTipoDado());
 
-        Simbolo simbolo = memoria.getSimbolo(nome);
-
-        if (simbolo != null) {
-
-            final boolean global = memoria.isGlobal(simbolo);
-            final boolean local = memoria.isLocal(simbolo);
-            memoria.empilharEscopo();
-            memoria.adicionarSimbolo(variavel);
-            final boolean global1 = memoria.isGlobal(variavel);
-            final boolean local1 = memoria.isLocal(variavel);
-            if ((global && global1) || (local && local1))
-            {
-                variavel.setRedeclarado(true);
-                notificarErroSemantico(new ErroSimboloRedeclarado(variavel, simbolo));
-                memoria.desempilharEscopo();
-            }
-            else
-            {
-                memoria.desempilharEscopo();
-                memoria.adicionarSimbolo(variavel);
-                Simbolo simboloGlobal = memoria.isGlobal(simbolo) ? simbolo : variavel;
-                Simbolo simboloLocal = memoria.isGlobal(simbolo) ? variavel : simbolo;
-
-                notificarAviso(new AvisoSimboloGlobalOcultado(simboloGlobal, simboloLocal, noDeclaracaoRegistro));
-            }
-        }
-        else// (ExcecaoSimboloNaoDeclarado excecaoSimboloNaoDeclarado)
-        {
-            if (FUNCOES_RESERVADAS.contains(nome))
-            {
-                variavel.setRedeclarado(true);
-                Funcao funcaoSistam = new Funcao(nome, TipoDado.VAZIO, Quantificador.VETOR);
-                notificarErroSemantico(new ErroSimboloRedeclarado(variavel, funcaoSistam));
-            }
-            else
-            {
-                memoria.adicionarSimbolo(variavel);
-            }
-        }
+        memoria.adicionarSimbolo(variavel);
 
         memoria.empilharEscopo();
-        memoria.adicionarSimbolo(variavel);
         memoria.desempilharEscopo();
 
         return null;
@@ -2549,9 +2533,14 @@ public final class AnalisadorSemantico implements VisitanteASA
 
         Simbolo tipoInstancia = memoria.getSimbolo(noInstanciaRegistro.getTipoInstancia());
 
+        //VERIFICANDO SE EXISTE REGISTRO DECLARADO
+        if(tipoInstancia == null || !tipoInstancia.getTipoDado().equals(TipoDado.REGISTRO)){
+            notificarErroSemantico(new ErroSimboloNaoDeclarado(new NoReferenciaVariavel(null, tipoInstancia.getNome())));
+        }
+
         List<NoListaAtributos> atributos = tipoInstancia.getAtributos();
 
-        //fiz isso agora para salvar toos os atributos do registro herando
+        //SALVANDO UMA COPIA DOS ATRIBUTOS NA NOVA VARIAVEL
         noInstanciaRegistro.setAtributos(atributos);
 
         Variavel variavel = new Variavel(nome, TipoDado.REGISTRO, noInstanciaRegistro, atributos);
@@ -2607,23 +2596,30 @@ public final class AnalisadorSemantico implements VisitanteASA
         inicializacao.setIdParaInspecao(totalVariaveisDeclaradas);
         totalVariaveisDeclaradas++;
 
-        String nomeAtributo = inicializacao.getNome();
+        String nomeCampo = inicializacao.getNome();
         String tipoRegistro = inicializacao.getTipoRegistro();
         NoExpressao valor = inicializacao.getValor();
         boolean ehAtributoDeclarado = false;
 
-        TipoDado tipoDadoVariavel = null;
 
         Simbolo registro = memoria.getSimbolo(tipoRegistro);
 
+        //VERIFICANDO SE EXISTE A INSTÃNCIA EM MEMORIA
+        if(registro == null || !registro.getTipoDado().equals(TipoDado.REGISTRO)){
+            notificarErroSemantico(new ErroSimboloNaoDeclarado(new NoReferenciaVariavel(null, registro.getNome())));
+        }
+
+
+        TipoDado tipoDadoVariavel = null;
         List<NoListaAtributos> atributos = registro.getAtributos();
 
         for (NoListaAtributos atributo : atributos) {
             for(NoAtributo s : atributo.getDeclaracoes()) {
-                if (s.getNome().equals(nomeAtributo)) {
-                    tipoDadoVariavel = atributo.getTipo();
-                    //aqui eu posso ter variaveis de tipos diferentes mas com nomes iguais dentro do registro
-                    if (tipoDadoVariavel == valor.getTipoResultante()) {
+
+                //VERIFICANDO EXISTÊNCIA DO CAMPO NA LISTA DE CAMPOS DO REGISTRO
+                if (s.getNome().equals(nomeCampo)) {
+                    //VERIFICANDO COMPATIBILIDADE DE TIPOS
+                    if (atributo.getTipo() == valor.getTipoResultante()) {
                         ehAtributoDeclarado = true;
                         atributo.setInicializacao(valor);
                         break;
@@ -2650,7 +2646,7 @@ public final class AnalisadorSemantico implements VisitanteASA
 
         }
         else{
-            notificarErroSemantico(new ErroAtributoNaoDeclarado(inicializacao.getTrechoCodigoFonte(), nomeAtributo, tipoRegistro));
+            notificarErroSemantico(new ErroAtributoNaoDeclarado(inicializacao.getTrechoCodigoFonte(), nomeCampo, tipoRegistro));
         }
 
         return null;

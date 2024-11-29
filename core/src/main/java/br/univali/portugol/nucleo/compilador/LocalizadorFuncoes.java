@@ -83,4 +83,18 @@ final class LocalizadorFuncoes extends VisitanteASABasico {
 
         return null;
     }
+
+    @Override
+    public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
+        funcoes.add(noDeclaracaoRegistro.getNome());
+
+        return null;
+    }
+
+    @Override
+    public Object visitar(NoInstanciaRegistro noInstanciaRegistro) throws ExcecaoVisitaASA {
+        funcoes.add(noInstanciaRegistro.getNome());
+
+        return null;
+    }
 }

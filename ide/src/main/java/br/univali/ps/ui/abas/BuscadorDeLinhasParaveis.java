@@ -28,7 +28,6 @@ public final class BuscadorDeLinhasParaveis extends VisitanteNulo {
     static {
         classesParaveis.add(NoCaso.class);
         classesParaveis.add(NoChamadaFuncao.class);
-        classesParaveis.add(NoInstanciaRegistro.class);
         classesParaveis.add(NoDeclaracaoMatriz.class);
         classesParaveis.add(NoDeclaracaoVetor.class);
         classesParaveis.add(NoDeclaracaoParametro.class);
@@ -376,6 +375,11 @@ public final class BuscadorDeLinhasParaveis extends VisitanteNulo {
 
     @Override
     public Object visitar(NoInclusaoBiblioteca noInclusaoBiblioteca) throws ExcecaoVisitaASA {
+        return null;
+    }
+
+    @Override
+    public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
         return null;
     }
 

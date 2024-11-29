@@ -28,6 +28,7 @@ public class GeradorCodigoJava
     private final GeradorOperacao geradorOperacao = new GeradorOperacao();
     private final GeradorAtributo geradorAtributo = new GeradorAtributo();
     private final GeradorDeclaracaoVariavel geradorDeclaracaoVariavel = new GeradorDeclaracaoVariavel();
+    private final GeradorDeclaracaoRegistro geradorDeclaracaoRegistro = new GeradorDeclaracaoRegistro();
     private final GeradorAtribuicao geradorAtribuicao = new GeradorAtribuicao();
     private final GeradorLoops geradorLoops = new GeradorLoops();
     private final long seed;
@@ -101,8 +102,10 @@ public class GeradorCodigoJava
                .geraAtributosParaVariaveisPassadasPorReferencia(preCompilador.getVariaveisPassadasPorReferencia())
                .geraConstrutor(nomeClasseJava, totalVariaveis, totalVetores, totalMatrizes)
                .geraInicializacaoVariaveisGlobais()
+                .geraDeclaracaoRegistros(asa.getListaDeclaracoesGlobais())
                .geraMetodos(preCompilador.getFuncoesQuerForamInvocadas())
                .geraChaveFechamentoClasse();
+
     }
 
     private class VisitorGeracaoCodigo extends VisitanteASABasico
@@ -334,6 +337,23 @@ public class GeradorCodigoJava
                     {
                         geradorDeclaracaoMetodo.gera(declaracaoFuncao, saida, this, nivelEscopo, opcoes, seed);
                     }
+                }
+            }
+            return this;
+        }
+
+        public VisitorGeracaoCodigo geraDeclaracaoRegistros(List<NoDeclaracao> registros) throws ExcecaoVisitaASA
+        {
+//            List<NoDeclaracao> declaracoes = asa.getListaDeclaracoesGlobais();
+
+            for (NoDeclaracao declaracao : registros)
+            {
+                if (declaracao instanceof NoDeclaracaoRegistro)
+                {
+                    NoDeclaracaoRegistro noDeclaracaoRegistro = (NoDeclaracaoRegistro)declaracao;
+
+                    geradorDeclaracaoRegistro.gera(noDeclaracaoRegistro, saida, this, nivelEscopo, opcoes, seed);
+
                 }
             }
             return this;
@@ -955,26 +975,36 @@ public class GeradorCodigoJava
             return null;
         }
 
+//        @Override
+//        public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
+//            String identacao = Utils.geraIdentacao(nivelEscopo);
+//            System.out.println(saida.toString());
+//            saida.append(identacao)
+//                    .append("public class ")
+//                    .append(noDeclaracaoRegistro.getNome()).println();
+//            saida.append("{").println();
+//
+//            List<NoListaAtributos> atributos = noDeclaracaoRegistro.getAtributos();
+//
+//            for(NoListaAtributos atributo : atributos){
+//                for(NoAtributo s : atributo.getDeclaracoes()) {
+//                    saida.append("public " + Utils.getNomeTipoJava(atributo.getTipo()) + " " + s.getNome())
+//                            .append(";").println();
+//                }
+//            }
+//            saida.append("}").println();
+//
+//            return null;
+//        }
+
         @Override
-        public Object visitar(NoDeclaracaoRegistro noDeclaracaoRegistro) throws ExcecaoVisitaASA {
-            String identacao = Utils.geraIdentacao(nivelEscopo);
-            System.out.println(saida.toString());
-            saida.append(identacao)
-                    .append("class ")
-                    .append(noDeclaracaoRegistro.getNome()).println();
-            saida.append("{").println();
+        public Object visitar(NoInstanciaRegistro noInstanciaRegistro) throws ExcecaoVisitaASA {
+            String nome = noInstanciaRegistro.getNome();
+            String tipoRegistro = noInstanciaRegistro.getTipoInstancia();
 
-            List<NoListaAtributos> atributos = noDeclaracaoRegistro.getAtributos();
-
-            for(NoListaAtributos atributo : atributos){
-                for(NoAtributo s : atributo.getDeclaracoes()) {
-                    saida.append("public " + Utils.getNomeTipoJava(atributo.getTipo()) + " " + s.getNome())
-                            .append(";").println();
-                }
-            }
-            saida.append("}").println();
-
-            return null;
+            saida.format("%s %s = ", tipoRegistro, nome);
+            saida.format("new %s()", tipoRegistro).println();
+            return this;
         }
 
         /**

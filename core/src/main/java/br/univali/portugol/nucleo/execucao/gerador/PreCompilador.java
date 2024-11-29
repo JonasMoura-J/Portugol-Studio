@@ -20,7 +20,7 @@ public class PreCompilador extends VisitanteNulo
 
     private final Map<TipoDado, List<NoDeclaracao>> declaracoes = new HashMap<>();
     private final Set<NoDeclaracaoFuncao> funcoesInvocadas = new HashSet<>(); // guarda apenas as funções que foram invocadas, as funções que não são invocadas não serão geradas no código Java
-    
+
     private static long seedNomes = System.currentTimeMillis();
     
     private final Map<String, String> dadosBibliotecas = new HashMap<>(); // nomes e aliases das bibliotecas incluídas
@@ -204,6 +204,12 @@ public class PreCompilador extends VisitanteNulo
 
     @Override
     public Object visitar(NoDeclaracaoRegistro no) throws ExcecaoVisitaASA {
+        no.setNome(geraNomeValido(no.getNome()));
+        return super.visitar(no);
+    }
+
+    @Override
+    public Object visitar(NoInstanciaRegistro no) throws ExcecaoVisitaASA {
         no.setNome(geraNomeValido(no.getNome()));
         return super.visitar(no);
     }

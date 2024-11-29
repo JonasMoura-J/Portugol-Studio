@@ -4,7 +4,7 @@ import PortugolLexico;
 
 arquivo 
     :   PROGRAMA ABRE_CHAVES 
-        inclusaoBiblioteca* (declaracaoRegistro | declaracaoFuncao | listaDeclaracoes)*
+        inclusaoBiblioteca* (declaracaoRegistro| declaracaoFuncao | listaDeclaracoes)*
         FECHA_CHAVES ;
 
 inclusaoBiblioteca

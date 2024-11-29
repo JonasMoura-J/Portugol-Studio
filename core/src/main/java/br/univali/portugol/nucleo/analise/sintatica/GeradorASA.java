@@ -43,7 +43,12 @@ public class GeradorASA {
 
         @Override
         public No visitArquivo(ArquivoContext ctx) {
+            List<NoDeclaracaoRegistro> registros = new ArrayList<>();
 
+            for(DeclaracaoRegistroContext declaracaoRegistroContext : ctx.declaracaoRegistro()){
+                registros.add((NoDeclaracaoRegistro)  declaracaoRegistroContext.accept(this));
+            }
+            asa.setListaDeclaracaoRegistros(registros);
 
             for (InclusaoBibliotecaContext inclusaoBibliotecaContext : ctx.inclusaoBiblioteca()) {
                 inclusoes.add((NoInclusaoBiblioteca)inclusaoBibliotecaContext.accept(this));

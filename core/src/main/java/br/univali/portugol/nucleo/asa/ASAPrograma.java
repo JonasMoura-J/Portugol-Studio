@@ -13,6 +13,7 @@ import java.util.List;
 public final class ASAPrograma extends ASA
 {
     private List<NoInclusaoBiblioteca> listaInclusoesBibliotecas = new ArrayList<>();
+    private List<NoDeclaracaoRegistro> listaDeclaracaoRegistros = new ArrayList<>();
     
     private int totalVariaveisDeclaradas = 0; 
     private int totalVetoresDeclarados = 0;
@@ -70,5 +71,13 @@ public final class ASAPrograma extends ASA
     public Object aceitar(VisitanteASA visitante) throws ExcecaoVisitaASA
     {
         return visitante.visitar(this);
+    }
+
+    public List<NoDeclaracaoRegistro> getListaDeclaracaoRegistros() {
+        return listaDeclaracaoRegistros;
+    }
+
+    public void setListaDeclaracaoRegistros(List<NoDeclaracaoRegistro> listaDeclaracaoRegistros) {
+        this.listaDeclaracaoRegistros = listaDeclaracaoRegistros;
     }
 }

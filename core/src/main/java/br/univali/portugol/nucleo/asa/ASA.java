@@ -41,12 +41,13 @@ public abstract class ASA
         }
         
         List<NoDeclaracao> declaracoes = new ArrayList<>();
-        
+
         declaracoes.addAll(getDeclaracoes(NoInclusaoBiblioteca.class));
+        declaracoes.addAll(getDeclaracoes(NoDeclaracaoRegistro.class));
         declaracoes.addAll(getDeclaracoes(NoDeclaracaoInicializavel.class));
         declaracoes.addAll(getDeclaracoes(NoDeclaracaoFuncao.class));
         declaracoes.addAll(getDeclaracoes(NoInstanciaRegistro.class));
-        declaracoes.addAll(getDeclaracoes(NoDeclaracaoRegistro.class));
+
 
         return declaracoes;
     }
