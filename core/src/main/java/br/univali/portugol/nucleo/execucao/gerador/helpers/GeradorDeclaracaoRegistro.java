@@ -17,7 +17,7 @@ public class GeradorDeclaracaoRegistro {
         String identacao = Utils.geraIdentacao(nivelEscopo);
         System.out.println(saida.toString());
         saida.append(identacao)
-                .append("static class ")
+                .append("class ")
                 .append(noDeclaracaoRegistro.getNome()).println();
         saida.append("{").println();
 

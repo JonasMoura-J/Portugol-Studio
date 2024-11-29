@@ -38,6 +38,7 @@ public class GeradorCodigoJava
     private int quantidadeInicializacoesPara = 0;
     private int indiceAtualInicializacaoPara = -1;
     private int numeroFlag = 1;
+    private String nomeClasseJavaInstancia;
 
     public static class Opcoes
     {
@@ -86,7 +87,8 @@ public class GeradorCodigoJava
         asa.aceitar(preCompilador);
 
         VisitorGeracaoCodigo gerador = new VisitorGeracaoCodigo(asa, saida, opcoes);
-        
+
+        nomeClasseJavaInstancia = nomeClasseJava;
         int totalVariaveis = asa.getTotalVariaveisDeclaradas();
         int totalVetores = asa.getTotalVetoresDeclarados();
         int totalMatrizes = asa.getTotalMatrizesDeclaradas();
@@ -999,13 +1001,31 @@ public class GeradorCodigoJava
 
         @Override
         public Object visitar(NoInstanciaRegistro noInstanciaRegistro) throws ExcecaoVisitaASA {
+            String identacao = Utils.geraIdentacao(nivelEscopo);
             String nome = noInstanciaRegistro.getNome();
             String tipoRegistro = noInstanciaRegistro.getTipoInstancia();
 
+            saida.format("%s instancia = new %s();", nomeClasseJavaInstancia, nomeClasseJavaInstancia).println();
+
             saida.format("%s %s = ", tipoRegistro, nome);
-            saida.format("new %s()", tipoRegistro).println();
+            saida.format("instancia.new %s();", tipoRegistro).println();
             return this;
         }
+
+//        @Override
+//        public Object visitar(NoInicializacaoAtributoVariavel noInicializacaoAtributoVariavel) throws ExcecaoVisitaASA {
+//            String identacao = Utils.geraIdentacao(nivelEscopo);
+//
+//
+//            String nome = noInicializacaoAtributoVariavel.getNome();
+//            String tipoRegistro = noInicializacaoAtributoVariavel.getTipoRegistro();
+//            NoExpressao valor = noInicializacaoAtributoVariavel.getValor();
+//
+//            saida.format("%s.%s = %s;", tipoRegistro, nome, valor.aceitar(this)).println();
+//
+//            saida.println();
+//            return this;
+//        }
 
         /**
          * Gera o comando Java para importação de uma determinada classe.
